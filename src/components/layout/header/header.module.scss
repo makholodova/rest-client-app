@@ -1,21 +1,18 @@
-﻿
-@use '@/styles/variables' as v;
+﻿@use '@/styles/variables' as v;
 @use '@/styles/mixins' as m;
 .header {
-
   background-color: v.$color-silver;
 }
 
-.headerWrapper
-{
+.headerWrapper {
   display: flex;
   gap: 1rem;
   align-items: center;
   justify-content: space-between;
   padding: 10px 15px;
 
-  @include m.phone{
-flex-direction: column;
+  @include m.phone {
+    flex-direction: column;
   }
 }
 .nav {

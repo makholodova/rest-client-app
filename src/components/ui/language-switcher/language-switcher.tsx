@@ -4,7 +4,7 @@ import { useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import Image from 'next/image';
 import styles from './language-switcher.module.scss';
-import { locales } from '@/constants/languages';
+import { LOCALES } from '@/constants/languages';
 
 export default function LanguageSwitcher() {
   const active = useLocale();
@@ -12,7 +12,7 @@ export default function LanguageSwitcher() {
 
   return (
     <div className={styles.wrapper}>
-      {locales.map(({ code, label, flag }) => (
+      {LOCALES.map(({ code, label, flag }) => (
         <Link
           key={code}
           href={pathname}
