@@ -1,0 +1,14 @@
+{
+  "Header": {
+    "logo": "REST Client",
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In"
+  },
+  "SignUp": {},
+  "SignIn": {},
+  "Footer": {
+    "ap": "Aliaksandra Palkhouskaya",
+    "dy": "Denis Yakovchik",
+    "mk": "Marina Kholodova"
+  }
+}

@@ -1,0 +1,10 @@
+﻿@use '@/styles/variables' as v;
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: v.$laptop;
+  margin: 0 auto;
+}

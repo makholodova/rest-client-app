@@ -1,0 +1,17 @@
+﻿@use 'normalize';
+@use 'variables';
+@use 'mixins';
+@use 'globals';
+
+html,
+body {
+  width: 100%;
+  max-width: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
