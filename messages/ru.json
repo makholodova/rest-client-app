@@ -3,5 +3,9 @@
     "logo": "REST Клиент",
     "sign-up": "Регистрация",
     "sign-in": "Войти"
+  },
+  "SignUp": {
+  },
+  "SignIn": {
   }
 }

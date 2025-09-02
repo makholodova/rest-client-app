@@ -1,3 +1,3 @@
 ﻿export default function SignInPage() {
-	return <div>Логин</div>;
+  return <div>Логин</div>;
 }

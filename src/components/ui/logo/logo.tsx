@@ -1,6 +1,6 @@
 ﻿import styles from './logo.module.scss';
 import Link from 'next/link';
-import { ROUTES } from '@/routes';
+import { ROUTES } from '@/constants/routes';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 

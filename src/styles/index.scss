@@ -3,10 +3,13 @@
 @use 'mixins';
 @use 'globals';
 
+html, body {
+  width: 100%;
+  max-width: 100%;
+}
+
 body {
-  margin: 0 auto;
-  min-height: 100vh;
-  max-width: 1400px;
+   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
