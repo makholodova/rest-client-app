@@ -1,11 +1,11 @@
 ﻿// ===== Neutral =====
 $color-black: #263238;
-$color-d-grey: #4D4D4D;
+$color-d-grey: #4d4d4d;
 $color-grey: #717171;
-$color-l-grey: #89939E;
-$color-grey-blue: #ABBED1;
-$color-silver: #F5F7FA;
-$color-white: #FFFFFF;
+$color-l-grey: #89939e;
+$color-grey-blue: #abbed1;
+$color-silver: #f5f7fa;
+$color-white: #ffffff;
 
 // ===== Primary / Secondary / Info =====
 $color-primary: #4caf4f;
@@ -30,3 +30,12 @@ $color-tint-5: #e8f5e9;
 $color-warning: #2e7d31;
 $color-error: #e53835;
 $color-success: #fbc02d;
+
+$box-shadow: 0 2px 10px rgb(0, 0, 0, 10%);
+$box-shadow-hover: 0 2px 10px rgb(0, 0, 0, 20%);
+
+
+$laptop: 1300px;
+$tablet: 1060px;
+$tablet-sm: 768px;
+$phone: 620px;
