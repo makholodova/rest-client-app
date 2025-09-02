@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
+import '@/styles/index.scss';
 
 import { notFound } from 'next/navigation';
 import { hasLocale } from 'next-intl';
 import { routing } from '@/i18n/routing';
+import Footer from '@/components/layout/footer/footer';
+import Header from '@/components/layout/header/header';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -23,7 +26,11 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
