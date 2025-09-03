@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 export default function GuestGreeting() {
   const t = useTranslations('GuestGreeting');
   return (
-    <div className={styles.wrapper}>
+    <section className={styles.wrapper}>
       <h2 className={styles.title}>{t('title')}!</h2>
       <p className={styles.text}>
         {t('text')}
@@ -20,6 +20,6 @@ export default function GuestGreeting() {
           {t('sign-up')}
         </Link>
       </p>
-    </div>
+    </section>
   );
 }

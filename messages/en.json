@@ -22,7 +22,10 @@
   },
   "UserGreeting": {
     "title": "Hello",
-    "text": "Glad to see you again. You can continue working with the API right now"
+    "text": "Glad to see you again. You can continue working with the API right now",
+    "restClient": "REST Client",
+    "history": "History",
+    "variables": "Variables"
   },
   "Teams": {
     "aliaksandra": "Aliaksandra Palkhouskaya",

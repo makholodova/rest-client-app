@@ -1,6 +1,7 @@
 @use '@/styles/variables' as v;
 
 .wrapper {
+  color: v.$color-d-grey;
   display: flex;
   flex-direction: column;
   align-items: center;
