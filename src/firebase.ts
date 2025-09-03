@@ -1,0 +1,75 @@
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
+  signOut,
+} from 'firebase/auth';
+import { getFirestore, collection, addDoc } from 'firebase/firestore';
+
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: 'AIzaSyBO_yryYqJQVYRsV4gD0NZ8Ulplxw96Kz8',
+  authDomain: 'rest-client-app-cfaa5.firebaseapp.com',
+  projectId: 'rest-client-app-cfaa5',
+  storageBucket: 'rest-client-app-cfaa5.firebasestorage.app',
+  messagingSenderId: '807816489019',
+  appId: '1:807816489019:web:253791a85b40cc0eefd41e',
+  measurementId: 'G-ZVR99WFE0W',
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const logInWithEmailAndPassword = async (email: string, password: string) => {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+const registerWithEmailAndPassword = async (
+  name: string,
+  email: string,
+  password: string
+) => {
+  try {
+    const res = await createUserWithEmailAndPassword(auth, email, password);
+    const user = res.user;
+    await addDoc(collection(db, 'users'), {
+      uid: user.uid,
+      name,
+      authProvider: 'local',
+      email,
+    });
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+const sendPasswordReset = async (email: string) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    alert('Password reset link sent!');
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+};
+
+const logout = () => {
+  signOut(auth);
+};
+
+export {
+  auth,
+  db,
+  logInWithEmailAndPassword,
+  registerWithEmailAndPassword,
+  sendPasswordReset,
+  logout,
+};
