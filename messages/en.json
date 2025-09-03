@@ -11,5 +11,26 @@
     "dy": "Denis Yakovchik",
     "mk": "Marina Kholodova"
   },
-  "Toasts": {}
+  "Toasts": {},
+  "HomePage": {},
+  "GuestGreeting": {
+    "title": "Welcome to Rest Client",
+    "text": "To access all features",
+    "or": "or",
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In"
+  },
+  "UserGreeting": {
+    "title": "Hello",
+    "text": "Glad to see you again. You can continue working with the API right now",
+    "restClient": "REST Client",
+    "history": "History",
+    "variables": "Variables"
+  },
+  "Teams": {
+    "aliaksandra": "Aliaksandra Palkhouskaya",
+    "denis": "Denis Yakovchik",
+    "marina": "Marina Kholodova"
+  },
+  "Developers": {}
 }

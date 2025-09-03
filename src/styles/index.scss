@@ -3,6 +3,16 @@
 @use 'mixins';
 @use 'globals';
 @use '@/styles/variables' as v;
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+
 html,
 body {
   width: 100%;

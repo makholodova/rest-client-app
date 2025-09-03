@@ -7,9 +7,30 @@
   "SignUp": {},
   "SignIn": {},
   "Footer": {
-    "ap": "Александра Пальховская",
+    "ap": "Александра Полховская",
     "dy": "Денис Яковчик",
     "mk": "Марина Холодова"
   },
-  "Toasts": {}
+  "Toasts": {},
+  "HomePage": {},
+  "GuestGreeting": {
+    "title": "Добро пожаловать в Rest Клиент",
+    "text": "Для доступа ко всем возможностям",
+    "or": "или",
+    "sign-up": "Зарегистрируйтесь",
+    "sign-in": "Войдите"
+  },
+  "UserGreeting": {
+    "title": "Здравствуйте",
+    "text": "Рады видеть вас снова. Можете продолжить работу с API прямо сейчас",
+    "restClient": "REST клиент",
+    "history": "История",
+    "variables": "Переменные"
+  },
+  "Teams": {
+    "aliaksandra": "Aliaksandra Palkhouskaya",
+    "denis": "Denis Yakovchik",
+    "marina": "Marina Kholodova"
+  },
+  "Developers": {}
 }
