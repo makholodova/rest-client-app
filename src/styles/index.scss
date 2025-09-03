@@ -2,7 +2,7 @@
 @use 'variables';
 @use 'mixins';
 @use 'globals';
-
+@use '@/styles/variables' as v;
 html,
 body {
   width: 100%;
@@ -10,6 +10,7 @@ body {
 }
 
 body {
+  color: v.$color-black;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
