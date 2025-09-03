@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@/styles/index.scss';
-
+import { ToastContainer } from 'react-toastify';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing';
@@ -38,6 +38,18 @@ export default async function RootLayout({
           <Header />
           {children}
           <Footer />
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </body>
       </NextIntlClientProvider>
     </html>
