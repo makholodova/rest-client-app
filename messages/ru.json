@@ -32,5 +32,10 @@
     "denis": "Denis Yakovchik",
     "marina": "Marina Kholodova"
   },
-  "Developers": {}
+  "Developers": {},
+  "404": {
+    "title": "404 | Не Найдено",
+    "description": "Не удалось найти запрошенный ресурс",
+    "button": "Вернуться на главную"
+  }
 }

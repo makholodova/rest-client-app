@@ -32,5 +32,10 @@
     "denis": "Denis Yakovchik",
     "marina": "Marina Kholodova"
   },
-  "Developers": {}
+  "Developers": {},
+  "404": {
+    "title": "404 | Not Found",
+    "description": "Could not find requested resource",
+    "button": "Return Home"
+  }
 }
