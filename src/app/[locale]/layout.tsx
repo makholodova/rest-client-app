@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: 'REST Client',
   description:
     'Rest Client API helps developers test and send HTTP requests, analyze responses, and streamline API development',
+  icons: {
+    icon: '/logo.svg',
+  },
 };
 
 export default async function RootLayout({
