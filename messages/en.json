@@ -11,7 +11,6 @@
     "dy": "Denis Yakovchik",
     "mk": "Marina Kholodova"
   },
-  "Toasts": {}
   "Toasts": {},
   "HomePage": {},
   "GuestGreeting": {
@@ -25,4 +24,10 @@
     "title": "Hello",
     "text": "Glad to see you again. You can continue working with the API right now"
   },
+  "Teams": {
+    "aliaksandra": "Aliaksandra Palkhouskaya",
+    "denis": "Denis Yakovchik",
+    "marina": "Marina Kholodova"
+  },
+  "Developers": {}
 }
