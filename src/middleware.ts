@@ -41,9 +41,9 @@ function applyAuthLogic(request: NextRequest): NextResponse | null {
 
 export const config = {
   matcher: [
-    ROUTES.HISTORY,
-    ROUTES.SIGN_IN,
-    ROUTES.SIGN_UP,
+    '/history',
+    '/signin',
+    '/signup',
     '/((?!api|trpc|_next|_vercel|.*\\..*).*)',
   ],
 };
