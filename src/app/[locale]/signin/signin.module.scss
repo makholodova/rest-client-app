@@ -40,16 +40,27 @@
   border-radius: 8px;
   font-size: 1rem;
   color: v.$color-shade-2;
+  transition: background-color 0.2s;
+  transition: border-color 0.2s;
 
+  &:hover {
+    background-color: v.$color-tint-5;
+    transition: background-color 0.2s;
+  }
   &:focus {
     outline: none;
     border-color: v.$color-shade-2;
+    transition: border-color 0.2s;
+    background-color: v.$color-tint-5;
+    transition: background-color 0.2s;
   }
 }
 
 .error {
   color: v.$color-error;
   align-self: flex-start;
+  font-size: 14px;
+  min-height: 16px;
 }
 
 .submitBtn {
@@ -66,6 +77,12 @@
 
   &:hover {
     background-color: v.$color-shade-2;
+  }
+}
+.submitBtnDsbl {
+  cursor: not-allowed;
+  &:hover {
+    background-color: v.$color-silver;
   }
 }
 .linkWrapper {

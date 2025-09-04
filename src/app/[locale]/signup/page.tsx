@@ -17,7 +17,7 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignUpForm>({
     resolver: zodResolver(signUpSchema),
   });
@@ -40,33 +40,32 @@ export default function SignUpPage() {
           placeholder="Name"
           {...register('name')}
         />
-        {errors.name && <p className={styles.error}>{errors.name.message}</p>}
+        <p className={styles.error}>{errors.name?.message || ''}</p>
         <input
           type="email"
           className={styles.input}
           placeholder="E-mail Address"
           {...register('email')}
         />
-        {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+        <p className={styles.error}>{errors.email?.message || ''}</p>{' '}
         <input
           type="password"
           className={styles.input}
           placeholder="Password"
           {...register('password')}
         />
-        {errors.password && (
-          <p className={styles.error}>{errors.password.message}</p>
-        )}
+        <p className={styles.error}>{errors.password?.message || ''}</p>
         <input
           type="password"
           className={styles.input}
           placeholder="Confirm Password"
           {...register('confirmPassword')}
         />
-        {errors.confirmPassword && (
-          <p className={styles.error}>{errors.confirmPassword.message}</p>
-        )}
-        <button className={styles.submitBtn} type="submit">
+        <p className={styles.error}>{errors.confirmPassword?.message || ''}</p>
+        <button
+          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnDsbl : ''}`}
+          type="submit"
+        >
           Sign Up
         </button>{' '}
       </form>

@@ -16,7 +16,7 @@ export default function SignInPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
   });
@@ -42,17 +42,19 @@ export default function SignInPage() {
           placeholder="E-mail Address"
           {...register('email')}
         />{' '}
-        {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+        <p className={styles.error}>{errors.email?.message || ''}</p>
         <input
           type="password"
           className={styles.input}
           placeholder="Password"
           {...register('password')}
         />{' '}
-        {errors.password && (
-          <p className={styles.error}>{errors.password.message}</p>
-        )}
-        <button className={styles.submitBtn} type="submit">
+        <p className={styles.error}>{errors.password?.message || ''}</p>
+        <button
+          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnDsbl : ''}`}
+          type="submit"
+          disabled={isSubmitting}
+        >
           Sign In
         </button>
       </form>
