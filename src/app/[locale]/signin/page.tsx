@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../../constants/routes';
 import Link from 'next/link';
+import styles from './signin.module.scss';
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
@@ -24,32 +25,30 @@ export default function SignInPage() {
   };
 
   return (
-    <div className="login">
-      <div className="login_container">
+    <div className={styles.wrapper}>
+      <div className={styles.container}>
         <input
           type="text"
-          className="login_textBox"
+          className={styles.input}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
         />
         <input
           type="password"
-          className="login_textBox"
+          className={styles.input}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
         />
-        <button className="login_btn" onClick={handleSignIn}>
+        <button className={styles.submitBtn} onClick={handleSignIn}>
           Sign In
         </button>
       </div>
-      <div>
-        <p className="login_signup-text">
-          <Link href={ROUTES.SIGN_UP} className="login_link">
-            Sign Up
-          </Link>
-        </p>
+      <div className={styles.linkWrapper}>
+        <Link href={ROUTES.SIGN_UP} className={styles.loginLink}>
+          Sign Up
+        </Link>
       </div>
     </div>
   );

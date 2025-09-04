@@ -1,21 +1,28 @@
 ﻿'use client';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { auth, registerWithEmailAndPassword } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../../constants/routes';
 import Link from 'next/link';
+import { signUpSchema, type SignUpForm } from '../../../utils/validation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import styles from '../signin/signin.module.scss';
 
 export default function SignUpPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
 
-  const register = () => {
-    if (!name) alert('Please enter name');
-    registerWithEmailAndPassword(name, email, password);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignUpForm>({
+    resolver: zodResolver(signUpSchema),
+  });
+  const onSubmit = async (data: SignUpForm) => {
+    await registerWithEmailAndPassword(data.name, data.email, data.password);
   };
 
   useEffect(() => {
@@ -24,39 +31,48 @@ export default function SignUpPage() {
   }, [user, loading, router]);
 
   return (
-    <div className="register">
-      <div className="register_container">
+    <div className={styles.wrapper}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
         <input
           type="text"
-          className="register_textBox"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          className={styles.input}
           placeholder="Full Name"
-        />{' '}
+          {...register('name')}
+        />
+        {errors.name && <p className={styles.error}>{errors.name.message}</p>}
         <input
           type="text"
-          className="register_textBox"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          className={styles.input}
           placeholder="E-mail Address"
+          {...register('email')}
         />
+        {errors.email && <p className={styles.error}>{errors.email.message}</p>}
         <input
           type="password"
-          className="register_textBox"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          className={styles.input}
           placeholder="Password"
+          {...register('password')}
         />
-        <button className="register_btn" onClick={register}>
+        {errors.password && (
+          <p className={styles.error}>{errors.password.message}</p>
+        )}
+        <input
+          type="password"
+          className={styles.input}
+          placeholder="Confirm Password"
+          {...register('confirmPassword')}
+        />
+        {errors.confirmPassword && (
+          <p className={styles.error}>{errors.confirmPassword.message}</p>
+        )}
+        <button className={styles.submitBtn} type="submit">
           Sign Up
-        </button>
-      </div>
-      <div>
-        <p className="register__signup-text">
-          <Link href={ROUTES.SIGN_IN} className="register_link">
-            Sign In
-          </Link>
-        </p>
+        </button>{' '}
+      </form>
+      <div className={styles.linkWrapper}>
+        <Link href={ROUTES.SIGN_IN} className={styles.registerLink}>
+          Sign In
+        </Link>
       </div>
     </div>
   );

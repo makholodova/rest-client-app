@@ -1,0 +1,75 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
+.wrapper {
+  position: sticky;
+  top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: v.$color-silver;
+}
+
+.container {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: v.$color-white;
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid v.$color-primary;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: v.$color-shade-2;
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-shade-2;
+  }
+}
+
+.error {
+  color: v.$color-error;
+  align-self: flex-start;
+}
+
+.submitBtn {
+  background-color: v.$color-primary;
+  color: v.$color-white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 111%;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: v.$color-shade-2;
+  }
+}
+.linkWrapper {
+  margin-top: 1rem;
+  background-color: v.$color-tint-5;
+  color: v.$color-primary;
+  text-align: center;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 111%;
+  transition: background-color 0.2s;
+  &:hover {
+    background: v.$color-tint-4;
+  }
+}
