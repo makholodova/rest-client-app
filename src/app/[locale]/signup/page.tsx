@@ -9,10 +9,12 @@ import { signUpSchema, type SignUpForm } from '../../../utils/validation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styles from '../signin/signin.module.scss';
+import { useTranslations } from 'next-intl';
 
 export default function SignUpPage() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
+  const t = useTranslations('SignUp');
 
   const {
     register,
@@ -38,11 +40,11 @@ export default function SignUpPage() {
         onSubmit={handleSubmit(onSubmit)}
         className={`${styles.formContainer} ${isSubmitting ? styles.formContainerDisabled : ''}`}
       >
-        <h3 className={styles.title}>Registration</h3>
+        <h3 className={styles.title}>{t('title')}</h3>
         <input
           type="text"
           className={styles.input}
-          placeholder="Name"
+          placeholder={t('name')}
           disabled={isSubmitting}
           {...register('name')}
         />
@@ -50,7 +52,7 @@ export default function SignUpPage() {
         <input
           type="email"
           className={styles.input}
-          placeholder="E-mail Address"
+          placeholder={t('email')}
           disabled={isSubmitting}
           {...register('email')}
         />
@@ -58,7 +60,7 @@ export default function SignUpPage() {
         <input
           type="password"
           className={styles.input}
-          placeholder="Password"
+          placeholder={t('password')}
           disabled={isSubmitting}
           {...register('password')}
         />
@@ -66,7 +68,7 @@ export default function SignUpPage() {
         <input
           type="password"
           className={styles.input}
-          placeholder="Confirm Password"
+          placeholder={t('passwordConfirm')}
           disabled={isSubmitting}
           {...register('confirmPassword')}
         />
@@ -75,15 +77,15 @@ export default function SignUpPage() {
           className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnDsbl : ''}`}
           type="submit"
         >
-          Sign Up
+          {t('submitBtn')}{' '}
         </button>{' '}
       </form>
       <div>
         <p className={styles.linkWrapper}>
           {' '}
-          Already have an account?{' '}
+          {t('linkWrapper')}{' '}
           <Link href={ROUTES.SIGN_IN} className={styles.registerLink}>
-            Sign In{' '}
+            {t('signInLink')}{' '}
           </Link>
         </p>
       </div>

@@ -4,8 +4,24 @@
     "sign-up": "Sign Up",
     "sign-in": "Sign In"
   },
-  "SignUp": {},
-  "SignIn": {},
+  "SignUp": {
+    "title": "Sign Up",
+    "name": "Name",
+    "email": " E-mail Address",
+    "password": "Password",
+    "passwordConfirm": "Confirm Password",
+    "submitBtn": "Sign Up",
+    "linkWrapper": "Do you have an account? ",
+    "signInLink": "Sign in"
+  },
+  "SignIn": {
+    "title": "Sign in",
+    "email": " E-mail Address",
+    "password": "Password",
+    "submitBtn": "Sign in",
+    "linkWrapper": "Do not have an account? ",
+    "registrationLink": "Sign in"
+  },
   "Footer": {
     "ap": "Aliaksandra Palkhouskaya",
     "dy": "Denis Yakovchik",

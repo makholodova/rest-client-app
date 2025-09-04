@@ -10,10 +10,12 @@ import { signInSchema, type SignInForm } from '../../../utils/validation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
+import { useTranslations } from 'next-intl';
 
 export default function SignInPage() {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
+  const t = useTranslations('SignIn');
   const {
     register,
     handleSubmit,
@@ -41,11 +43,11 @@ export default function SignInPage() {
         onSubmit={handleSubmit(handleSignIn)}
         className={`${styles.formContainer} ${isSubmitting ? styles.formContainerDisabled : ''}`}
       >
-        <h3 className={styles.title}>Sign in</h3>
+        <h3 className={styles.title}>{t('title')}</h3>
         <input
           type="email"
           className={styles.input}
-          placeholder="E-mail Address"
+          placeholder={t('email')}
           disabled={isSubmitting}
           {...register('email')}
         />{' '}
@@ -53,7 +55,7 @@ export default function SignInPage() {
         <input
           type="password"
           className={styles.input}
-          placeholder="Password"
+          placeholder={t('password')}
           disabled={isSubmitting}
           {...register('password')}
         />{' '}
@@ -63,14 +65,14 @@ export default function SignInPage() {
           type="submit"
           disabled={isSubmitting}
         >
-          Sign In
+          {t('submitBtn')}{' '}
         </button>{' '}
       </form>
       <div>
         <p className={styles.linkWrapper}>
-          Do not have an account?{' '}
+          {t('linkWrapper')}{' '}
           <Link href={ROUTES.SIGN_UP} className={styles.loginLink}>
-            Sign Up
+            {t('registrationLink')}{' '}
           </Link>
         </p>
       </div>
