@@ -28,7 +28,7 @@ export default function SignInPage() {
     if (loading) return;
     if (user) router.push(ROUTES.HOME);
     if (error)
-      toast.error('Please, try later or sign in in case you are a new user.');
+      toast.error('Please, try later or sign up - in case you are a new user.');
   }, [user, loading, router, error]);
 
   const handleSignIn = async (data: SignInForm) => {
