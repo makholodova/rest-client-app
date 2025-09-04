@@ -15,7 +15,7 @@ export const signUpSchema = z
       .email('Invalid email address'),
     password: z
       .string()
-      .min(6, { message: 'Password is required, at least 6 characters' })
+      .min(12, { message: 'Password is required, at least 12 characters' })
       .regex(/[a-z]/, {
         message: 'Password should contain at least one lowercase',
       })
@@ -28,7 +28,7 @@ export const signUpSchema = z
       .regex(/[^A-Za-z0-9]/, {
         message: 'Password should contain at least one special char',
       }),
-    confirmPassword: z.string().min(6, 'Confirm your password'),
+    confirmPassword: z.string().min(12, 'Confirm your password'),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Passwords must match',
