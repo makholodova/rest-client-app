@@ -8,7 +8,6 @@ export default function HomeContent() {
   return (
     <section className={styles.wrapper}>
       <div className={styles.project}>
-        <h2 className={styles.title}>{t('projectTitle')}</h2>
         <p className={styles.description}>{t('projectText')}</p>
       </div>
 
