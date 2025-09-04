@@ -33,15 +33,16 @@ export default function SignUpPage() {
   return (
     <div className={styles.wrapper}>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+        <h3 className={styles.title}>Registration</h3>
         <input
           type="text"
           className={styles.input}
-          placeholder="Full Name"
+          placeholder="Name"
           {...register('name')}
         />
         {errors.name && <p className={styles.error}>{errors.name.message}</p>}
         <input
-          type="text"
+          type="email"
           className={styles.input}
           placeholder="E-mail Address"
           {...register('email')}
@@ -69,10 +70,14 @@ export default function SignUpPage() {
           Sign Up
         </button>{' '}
       </form>
-      <div className={styles.linkWrapper}>
-        <Link href={ROUTES.SIGN_IN} className={styles.registerLink}>
-          Sign In
-        </Link>
+      <div>
+        <p className={styles.linkWrapper}>
+          {' '}
+          Already have an account?{' '}
+          <Link href={ROUTES.SIGN_IN} className={styles.registerLink}>
+            Sign In{' '}
+          </Link>
+        </p>
       </div>
     </div>
   );

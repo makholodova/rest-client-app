@@ -2,8 +2,17 @@ import { z } from 'zod';
 
 export const signUpSchema = z
   .object({
-    name: z.string().min(1, 'Name is required'),
-    email: z.email('Invalid email address'),
+    name: z
+      .string()
+      .min(1, 'Name is required')
+      .regex(
+        /^[A-Za-zА-Яа-яЁё\s.'-]+$/,
+        'Name should contain only letters, you can add your full name or short'
+      ),
+    email: z
+      .string()
+      .min(1, 'Email is required')
+      .email('Invalid email address'),
     password: z
       .string()
       .min(6, { message: 'Password is required, at least 6 characters' })
@@ -27,3 +36,9 @@ export const signUpSchema = z
   });
 
 export type SignUpForm = z.infer<typeof signUpSchema>;
+
+export const signInSchema = signUpSchema.pick({
+  email: true,
+  password: true,
+});
+export type SignInForm = z.infer<typeof signInSchema>;

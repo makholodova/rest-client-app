@@ -1,17 +1,25 @@
 ﻿'use client';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { auth, logInWithEmailAndPassword } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../../constants/routes';
 import Link from 'next/link';
 import styles from './signin.module.scss';
+import { signInSchema, type SignInForm } from '../../../utils/validation';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 export default function SignInPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignInForm>({
+    resolver: zodResolver(signInSchema),
+  });
 
   useEffect(() => {
     if (loading) return;
@@ -20,35 +28,41 @@ export default function SignInPage() {
       alert('Please, try later or sign in in case you are a new user.');
   }, [user, loading, router, error]);
 
-  const handleSignIn = async () => {
-    await logInWithEmailAndPassword(email, password);
+  const handleSignIn = async (data: SignInForm) => {
+    await logInWithEmailAndPassword(data.email, data.password);
   };
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.container}>
+      <form onSubmit={handleSubmit(handleSignIn)} className={styles.container}>
+        <h3 className={styles.title}>Sign in</h3>
         <input
-          type="text"
+          type="email"
           className={styles.input}
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           placeholder="E-mail Address"
-        />
+          {...register('email')}
+        />{' '}
+        {errors.email && <p className={styles.error}>{errors.email.message}</p>}
         <input
           type="password"
           className={styles.input}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
           placeholder="Password"
-        />
-        <button className={styles.submitBtn} onClick={handleSignIn}>
+          {...register('password')}
+        />{' '}
+        {errors.password && (
+          <p className={styles.error}>{errors.password.message}</p>
+        )}
+        <button className={styles.submitBtn} type="submit">
           Sign In
         </button>
-      </div>
-      <div className={styles.linkWrapper}>
-        <Link href={ROUTES.SIGN_UP} className={styles.loginLink}>
-          Sign Up
-        </Link>
+      </form>
+      <div>
+        <p className={styles.linkWrapper}>
+          Do not have an account?{' '}
+          <Link href={ROUTES.SIGN_UP} className={styles.loginLink}>
+            Sign Up
+          </Link>
+        </p>
       </div>
     </div>
   );
