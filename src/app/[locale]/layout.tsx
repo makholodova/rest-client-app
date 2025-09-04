@@ -7,6 +7,7 @@ import { routing } from '@/i18n/routing';
 import Footer from '@/components/layout/footer/footer';
 import Header from '@/components/layout/header/header';
 import { getMessages } from 'next-intl/server';
+import { ErrorBoundary } from '@/components/layout/error-boundary/error-boundary';
 
 export const metadata: Metadata = {
   title: 'REST Client',
@@ -36,7 +37,7 @@ export default async function RootLayout({
       <NextIntlClientProvider locale={locale} messages={messages}>
         <body>
           <Header />
-          {children}
+          <ErrorBoundary locale={locale}>{children}</ErrorBoundary>
           <Footer />
           <ToastContainer
             position="top-right"
