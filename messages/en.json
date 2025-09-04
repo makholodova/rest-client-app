@@ -28,9 +28,32 @@
     "variables": "Variables"
   },
   "Teams": {
-    "aliaksandra": "Aliaksandra Palkhouskaya",
-    "denis": "Denis Yakovchik",
-    "marina": "Marina Kholodova"
-  },
-  "Developers": {}
+    "marina": {
+      "name": "Marina Kholodova",
+      "role": "Team Lead & Frontend Developer",
+      "bio": "I'm Marina, a frontend developer. I'm inspired by mountains and snowboarding — that's how I recharge. I got into development because I was interested in web technologies, which turned into a passion for creating user-friendly and modern interfaces. I like making interfaces that are easy to understand and fun to use.",
+      "contributions": {
+        "1": "Implemented Header and Footer",
+        "2": "Added support for 2 languages."
+      }
+    },
+    "aliaksandra": {
+      "name": "Aliaksandra Palkhouskaya",
+      "role": "Frontend Developer",
+      "bio": "I started my journey in IT with HTML and CSS, and then I realized that I wanted more, so JavaScript, then React completely took over my mind. My goal - is to create convenient, modern and productive web applications that solve real user problems. I like: coding learning new technologies and applying them in practice, have the results of my work in real projects.",
+      "contributions": {
+        "1": "Set up Firebase",
+        "2": "Implemented authentication"
+      }
+    },
+    "denis": {
+      "name": "Denis Yakovchik",
+      "role": "Frontend Developer",
+      "bio": "I'm Denis, a front-end developer. My journey into development began during my university studies, where I initially learned to develop desktop applications. Over time, I realized that web technologies were much more interesting to me, after which I took my first steps in front-end development. In my free time, I enjoy walking and playing board games. I strive to further improve my skills and create products that are useful to people.",
+      "contributions": {
+        "1": "Set up project's environment",
+        "2": "Configured i18n"
+      }
+    }
+  }
 }
