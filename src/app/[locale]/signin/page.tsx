@@ -9,6 +9,7 @@ import styles from './signin.module.scss';
 import { signInSchema, type SignInForm } from '../../../utils/validation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
 
 export default function SignInPage() {
   const [user, loading, error] = useAuthState(auth);
@@ -19,13 +20,15 @@ export default function SignInPage() {
     formState: { errors, isSubmitting },
   } = useForm<SignInForm>({
     resolver: zodResolver(signInSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
   });
 
   useEffect(() => {
     if (loading) return;
     if (user) router.push(ROUTES.HOME);
     if (error)
-      alert('Please, try later or sign in in case you are a new user.');
+      toast.error('Please, try later or sign in in case you are a new user.');
   }, [user, loading, router, error]);
 
   const handleSignIn = async (data: SignInForm) => {

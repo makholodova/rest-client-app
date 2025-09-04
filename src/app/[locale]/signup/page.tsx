@@ -20,6 +20,8 @@ export default function SignUpPage() {
     formState: { errors, isSubmitting },
   } = useForm<SignUpForm>({
     resolver: zodResolver(signUpSchema),
+    mode: 'onBlur',
+    reValidateMode: 'onChange',
   });
   const onSubmit = async (data: SignUpForm) => {
     await registerWithEmailAndPassword(data.name, data.email, data.password);
