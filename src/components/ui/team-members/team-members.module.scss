@@ -1,6 +1,13 @@
-﻿.list {
+﻿@use '@/styles/mixins' as m;
+
+.list {
+  width: 100%;
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
+
+  @include m.tablet {
+    justify-content: center;
+  }
 }
