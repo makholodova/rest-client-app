@@ -64,3 +64,20 @@
     }
   }
 }
+
+.signOut {
+  color: v.$color-primary;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 111%;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: v.$color-tint-5;
+    }
+  }
+}
