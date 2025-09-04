@@ -34,12 +34,16 @@ export default function SignInPage() {
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit(handleSignIn)} className={styles.container}>
+      <form
+        onSubmit={handleSubmit(handleSignIn)}
+        className={`${styles.formContainer} ${isSubmitting ? styles.formContainerDisabled : ''}`}
+      >
         <h3 className={styles.title}>Sign in</h3>
         <input
           type="email"
           className={styles.input}
           placeholder="E-mail Address"
+          disabled={isSubmitting}
           {...register('email')}
         />{' '}
         <p className={styles.error}>{errors.email?.message || ''}</p>
@@ -47,6 +51,7 @@ export default function SignInPage() {
           type="password"
           className={styles.input}
           placeholder="Password"
+          disabled={isSubmitting}
           {...register('password')}
         />{' '}
         <p className={styles.error}>{errors.password?.message || ''}</p>
@@ -56,7 +61,7 @@ export default function SignInPage() {
           disabled={isSubmitting}
         >
           Sign In
-        </button>
+        </button>{' '}
       </form>
       <div>
         <p className={styles.linkWrapper}>

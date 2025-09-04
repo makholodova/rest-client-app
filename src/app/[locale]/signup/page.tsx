@@ -32,12 +32,16 @@ export default function SignUpPage() {
 
   return (
     <div className={styles.wrapper}>
-      <form onSubmit={handleSubmit(onSubmit)} className={styles.container}>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className={`${styles.formContainer} ${isSubmitting ? styles.formContainerDisabled : ''}`}
+      >
         <h3 className={styles.title}>Registration</h3>
         <input
           type="text"
           className={styles.input}
           placeholder="Name"
+          disabled={isSubmitting}
           {...register('name')}
         />
         <p className={styles.error}>{errors.name?.message || ''}</p>
@@ -45,6 +49,7 @@ export default function SignUpPage() {
           type="email"
           className={styles.input}
           placeholder="E-mail Address"
+          disabled={isSubmitting}
           {...register('email')}
         />
         <p className={styles.error}>{errors.email?.message || ''}</p>{' '}
@@ -52,6 +57,7 @@ export default function SignUpPage() {
           type="password"
           className={styles.input}
           placeholder="Password"
+          disabled={isSubmitting}
           {...register('password')}
         />
         <p className={styles.error}>{errors.password?.message || ''}</p>
@@ -59,6 +65,7 @@ export default function SignUpPage() {
           type="password"
           className={styles.input}
           placeholder="Confirm Password"
+          disabled={isSubmitting}
           {...register('confirmPassword')}
         />
         <p className={styles.error}>{errors.confirmPassword?.message || ''}</p>
