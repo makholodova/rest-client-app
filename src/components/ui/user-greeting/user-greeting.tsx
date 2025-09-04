@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ROUTES } from '@/constants/routes';
 
 type UserGreetingProp = {
-  name?: string;
+  name?: string | null;
 };
 
 export default function UserGreeting({ name }: UserGreetingProp) {
