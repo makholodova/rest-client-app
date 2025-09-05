@@ -1,11 +1,11 @@
 ﻿import styles from './footer.module.scss';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
 import { FOOTER_INFO, DEVELOPERS } from '@/constants/footer';
+import { getTranslations } from 'next-intl/server';
 
-export default function Footer() {
-  const t = useTranslations('Footer');
+export default async function Footer() {
+  const t = await getTranslations('Footer');
 
   return (
     <footer className={styles.footer}>
