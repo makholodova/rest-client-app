@@ -33,6 +33,11 @@
     "variables": "Variables"
   },
   "Teams": {
+  "404": {
+    "title": "404 | Not Found",
+    "description": "Could not find requested resource",
+    "button": "Return Home"
+  },
     "marina": {
       "name": "Marina Kholodova",
       "role": "Team Lead & Frontend Developer",
