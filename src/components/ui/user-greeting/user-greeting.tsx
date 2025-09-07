@@ -31,7 +31,6 @@ export default function UserGreeting({ name }: UserGreetingProp) {
           variant={'secondary'}
           href={ROUTES.HISTORY}
         >
-          {' '}
           {t('history')}
         </ButtonLink>
         <ButtonLink
@@ -39,7 +38,6 @@ export default function UserGreeting({ name }: UserGreetingProp) {
           variant={'secondary'}
           href={ROUTES.VARIABLES}
         >
-          {' '}
           {t('variables')}
         </ButtonLink>
       </div>
