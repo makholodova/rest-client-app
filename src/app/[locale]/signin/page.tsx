@@ -16,12 +16,15 @@ export default function SignInPage() {
   const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('SignIn');
+  const tV = useTranslations('Validation');
+  const schema = signInSchema(tV);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<SignInForm>({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(schema),
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
@@ -29,9 +32,8 @@ export default function SignInPage() {
   useEffect(() => {
     if (loading) return;
     if (user) router.push(ROUTES.HOME);
-    if (error)
-      toast.error('Please, try later or sign up - in case you are a new user.');
-  }, [user, loading, router, error]);
+    if (error) toast.error(t('useEffectErrorMessage'));
+  }, [user, loading, router, error, t]);
 
   const handleSignIn = async (data: SignInForm) => {
     await logInWithEmailAndPassword(data.email, data.password);

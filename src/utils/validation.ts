@@ -1,44 +1,37 @@
 import { z } from 'zod';
 
-export const signUpSchema = z
-  .object({
-    name: z
-      .string()
-      .min(1, 'Name is required')
-      .regex(
-        /^[A-Za-zА-Яа-яЁё\s.'-]+$/,
-        'Name should contain only letters, you can add your full name or short'
-      ),
-    email: z
-      .string()
-      .min(1, 'Email is required')
-      .email('Invalid email address'),
-    password: z
-      .string()
-      .min(12, { message: 'Password is required, at least 12 characters' })
-      .regex(/[a-z]/, {
-        message: 'Password should contain at least one lowercase',
-      })
-      .regex(/[A-Z]/, {
-        message: 'Password should contain at least one uppercase',
-      })
-      .regex(/[0-9]/, {
-        message: 'Password should contain at least one digit',
-      })
-      .regex(/[^A-Za-z0-9]/, {
-        message: 'Password should contain at least one special char',
-      }),
-    confirmPassword: z.string().min(12, 'Confirm your password'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords must match',
-    path: ['confirmPassword'],
+export const signUpSchema = (tV: (key: string) => string) =>
+  z
+    .object({
+      name: z
+        .string()
+        .min(1, { message: tV('name.required') })
+        .regex(/^[A-Za-zА-Яа-яЁё\s.'-]+$/, { message: tV('name.regex') }),
+      email: z
+        .string()
+        .min(1, { message: tV('email.required') })
+        .email({ message: tV('email.invalid') }),
+      password: z
+        .string()
+        .min(12, { message: tV('password.min') })
+        .regex(/[a-z]/, { message: tV('password.lowercase') })
+        .regex(/[A-Z]/, { message: tV('password.uppercase') })
+        .regex(/[0-9]/, { message: tV('password.digit') })
+        .regex(/[^A-Za-z0-9]/, { message: tV('password.special') }),
+      confirmPassword: z
+        .string()
+        .min(12, { message: tV('confirmPassword.required') }),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: tV('confirmPassword.match'),
+      path: ['confirmPassword'],
+    });
+
+export type SignUpForm = z.infer<ReturnType<typeof signUpSchema>>;
+
+export const signInSchema = (tV: (key: string) => string) =>
+  signUpSchema(tV).pick({
+    email: true,
+    password: true,
   });
-
-export type SignUpForm = z.infer<typeof signUpSchema>;
-
-export const signInSchema = signUpSchema.pick({
-  email: true,
-  password: true,
-});
-export type SignInForm = z.infer<typeof signInSchema>;
+export type SignInForm = z.infer<ReturnType<typeof signInSchema>>;

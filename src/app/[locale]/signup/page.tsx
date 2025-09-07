@@ -15,13 +15,15 @@ export default function SignUpPage() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('SignUp');
+  const tV = useTranslations('Validation');
+  const schema = signUpSchema(tV);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<SignUpForm>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(schema),
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
