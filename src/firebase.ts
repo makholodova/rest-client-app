@@ -9,8 +9,8 @@ import {
 } from 'firebase/auth';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+import { FirebaseError } from 'firebase/app';
 
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: 'AIzaSyBO_yryYqJQVYRsV4gD0NZ8Ulplxw96Kz8',
   authDomain: 'rest-client-app-cfaa5.firebaseapp.com',
@@ -28,7 +28,11 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    toast.error(err.message);
+    if (err instanceof FirebaseError) {
+      toast.error(err.message);
+    } else {
+      toast.error('Unexpected error');
+    }
   }
 };
 
@@ -48,7 +52,11 @@ const registerWithEmailAndPassword = async (
       email,
     });
   } catch (err) {
-    toast.error(err.message);
+    if (err instanceof FirebaseError) {
+      toast.error(err.message);
+    } else {
+      toast.error('Unexpected error');
+    }
   }
 };
 
@@ -57,7 +65,11 @@ const sendPasswordReset = async (email: string) => {
     await sendPasswordResetEmail(auth, email);
     toast.success('Password reset link sent!');
   } catch (err) {
-    toast.error(err.message);
+    if (err instanceof FirebaseError) {
+      toast.error(err.message);
+    } else {
+      toast.error('Unexpected error');
+    }
   }
 };
 
