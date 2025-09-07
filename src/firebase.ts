@@ -8,6 +8,7 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { toast } from 'react-toastify';
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -27,8 +28,7 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (err) {
-    console.error(err);
-    alert(err.message);
+    toast.error(err.message);
   }
 };
 
@@ -48,18 +48,16 @@ const registerWithEmailAndPassword = async (
       email,
     });
   } catch (err) {
-    console.error(err);
-    alert(err.message);
+    toast.error(err.message);
   }
 };
 
 const sendPasswordReset = async (email: string) => {
   try {
     await sendPasswordResetEmail(auth, email);
-    alert('Password reset link sent!');
+    toast.success('Password reset link sent!');
   } catch (err) {
-    console.error(err);
-    alert(err.message);
+    toast.error(err.message);
   }
 };
 
