@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import styles from './header.module.scss';
 import Logo from '@/components/ui/logo/logo';

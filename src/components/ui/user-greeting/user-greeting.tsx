@@ -5,7 +5,7 @@ import { ROUTES } from '@/constants/routes';
 import ButtonLink from '@/components/ui/button-link/button-link';
 
 type UserGreetingProp = {
-  name?: string;
+  name?: string | null;
 };
 
 export default function UserGreeting({ name }: UserGreetingProp) {

@@ -4,8 +4,25 @@
     "sign-up": "Sign Up",
     "sign-in": "Sign In"
   },
-  "SignUp": {},
-  "SignIn": {},
+  "SignUp": {
+    "title": "Sign Up",
+    "name": "Name",
+    "email": " E-mail Address",
+    "password": "Password",
+    "passwordConfirm": "Confirm Password",
+    "submitBtn": "Sign Up",
+    "linkWrapper": "Do you have an account? ",
+    "signInLink": "Sign in"
+  },
+  "SignIn": {
+    "title": "Sign in",
+    "email": " E-mail Address",
+    "password": "Password",
+    "submitBtn": "Sign in",
+    "linkWrapper": "Do not have an account? ",
+    "registrationLink": "Sign in",
+    "useEffectErrorMessage": "Please, try later or sign up - in case you are a new user."
+  },
   "Footer": {
     "ap": "Aliaksandra Palkhouskaya",
     "dy": "Denis Yakovchik",
@@ -64,6 +81,27 @@
         "1": "Set up project's environment",
         "2": "Configured i18n"
       }
+    }
+  },
+  "Validation": {
+    "name": {
+      "required": "Name is required",
+      "regex": "Name should contain only letters, you can add your full name or short"
+    },
+    "email": {
+      "required": "Email is required",
+      "invalid": "Invalid email address"
+    },
+    "password": {
+      "min": "Password is required, at least 12 characters",
+      "lowercase": "Password should contain at least one lowercase",
+      "uppercase": "Password should contain at least one uppercase",
+      "digit": "Password should contain at least one digit",
+      "special": "Password should contain at least one special char"
+    },
+    "confirmPassword": {
+      "required": "Confirm your password",
+      "match": "Passwords must match"
     }
   }
 }
