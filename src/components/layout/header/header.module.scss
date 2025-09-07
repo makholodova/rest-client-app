@@ -35,34 +35,8 @@
 }
 
 .navLink {
-  font-weight: 400;
   font-size: 18px;
   line-height: 111%;
-  text-align: center;
-  border-radius: 4px;
-  padding: 8px 16px;
-  transition: background-color 0.2s ease;
-}
-
-.signUp {
-  color: v.$color-white;
-  background: v.$color-primary;
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      background: v.$color-shade-2;
-    }
-  }
-}
-
-.signIn {
-  color: v.$color-primary;
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      background: v.$color-tint-5;
-    }
-  }
 }
 
 .signOut {

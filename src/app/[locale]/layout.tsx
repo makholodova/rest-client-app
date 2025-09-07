@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import '@/styles/index.scss';
-import { ToastContainer } from 'react-toastify';
 import { notFound } from 'next/navigation';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { routing } from '@/i18n/routing';
@@ -8,6 +7,7 @@ import Footer from '@/components/layout/footer/footer';
 import Header from '@/components/layout/header/header';
 import { getMessages } from 'next-intl/server';
 import { ErrorBoundary } from '@/components/layout/error-boundary/error-boundary';
+import ToastProvider from '@/components/providers/toast-provider';
 
 export const metadata: Metadata = {
   title: 'REST Client',
@@ -34,25 +34,14 @@ export default async function RootLayout({
 
   return (
     <html lang={locale}>
-      <NextIntlClientProvider locale={locale} messages={messages}>
-        <body>
+      <body>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
           <ErrorBoundary locale={locale}>{children}</ErrorBoundary>
           <Footer />
-          <ToastContainer
-            position="top-right"
-            autoClose={3000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="light"
-          />
-        </body>
-      </NextIntlClientProvider>
+          <ToastProvider />
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
