@@ -13,17 +13,8 @@ h6,
 p {
   margin: 0;
 }
-.pageHome {
-  width: 100%;
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-
-  align-items: center;
-  padding: 35px 15px 65px 15px;
-}
 .container {
+  width: 100%;
   max-width: v.$laptop;
   margin: 0 auto;
 }

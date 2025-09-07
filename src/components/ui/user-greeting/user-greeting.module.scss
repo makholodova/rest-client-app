@@ -19,24 +19,3 @@
   gap: 1.5rem;
   justify-content: center;
 }
-.link {
-  color: v.$color-primary;
-  text-align: center;
-  border-radius: 4px;
-  padding: 8px 16px;
-  scale: 1;
-  background: v.$color-silver;
-
-  transition:
-    background-color 0.2s ease,
-    color 0.2s ease,
-    scale 0.2s ease;
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      /*color: v.$color-shade-2;*/
-      background: v.$color-tint-5;
-      scale: 1.1;
-    }
-  }
-}

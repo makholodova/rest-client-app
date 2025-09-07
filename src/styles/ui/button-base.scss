@@ -1,0 +1,50 @@
+﻿@use '../../styles/variables' as v;
+
+.button {
+  border: none;
+  color: inherit;
+  text-align: center;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background: transparent;
+  scale: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    scale 0.2s ease;
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.primary {
+  background: v.$color-primary;
+  color: v.$color-white;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: v.$color-shade-2;
+    }
+  }
+}
+
+.secondary {
+  background: v.$color-silver;
+  color: v.$color-primary;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: v.$color-tint-5;
+    }
+  }
+}
+
+.scaleOnHover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      scale: 1.1;
+    }
+  }
+}

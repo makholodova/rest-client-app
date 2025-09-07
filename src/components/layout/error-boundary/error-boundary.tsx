@@ -1,6 +1,9 @@
 'use client';
 
 import React from 'react';
+import styles from './error-boundary.module.scss';
+import Button from '@/components/ui/button/button';
+import Page from '@/components/layout/page/page';
 
 type ErrorBoundaryProps = {
   children: React.ReactNode;
@@ -40,11 +43,15 @@ export class ErrorBoundary extends React.Component<
           : { title: 'Error', retry: 'Try again' };
 
       return (
-        <div className="container">
-          <h2>{t.title}</h2>
-          <p>{error?.message ?? 'Что-то пошло не так'}</p>
-          <button onClick={this.reset}>{t.retry}</button>
-        </div>
+        <Page centered>
+          <div className={styles.wrapper}>
+            <h2 className={styles.title}>{t.title}</h2>
+            <p className={styles.text}>
+              {error?.message ?? 'Что-то пошло не так'}
+            </p>
+            <Button onClick={this.reset}>{t.retry}</Button>
+          </div>
+        </Page>
       );
     }
 
