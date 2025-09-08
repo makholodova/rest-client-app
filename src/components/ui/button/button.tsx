@@ -4,7 +4,7 @@ import styles from './button.module.scss';
 type ButtonProps = {
   children: React.ReactNode;
   className?: string;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'removeButton';
   type?: 'button' | 'submit';
   onClick?: () => void;
   disabled?: boolean;

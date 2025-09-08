@@ -1,0 +1,70 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
+
+.wrapper {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  margin-bottom: 16px;
+}
+
+.table {
+  width: 100%;
+  border-spacing: 0 4 4px;
+  margin-bottom: 8px;
+  border-radius: 4px;
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 5px;
+    width: 248px;
+    border-radius: 8px;
+    &:hover {
+      background-color: v.$color-tint-5;
+      transition: background-color 0.2s;
+    }
+  }
+  .invisible {
+    width: 30px;
+    border: none;
+    background-color: inherit;
+    &:hover {
+      background-color: inherit;
+      transition: background-color 0.2s;
+    }
+  }
+
+  th {
+    text-align: left;
+    border: none;
+    padding: 0;
+  }
+}
+
+.input {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid v.$color-primary;
+  border-radius: 8px;
+  font-size: 1rem;
+  color: v.$color-shade-2;
+  transition: background-color 0.2s;
+  transition: border-color 0.2s;
+
+  &:hover {
+    background-color: v.$color-tint-5;
+    transition: background-color 0.2s;
+  }
+  &:focus {
+    outline: none;
+    border-color: v.$color-shade-2;
+    transition: border-color 0.2s;
+    background-color: v.$color-tint-5;
+    transition: background-color 0.2s;
+  }
+}
