@@ -2,6 +2,7 @@
 @use '@/styles/mixins' as m;
 
 .wrapper {
+  margin-top: 2rem;
   width: 100%;
   display: flex;
   flex-direction: column;

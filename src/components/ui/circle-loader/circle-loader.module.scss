@@ -1,0 +1,22 @@
+﻿@use '@/styles/variables' as v;
+
+.circleLoader {
+  width: 60px;
+  height: 60px;
+  border-width: 8px;
+  border-style: solid;
+  border-color: v.$color-tint-1;
+  border-top-color: v.$color-tint-4;
+  border-radius: 50%;
+  margin: auto;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
