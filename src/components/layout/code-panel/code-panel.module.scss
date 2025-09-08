@@ -1,0 +1,76 @@
+@use '@/styles/variables' as v;
+
+.panel {
+  width: 100%;
+  height: max-content;
+
+  padding: 8px;
+
+  border-radius: 12px;
+  background-color: v.$color-d-grey;
+}
+
+.pre {
+  max-height: 400px;
+  padding: 16px 8px;
+  border-radius: 8px;
+
+  overflow: auto;
+
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  counter-reset: line;
+
+  background-color: #2d2d2d;
+  color: #f8f8f2;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+
+  .title {
+    color: #fff;
+  }
+
+  .tools {
+    display: flex;
+    gap: 12px;
+  }
+}
+
+.editing {
+  max-height: 400px;
+  padding: 20px 10px;
+  border-radius: 8px;
+
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+
+  background-color: #2d2d2d;
+  color: #f8f8f2;
+
+  p {
+    width: 20px;
+    text-align: right;
+  }
+
+  label {
+    display: flex;
+    gap: 12px;
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    background-color: #2d2d2d;
+    color: #f8f8f2;
+
+    &:focus {
+      border: none;
+    }
+  }
+}
