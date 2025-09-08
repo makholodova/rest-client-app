@@ -14,7 +14,7 @@ import {
   type Variables,
 } from '@/utils/variables';
 
-export default function VariablesPage() {
+export default function Variables() {
   const [variables, setVariables] = useState<Variables>({});
   const [key, setKey] = useState('');
   const [value, setValue] = useState('');
