@@ -8,69 +8,71 @@
 
   border-radius: 12px;
   background-color: v.$color-d-grey;
-}
+  color: #fff;
 
-.pre {
-  max-height: 400px;
-  padding: 16px 8px;
-  border-radius: 8px;
+  .textarea {
+    width: 100%;
+    height: 100%;
 
-  overflow: auto;
+    padding: 8px 0;
 
-  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
-  font-size: 14px;
-  line-height: 1.5;
-  counter-reset: line;
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
 
-  background-color: #2d2d2d;
-  color: #f8f8f2;
-}
+    overflow: auto;
+    white-space: pre;
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 8px;
+    tab-size: 2;
+    -moz-tab-size: 2;
 
-  .title {
+    background-color: #2d2d2d;
     color: #fff;
   }
 
-  .tools {
-    display: flex;
-    gap: 12px;
-  }
-}
-
-.editing {
-  max-height: 400px;
-  padding: 20px 10px;
-  border-radius: 8px;
-
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-
-  background-color: #2d2d2d;
-  color: #f8f8f2;
-
-  p {
-    width: 20px;
-    text-align: right;
-  }
-
-  label {
-    display: flex;
-    gap: 12px;
-  }
-
-  input {
+  .editor {
     width: 100%;
-    border: none;
-    background-color: #2d2d2d;
-    color: #f8f8f2;
+    height: 400px;
 
-    &:focus {
-      border: none;
+    padding: 20px 10px;
+    border-radius: 8px;
+
+    display: flex;
+    gap: 12px;
+    overflow: auto;
+
+    background-color: #2d2d2d;
+    color: #fff;
+
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+
+    .lineNumbers {
+      min-width: 40px;
+      height: 100%;
+
+      padding: 8px 4px;
+      border-right: 1px solid #ddd;
+
+      overflow: hidden;
+
+      text-align: right;
+      user-select: none;
     }
+
+    .lineNumber {
+      color: #666;
+      padding: 0 4px;
+      height: 1.5em;
+      line-height: 1.5;
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
   }
 }

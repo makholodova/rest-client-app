@@ -1,53 +1,90 @@
+'use client';
+
 import style from './code-panel.module.scss';
-import { useEffect, useState } from 'react';
-import CodePanelHeader from './code-panel-header';
+import { useEffect, useRef, useState } from 'react';
+import Button from '@/components/ui/button/button';
+import { toast } from 'react-toastify';
+import { ConfigRequest } from '@/types/postman.type';
 
 type CodePanelProps = {
-  code: string[];
+  config: ConfigRequest;
 };
 
-export default function CodePanel({ code }: CodePanelProps) {
-  const [editedCode, setEditedCode] = useState<string[]>(code);
-  const [isEdit, setIsEdit] = useState(false);
+export default function CodePanel({ config }: CodePanelProps) {
+  const [code, setCode] = useState<string>('');
+  const [lineCount, setLineCount] = useState(1);
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const lineNumbersRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setEditedCode(code);
+    const lines = code.split('\n').length;
+    setLineCount(lines);
   }, [code]);
 
-  const updateLine = (index: number, newValue: string) => {
-    setEditedCode((prev) => {
-      const newCode = [...prev];
-      newCode[index] = newValue;
-      return newCode;
-    });
+  const handleScroll = () => {
+    if (textareaRef.current && lineNumbersRef.current) {
+      lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop;
+    }
+  };
+
+  const copyToClipboard = async () => {
+    try {
+      await navigator.clipboard.writeText(code);
+      toast.success('Текст скопирован в буфер обмена');
+    } catch (err) {
+      toast.error(`Ошибка копирования: ${err}`);
+    }
+  };
+
+  const generateCode = async () => {
+    try {
+      const response = await fetch('/api/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(config),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setCode(result.code);
+      }
+    } catch (error) {
+      console.error('Error generating code:', error);
+    }
   };
 
   return (
     <section className={style.panel}>
-      <CodePanelHeader {...{ editedCode, setEditedCode, isEdit, setIsEdit }} />
+      <header className={style.header}>
+        <h2>{config.language}</h2>
+        <Button onClick={generateCode}>generate code</Button>
+        <Button onClick={copyToClipboard}>copy</Button>
+      </header>
 
-      {isEdit ? (
-        <form className={style.editing}>
-          {editedCode.map((str, index) => (
-            <label key={index}>
-              <p>{index + 1}</p>
-              <input
-                type="text"
-                defaultValue={str}
-                onChange={(e) => updateLine(index, e.target.value)}
-              />
-            </label>
+      <div className={style.editor}>
+        <div ref={lineNumbersRef} className={style.lineNumbers}>
+          {Array.from({ length: lineCount }, (_, i) => (
+            <div key={i} className={style.lineNumber}>
+              {i + 1}
+            </div>
           ))}
-        </form>
-      ) : (
-        <pre className={style.pre}>
-          <ol>
-            {editedCode.map((str, index) => (
-              <li key={`pre ${index}`}>{str}</li>
-            ))}
-          </ol>
-        </pre>
-      )}
+        </div>
+
+        <textarea
+          ref={textareaRef}
+          className={style.textarea}
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          onScroll={handleScroll}
+          spellCheck={false}
+          wrap="off"
+          placeholder="Введите код..."
+        />
+      </div>
     </section>
   );
 }
