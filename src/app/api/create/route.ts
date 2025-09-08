@@ -18,6 +18,8 @@ export async function POST(configRequest: NextRequest) {
 
     const request = new sdk.Request(config.url);
     request.method = config.method;
+    request.url.variables.members = config.variables ?? [];
+    request.headers.members = config.headers ?? [];
 
     const supportedCodegens: LanguageOption[] = codegen.getLanguageList();
     const zap = supportedCodegens.find((item) => item.key === config.language);
