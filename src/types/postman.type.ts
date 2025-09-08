@@ -1,5 +1,27 @@
 type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS';
 
+type ProgrammingLanguage =
+  | 'csharp'
+  | 'curl'
+  | 'dart'
+  | 'go'
+  | 'http'
+  | 'java'
+  | 'javascript'
+  | 'kotlin'
+  | 'c'
+  | 'nodejs'
+  | 'objective-c'
+  | 'ocaml'
+  | 'php'
+  | 'powershell'
+  | 'python'
+  | 'r'
+  | 'ruby'
+  | 'rust'
+  | 'shell'
+  | 'swift';
+
 export type VariableRequest = {
   key: string;
   value: string;
@@ -17,7 +39,7 @@ export type HeaderRequest = {
 export type ConfigRequest = {
   method: Method;
   url: string;
-  language: string;
+  language: ProgrammingLanguage;
   variables?: VariableRequest[];
   headers?: HeaderRequest[];
 };

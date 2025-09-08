@@ -1,4 +1,4 @@
-import { HeaderRequest, VariableRequest } from './types/postman.type';
+import { HeaderRequest, VariableRequest } from '../types/postman.type';
 
 export const mockVariables: VariableRequest[] = [
   {
