@@ -2,7 +2,8 @@
   "Header": {
     "logo": "REST Client",
     "sign-up": "Sign Up",
-    "sign-in": "Sign In"
+    "sign-in": "Sign In",
+    "sign-out": "Sign Out"
   },
   "SignUp": {
     "title": "Sign Up",
