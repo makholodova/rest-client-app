@@ -7,16 +7,16 @@
   border-radius: 8px;
   transition:
     border-color 0.2s ease,
-    border-color 0.2s ease;
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
 
   @media (hover: hover) and (pointer: fine) {
-    &: hover;
-  {
-    box-shadow: v.$box-shadow;
-  }
+    &:hover {
+      box-shadow: v.$box-shadow-hover;
+    }
   }
   &:focus {
-    box-shadow: v.$box-shadow;
+    box-shadow: v.$box-shadow-hover;
     border-color: v.$color-shade-1;
     outline: none;
   }
