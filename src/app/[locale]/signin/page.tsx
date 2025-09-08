@@ -63,7 +63,11 @@ export default function SignInPage() {
           disabled={isSubmitting}
         />
         <p className={styles.error}>{errors.password?.message || ''}</p>
-        <Button disabled={!isValid || isSubmitting} type={'submit'}>
+        <Button
+          isLoading={isSubmitting}
+          disabled={!isValid || isSubmitting}
+          type={'submit'}
+        >
           {t('submitBtn')}
         </Button>
       </form>

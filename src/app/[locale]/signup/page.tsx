@@ -73,7 +73,11 @@ export default function SignUpPage() {
           {...register('confirmPassword')}
         />
         <p className={styles.error}>{errors.confirmPassword?.message || ''}</p>
-        <Button disabled={!isValid || isSubmitting} type={'submit'}>
+        <Button
+          isLoading={isSubmitting}
+          disabled={!isValid || isSubmitting}
+          type={'submit'}
+        >
           {t('submitBtn')}
         </Button>
       </form>
