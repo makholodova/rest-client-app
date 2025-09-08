@@ -1,11 +1,11 @@
 ﻿'use client';
 import { useTranslations } from 'next-intl';
 import styles from './user-greeting.module.scss';
-import Link from 'next/link';
 import { ROUTES } from '@/constants/routes';
+import ButtonLink from '@/components/ui/button-link/button-link';
 
 type UserGreetingProp = {
-  name?: string;
+  name?: string | null;
 };
 
 export default function UserGreeting({ name }: UserGreetingProp) {
@@ -19,15 +19,27 @@ export default function UserGreeting({ name }: UserGreetingProp) {
       </h2>
       <p className={styles.text}>{t('text')}.</p>
       <div className={styles.links}>
-        <Link className={styles.link} href={ROUTES.REST_CLIENT}>
+        <ButtonLink
+          scaleOnHover={true}
+          variant={'secondary'}
+          href={ROUTES.REST_CLIENT}
+        >
           {t('restClient')}
-        </Link>{' '}
-        <Link className={styles.link} href={ROUTES.HISTORY}>
+        </ButtonLink>
+        <ButtonLink
+          scaleOnHover={true}
+          variant={'secondary'}
+          href={ROUTES.HISTORY}
+        >
           {t('history')}
-        </Link>
-        <Link className={styles.link} href={ROUTES.VARIABLES}>
+        </ButtonLink>
+        <ButtonLink
+          scaleOnHover={true}
+          variant={'secondary'}
+          href={ROUTES.VARIABLES}
+        >
           {t('variables')}
-        </Link>
+        </ButtonLink>
       </div>
     </section>
   );
