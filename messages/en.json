@@ -7,20 +7,20 @@
   "SignUp": {
     "title": "Sign Up",
     "name": "Name",
-    "email": " E-mail Address",
+    "email": " E-mail address",
     "password": "Password",
-    "passwordConfirm": "Confirm Password",
+    "passwordConfirm": "Confirm password",
     "submitBtn": "Sign Up",
     "linkWrapper": "Do you have an account? ",
-    "signInLink": "Sign in"
+    "signInLink": "Sign In"
   },
   "SignIn": {
-    "title": "Sign in",
-    "email": " E-mail Address",
+    "title": "Sign In",
+    "email": " E-mail address",
     "password": "Password",
-    "submitBtn": "Sign in",
+    "submitBtn": "Sign In",
     "linkWrapper": "Do not have an account? ",
-    "registrationLink": "Sign in",
+    "registrationLink": "Sign Up",
     "useEffectErrorMessage": "Please, try later or sign up - in case you are a new user."
   },
   "Footer": {

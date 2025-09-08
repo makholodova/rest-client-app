@@ -101,11 +101,3 @@
   transition: background-color 0.2s;
 }
 
-.loginLink,
-.registerLink {
-  text-decoration: underline;
-  &:hover {
-    color: v.$color-shade-2;
-    transition: color 0.2s;
-  }
-}

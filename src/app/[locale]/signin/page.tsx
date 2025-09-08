@@ -4,13 +4,13 @@ import { auth, logInWithEmailAndPassword } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../../constants/routes';
-import Link from 'next/link';
 import styles from './signin.module.scss';
 import { signInSchema, type SignInForm } from '../../../utils/validation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
+import AppLink from '@/components/ui/app-link/app-link';
 
 export default function SignInPage() {
   const [user, loading, error] = useAuthState(auth);
@@ -73,9 +73,7 @@ export default function SignInPage() {
       <div>
         <p className={styles.linkWrapper}>
           {t('linkWrapper')}{' '}
-          <Link href={ROUTES.SIGN_UP} className={styles.loginLink}>
-            {t('registrationLink')}{' '}
-          </Link>
+          <AppLink href={ROUTES.SIGN_UP}>{t('registrationLink')}</AppLink>
         </p>
       </div>
     </div>

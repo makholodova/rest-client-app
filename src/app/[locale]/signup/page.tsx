@@ -4,12 +4,12 @@ import { auth, registerWithEmailAndPassword } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../../constants/routes';
-import Link from 'next/link';
 import { signUpSchema, type SignUpForm } from '../../../utils/validation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styles from '../signin/signin.module.scss';
 import { useTranslations } from 'next-intl';
+import AppLink from '@/components/ui/app-link/app-link';
 
 export default function SignUpPage() {
   const [user, loading] = useAuthState(auth);
@@ -86,9 +86,7 @@ export default function SignUpPage() {
         <p className={styles.linkWrapper}>
           {' '}
           {t('linkWrapper')}{' '}
-          <Link href={ROUTES.SIGN_IN} className={styles.registerLink}>
-            {t('signInLink')}{' '}
-          </Link>
+          <AppLink href={ROUTES.SIGN_IN}>{t('signInLink')}</AppLink>
         </p>
       </div>
     </div>
