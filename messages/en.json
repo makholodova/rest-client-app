@@ -25,7 +25,10 @@
     "useEffectErrorMessage": "Please, try later or sign up - in case you are a new user."
   },
   "RestClient": {
-    "send": "Send request"
+    "send": "Send request",
+    "headers": "Headers",
+    "body": "Body",
+    "code": "Code"
   },
   "Footer": {
     "ap": "Aliaksandra Palkhouskaya",
