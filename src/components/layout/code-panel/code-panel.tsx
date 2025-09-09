@@ -11,21 +11,21 @@ type CodePanelProps = {
 };
 
 export default function CodePanel({ config }: CodePanelProps) {
-  const [isRead, setIsRead] = useState(false);
+  const [isRead, setIsRead] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
-  const [lineCount, setLineCount] = useState(1);
+  const [lineNumbers, setLineNumbers] = useState<string>('1\n');
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const lineNumbersRef = useRef<HTMLDivElement>(null);
+  const textareaNumbersRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    const lines = code.split('\n').length;
-    setLineCount(lines);
+    const lines = code.split('\n').map((_, index) => `${++index}`);
+    setLineNumbers(lines.join('\n') ?? '1\n');
   }, [code]);
 
   const handleScroll = () => {
-    if (textareaRef.current && lineNumbersRef.current) {
-      lineNumbersRef.current.scrollTop = textareaRef.current.scrollTop;
+    if (textareaRef.current && textareaNumbersRef.current) {
+      textareaNumbersRef.current.scrollTop = textareaRef.current.scrollTop;
     }
   };
 
@@ -51,10 +51,11 @@ export default function CodePanel({ config }: CodePanelProps) {
       const result = await response.json();
 
       if (result.success) {
+        toast.success('Код успешно сгенерирован!');
         setCode(result.code);
       }
     } catch (error) {
-      console.error('Error generating code:', error);
+      toast.error(`Error generating code: ${error}`);
     }
   };
 
@@ -73,17 +74,16 @@ export default function CodePanel({ config }: CodePanelProps) {
       </header>
 
       <div className={style.editor}>
-        <div ref={lineNumbersRef} className={style.lineNumbers}>
-          {Array.from({ length: lineCount }, (_, i) => (
-            <div key={i} className={style.lineNumber}>
-              {i + 1}
-            </div>
-          ))}
-        </div>
+        <textarea
+          ref={textareaNumbersRef}
+          className={style.linearea}
+          value={lineNumbers}
+          readOnly
+        />
 
         <textarea
           ref={textareaRef}
-          className={style.textarea}
+          className={style.codearea}
           value={code}
           onChange={(e) => setCode(e.target.value)}
           onScroll={handleScroll}
