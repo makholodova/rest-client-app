@@ -51,73 +51,52 @@ export default function Variables() {
     <Page>
       <div className={styles.wrapper}>
         <h2 className={styles.title}>{t('title')}</h2>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>
-                <FieldInput
-                  type="text"
-                  placeholder={t('placeholder')}
-                  value={key}
-                  onChange={(e) => setKey(e.target.value)}
-                  className={styles.input}
-                />
-              </th>
-              <th>
-                {' '}
-                <FieldInput
-                  type="text"
-                  placeholder={t('value')}
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
-                  className={styles.input}
-                />
-              </th>
-              <th className={styles.invisible}>
-                {' '}
+        <div className={styles.addVar}>
+          <FieldInput
+            type="text"
+            placeholder={t('placeholder')}
+            value={key}
+            onChange={(e) => setKey(e.target.value)}
+            className={styles.input}
+          />
+          <FieldInput
+            type="text"
+            placeholder={t('value')}
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            className={styles.input}
+          />
+          <Button type="button" variant="removeButton" onClick={handleAdd}>
+            <Image src="/plus.svg" alt="+" width={24} height={24} />
+          </Button>
+        </div>
+        {hasVariables ? (
+          <ul className={styles.list}>
+            {Object.entries(variables).map(([key, value]) => (
+              <li key={key} className={styles.listItem}>
+                <span className={styles.varKey}>{key}</span>
+                <span className={styles.varValue}>{value}</span>
                 <Button
-                  type="button"
                   variant="removeButton"
-                  onClick={handleAdd}
+                  onClick={() => handleDelete(key)}
                 >
-                  <Image src="/plus.svg" alt="+" width={24} height={24} />
+                  <Image src="/close.svg" alt="Close" width={24} height={24} />
                 </Button>
-              </th>
-            </tr>
-          </thead>
-          {hasVariables ? (
-            <tbody>
-              {Object.entries(variables).map(([key, value]) => (
-                <tr key={key}>
-                  <td>{key}</td>
-                  <td>{value}</td>
-                  <td className={styles.invisible}>
-                    <Button
-                      variant="removeButton"
-                      onClick={() => handleDelete(key)}
-                    >
-                      <Image
-                        src="/close.svg"
-                        alt="Close"
-                        width={24}
-                        height={24}
-                      />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          ) : null}
-        </table>
+              </li>
+            ))}
+          </ul>
+        ) : null}
         {hasVariables ? null : <h3>{t('noVariables')}</h3>}
         {hasVariables ? (
-          <Button
-            variant="secondary"
-            onClick={handleClear}
-            disabled={!Object.keys(variables).length}
-          >
-            {t('clearBtn')}
-          </Button>
+          <div className={styles.clear}>
+            <Button
+              variant="secondary"
+              onClick={handleClear}
+              disabled={!Object.keys(variables).length}
+            >
+              {t('clearBtn')}
+            </Button>{' '}
+          </div>
         ) : null}
       </div>
     </Page>
