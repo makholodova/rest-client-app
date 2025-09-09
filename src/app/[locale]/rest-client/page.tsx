@@ -6,7 +6,7 @@ import CodePanel from '@/components/layout/code-panel/code-panel';
 const config: ConfigRequest = {
   method: 'OPTIONS',
   url: 'https://api.example.com/users',
-  language: 'objective-c',
+  language: 'rust',
   headers: mockHeaders,
 };
 

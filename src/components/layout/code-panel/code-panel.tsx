@@ -5,18 +5,21 @@ import { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/button/button';
 import { toast } from 'react-toastify';
 import { ConfigRequest } from '@/types/postman.type';
+import { useTranslations } from 'use-intl';
 
 type CodePanelProps = {
   config: ConfigRequest;
 };
 
 export default function CodePanel({ config }: CodePanelProps) {
-  const [isRead, setIsRead] = useState<boolean>(false);
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [code, setCode] = useState<string>('');
   const [lineNumbers, setLineNumbers] = useState<string>('1\n');
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const textareaNumbersRef = useRef<HTMLTextAreaElement>(null);
+
+  const t = useTranslations('codePanel');
 
   useEffect(() => {
     const lines = code.split('\n').map((_, index) => `${++index}`);
@@ -32,9 +35,9 @@ export default function CodePanel({ config }: CodePanelProps) {
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(code);
-      toast.success('Текст скопирован в буфер обмена');
+      toast.success(t('copySucces'));
     } catch (err) {
-      toast.error(`Ошибка копирования: ${err}`);
+      toast.error(`${t('copyError')}: ${err}`);
     }
   };
 
@@ -51,11 +54,19 @@ export default function CodePanel({ config }: CodePanelProps) {
       const result = await response.json();
 
       if (result.success) {
-        toast.success('Код успешно сгенерирован!');
+        toast.success(t('genSucces'));
         setCode(result.code);
       }
     } catch (error) {
-      toast.error(`Error generating code: ${error}`);
+      toast.error(`${t('genError')}: ${error}`);
+    }
+  };
+
+  const startEdit = () => {
+    setIsEdit((prev) => !prev);
+
+    if (!isEdit) {
+      textareaRef.current?.focus();
     }
   };
 
@@ -63,17 +74,20 @@ export default function CodePanel({ config }: CodePanelProps) {
     <section className={style.panel}>
       <header className={style.header}>
         <h2>{config.language}</h2>
-        <Button onClick={generateCode}>generate code</Button>
+        <Button onClick={generateCode}>{t('generate')}</Button>
 
         <div className={style.tools}>
-          <Button onClick={copyToClipboard}>copy</Button>
-          <Button onClick={() => setIsRead((prev) => !prev)}>
-            {isRead ? 'edit' : 'read'}
+          <Button onClick={copyToClipboard}>{t('copy')}</Button>
+          <Button
+            onClick={startEdit}
+            variant={isEdit ? 'primary' : 'secondary'}
+          >
+            {isEdit ? t('edit') : t('read')}
           </Button>
         </div>
       </header>
 
-      <div className={style.editor}>
+      <div className={`${style.editor} ${isEdit ? style.active : ''}`}>
         <textarea
           ref={textareaNumbersRef}
           className={style.linearea}
@@ -89,8 +103,8 @@ export default function CodePanel({ config }: CodePanelProps) {
           onScroll={handleScroll}
           spellCheck={false}
           wrap="off"
-          placeholder="Введите код..."
-          readOnly={isRead}
+          placeholder={t('codearea')}
+          readOnly={!isEdit}
         />
       </div>
     </section>
