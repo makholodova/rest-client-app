@@ -80,7 +80,7 @@ export default function Variables() {
               </th>
             </tr>
           </thead>
-          {hasVariables && (
+          {hasVariables ? (
             <tbody>
               {Object.entries(variables).map(([key, value]) => (
                 <tr key={key}>
@@ -102,10 +102,10 @@ export default function Variables() {
                 </tr>
               ))}
             </tbody>
-          )}
+          ) : null}
         </table>
-        {!hasVariables && <h3>No variables yet</h3>}
-        {hasVariables && (
+        {hasVariables ? null : <h3>No variables yet</h3>}
+        {hasVariables ? (
           <Button
             variant="secondary"
             onClick={handleClear}
@@ -113,7 +113,7 @@ export default function Variables() {
           >
             Clear all
           </Button>
-        )}
+        ) : null}
       </div>
     </Page>
   );
