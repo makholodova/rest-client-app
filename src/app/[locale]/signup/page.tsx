@@ -4,12 +4,14 @@ import { auth, registerWithEmailAndPassword } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '../../../constants/routes';
-import Link from 'next/link';
 import { signUpSchema, type SignUpForm } from '../../../utils/validation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import styles from '../signin/signin.module.scss';
 import { useTranslations } from 'next-intl';
+import AppLink from '@/components/ui/app-link/app-link';
+import Button from '@/components/ui/button/button';
+import { FieldInput } from '@/components/ui/field-input/field-input';
 
 export default function SignUpPage() {
   const [user, loading] = useAuthState(auth);
@@ -21,7 +23,7 @@ export default function SignUpPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<SignUpForm>({
     resolver: zodResolver(schema),
     mode: 'onBlur',
@@ -43,52 +45,46 @@ export default function SignUpPage() {
         className={`${styles.formContainer} ${isSubmitting ? styles.formContainerDisabled : ''}`}
       >
         <h3 className={styles.title}>{t('title')}</h3>
-        <input
+        <FieldInput
           type="text"
-          className={styles.input}
           placeholder={t('name')}
           disabled={isSubmitting}
           {...register('name')}
         />
         <p className={styles.error}>{errors.name?.message || ''}</p>
-        <input
+        <FieldInput
           type="email"
-          className={styles.input}
           placeholder={t('email')}
           disabled={isSubmitting}
           {...register('email')}
         />
         <p className={styles.error}>{errors.email?.message || ''}</p>{' '}
-        <input
+        <FieldInput
           type="password"
-          className={styles.input}
           placeholder={t('password')}
           disabled={isSubmitting}
           {...register('password')}
         />
         <p className={styles.error}>{errors.password?.message || ''}</p>
-        <input
+        <FieldInput
           type="password"
-          className={styles.input}
           placeholder={t('passwordConfirm')}
           disabled={isSubmitting}
           {...register('confirmPassword')}
         />
         <p className={styles.error}>{errors.confirmPassword?.message || ''}</p>
-        <button
-          className={`${styles.submitBtn} ${isSubmitting ? styles.submitBtnDsbl : ''}`}
-          type="submit"
+        <Button
+          isLoading={isSubmitting}
+          disabled={!isValid || isSubmitting}
+          type={'submit'}
         >
-          {t('submitBtn')}{' '}
-        </button>{' '}
+          {t('submitBtn')}
+        </Button>
       </form>
       <div>
         <p className={styles.linkWrapper}>
-          {' '}
           {t('linkWrapper')}{' '}
-          <Link href={ROUTES.SIGN_IN} className={styles.registerLink}>
-            {t('signInLink')}{' '}
-          </Link>
+          <AppLink href={ROUTES.SIGN_IN}>{t('signInLink')}</AppLink>
         </p>
       </div>
     </div>

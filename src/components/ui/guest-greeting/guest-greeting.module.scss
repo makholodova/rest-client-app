@@ -13,14 +13,3 @@
 .text {
   text-align: center;
 }
-.link {
-  color: v.$color-primary;
-
-  transition: color 0.2s ease;
-
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      color: v.$color-shade-2;
-    }
-  }
-}

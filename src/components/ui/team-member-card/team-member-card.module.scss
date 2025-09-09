@@ -33,14 +33,6 @@
   display: flex;
   gap: 0.3rem;
   align-items: center;
-
-  color: v.$color-primary;
-  transition: color 0.2s ease;
-  @media (hover: hover) and (pointer: fine) {
-    &:hover {
-      color: v.$color-shade-2;
-    }
-  }
 }
 .contributions {
   padding-left: 1.5rem;

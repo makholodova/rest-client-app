@@ -8,6 +8,7 @@ type ButtonProps = {
   type?: 'button' | 'submit';
   onClick?: () => void;
   disabled?: boolean;
+  isLoading?: boolean;
 };
 
 export default function Button({
@@ -17,6 +18,7 @@ export default function Button({
   type = 'button',
   onClick,
   disabled,
+  isLoading,
 }: ButtonProps) {
   return (
     <button
@@ -25,7 +27,7 @@ export default function Button({
       disabled={disabled}
       className={clsx(styles.button, styles[variant], className)}
     >
-      {children}
+      {isLoading ? <span className={styles.spinner} /> : children}
     </button>
   );
 }
