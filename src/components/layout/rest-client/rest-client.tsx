@@ -1,21 +1,28 @@
+'use client';
+
 import styles from './rest-client.module.scss';
-
-import { mockHeaders } from '@/constants/mockPostman';
-import { ConfigRequest } from '@/types/postman.type';
-import CodePanel from '@/components/layout/code-panel/code-panel';
-
-const config: ConfigRequest = {
-  method: 'OPTIONS',
-  url: 'https://api.example.com/users',
-  language: 'rust',
-  headers: mockHeaders,
-};
+import { useTranslations } from 'next-intl';
+import { Tabs } from '@/components/ui/tabs/tabs';
+import Headers from '@/components/layout/rest-client/tabs/headers/headers';
+import ResponseViewer from '@/components/layout/rest-client/response-viewer/response-viewer';
+import BodyEditor from '@/components/layout/rest-client/tabs/body-editor/body-editor';
+import CodeGenerator from '@/components/layout/rest-client/tabs/code-generator/code-generator';
+import RequestForm from '@/components/layout/rest-client/request-form/request-form';
 
 export default function RestClient() {
+  const t = useTranslations('RestClient');
+
+  const tabs = [
+    { label: t('headers'), content: <Headers /> },
+    { label: t('body'), content: <BodyEditor /> },
+    { label: t('code'), content: <CodeGenerator /> },
+  ];
+
   return (
     <div className={styles.wrapper}>
-      <h2>RestClient</h2>
-      <CodePanel config={config} />
+      <RequestForm />
+      <Tabs tabs={tabs} />
+      <ResponseViewer />
     </div>
   );
 }
