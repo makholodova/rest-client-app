@@ -5,7 +5,7 @@ import styles from './variables.module.scss';
 import Page from '@/components/layout/page/page';
 import Button from '@/components/ui/button/button';
 import Image from 'next/image';
-
+import { useTranslations } from 'next-intl';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import {
   loadVariables,
@@ -18,6 +18,7 @@ export default function Variables() {
   const [variables, setVariables] = useState<Variables>({});
   const [key, setKey] = useState('');
   const [value, setValue] = useState('');
+  const t = useTranslations('Variables');
 
   useEffect(() => {
     setVariables(loadVariables());
@@ -49,14 +50,14 @@ export default function Variables() {
   return (
     <Page>
       <div className={styles.wrapper}>
-        <h2 className={styles.title}>Variables</h2>
+        <h2 className={styles.title}>{t('title')}</h2>
         <table className={styles.table}>
           <thead>
             <tr>
               <th>
                 <FieldInput
                   type="text"
-                  placeholder="Variable"
+                  placeholder={t('placeholder')}
                   value={key}
                   onChange={(e) => setKey(e.target.value)}
                   className={styles.input}
@@ -66,7 +67,7 @@ export default function Variables() {
                 {' '}
                 <FieldInput
                   type="text"
-                  placeholder="Value"
+                  placeholder={t('value')}
                   value={value}
                   onChange={(e) => setValue(e.target.value)}
                   className={styles.input}
@@ -74,8 +75,12 @@ export default function Variables() {
               </th>
               <th className={styles.invisible}>
                 {' '}
-                <Button type="button" variant="primary" onClick={handleAdd}>
-                  Add
+                <Button
+                  type="button"
+                  variant="removeButton"
+                  onClick={handleAdd}
+                >
+                  <Image src="/plus.svg" alt="+" width={24} height={24} />
                 </Button>
               </th>
             </tr>
@@ -104,14 +109,14 @@ export default function Variables() {
             </tbody>
           ) : null}
         </table>
-        {hasVariables ? null : <h3>No variables yet</h3>}
+        {hasVariables ? null : <h3>{t('noVariables')}</h3>}
         {hasVariables ? (
           <Button
             variant="secondary"
             onClick={handleClear}
             disabled={!Object.keys(variables).length}
           >
-            Clear all
+            {t('clearBtn')}
           </Button>
         ) : null}
       </div>

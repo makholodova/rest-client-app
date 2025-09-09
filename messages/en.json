@@ -104,5 +104,12 @@
       "required": "Confirm your password",
       "match": "Passwords must match"
     }
+  },
+  "Variables": {
+    "title": "Variables",
+    "placeholder": "Variable's name",
+    "value": "Variable's value",
+    "clearBtn": "Clear all",
+    "noVariables": "No variables yet."
   }
 }

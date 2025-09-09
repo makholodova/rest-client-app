@@ -24,18 +24,19 @@
     padding: 5px;
     width: 248px;
     border-radius: 8px;
+    transition: background-color 0.2s;
     &:hover {
       background-color: v.$color-tint-5;
-      transition: background-color 0.2s;
     }
   }
   .invisible {
     width: 30px;
     border: none;
+    padding: 5px;
     background-color: inherit;
+    transition: background-color 0.2s;
     &:hover {
       background-color: inherit;
-      transition: background-color 0.2s;
     }
   }
 
@@ -46,13 +47,12 @@
   }
 }
 
-.input {
-  &:hover {
-    background-color: v.$color-tint-5;
-    transition: background-color 0.2s;
-  }
-  &:focus {
-    background-color: v.$color-tint-5;
-    transition: background-color 0.2s;
-  }
-}
+// .input {
+//   transition: background-color 0.2s;
+//   &:hover {
+//     background-color: v.$color-tint-5;
+//   }
+//   &:focus {
+//     background-color: v.$color-tint-5;
+//   }
+// }
