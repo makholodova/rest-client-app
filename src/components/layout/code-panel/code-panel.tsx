@@ -6,6 +6,7 @@ import Button from '@/components/ui/button/button';
 import { toast } from 'react-toastify';
 import { ConfigRequest } from '@/types/postman.type';
 import { useTranslations } from 'use-intl';
+import CircleLoader from '@/components/ui/circle-loader/circle-loader';
 
 type CodePanelProps = {
   config: ConfigRequest;
@@ -13,6 +14,8 @@ type CodePanelProps = {
 
 export default function CodePanel({ config }: CodePanelProps) {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const [code, setCode] = useState<string>('');
   const [lineNumbers, setLineNumbers] = useState<string>('1\n');
 
@@ -42,6 +45,8 @@ export default function CodePanel({ config }: CodePanelProps) {
   };
 
   const generateCode = async () => {
+    setIsLoading(false);
+
     try {
       const response = await fetch('/api/create', {
         method: 'POST',
@@ -59,6 +64,8 @@ export default function CodePanel({ config }: CodePanelProps) {
       }
     } catch (error) {
       toast.error(`${t('genError')}: ${error}`);
+    } finally {
+      setIsLoading(true);
     }
   };
 
@@ -88,24 +95,30 @@ export default function CodePanel({ config }: CodePanelProps) {
       </header>
 
       <div className={`${style.editor} ${isEdit ? style.active : ''}`}>
-        <textarea
-          ref={textareaNumbersRef}
-          className={style.linearea}
-          value={lineNumbers}
-          readOnly
-        />
+        {isLoading ? (
+          <>
+            <textarea
+              ref={textareaNumbersRef}
+              className={style.linearea}
+              value={lineNumbers}
+              readOnly
+            />
 
-        <textarea
-          ref={textareaRef}
-          className={style.codearea}
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          onScroll={handleScroll}
-          spellCheck={false}
-          wrap="off"
-          placeholder={t('codearea')}
-          readOnly={!isEdit}
-        />
+            <textarea
+              ref={textareaRef}
+              className={style.codearea}
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              onScroll={handleScroll}
+              spellCheck={false}
+              wrap="off"
+              placeholder={t('codearea')}
+              readOnly={!isEdit}
+            />
+          </>
+        ) : (
+          <CircleLoader />
+        )}
       </div>
     </section>
   );
