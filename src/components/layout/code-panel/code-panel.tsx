@@ -11,6 +11,7 @@ type CodePanelProps = {
 };
 
 export default function CodePanel({ config }: CodePanelProps) {
+  const [isRead, setIsRead] = useState(false);
   const [code, setCode] = useState<string>('');
   const [lineCount, setLineCount] = useState(1);
 
@@ -62,7 +63,13 @@ export default function CodePanel({ config }: CodePanelProps) {
       <header className={style.header}>
         <h2>{config.language}</h2>
         <Button onClick={generateCode}>generate code</Button>
-        <Button onClick={copyToClipboard}>copy</Button>
+
+        <div className={style.tools}>
+          <Button onClick={copyToClipboard}>copy</Button>
+          <Button onClick={() => setIsRead((prev) => !prev)}>
+            {isRead ? 'edit' : 'read'}
+          </Button>
+        </div>
       </header>
 
       <div className={style.editor}>
@@ -83,6 +90,7 @@ export default function CodePanel({ config }: CodePanelProps) {
           spellCheck={false}
           wrap="off"
           placeholder="Введите код..."
+          readOnly={isRead}
         />
       </div>
     </section>

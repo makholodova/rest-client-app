@@ -50,7 +50,7 @@
     line-height: 1.5;
 
     .lineNumbers {
-      min-width: 40px;
+      min-width: 30px;
       height: 100%;
 
       padding: 8px 4px;
@@ -63,10 +63,16 @@
     }
 
     .lineNumber {
-      color: #666;
-      padding: 0 4px;
       height: 1.5em;
+      padding: 0 4px;
+
       line-height: 1.5;
+      font:
+        400 12px/100% 'Monaco',
+        'Menlo',
+        'Ubuntu Mono',
+        monospace;
+      color: #666;
     }
   }
 
@@ -74,5 +80,10 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
+
+    .tools {
+      display: flex;
+      gap: 12px;
+    }
   }
 }
