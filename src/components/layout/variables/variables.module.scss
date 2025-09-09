@@ -47,23 +47,11 @@
 }
 
 .input {
-  width: 100%;
-  padding: 0.8rem 1.2rem;
-  border: 1px solid v.$color-primary;
-  border-radius: 8px;
-  font-size: 1rem;
-  color: v.$color-shade-2;
-  transition: background-color 0.2s;
-  transition: border-color 0.2s;
-
   &:hover {
     background-color: v.$color-tint-5;
     transition: background-color 0.2s;
   }
   &:focus {
-    outline: none;
-    border-color: v.$color-shade-2;
-    transition: border-color 0.2s;
     background-color: v.$color-tint-5;
     transition: background-color 0.2s;
   }
