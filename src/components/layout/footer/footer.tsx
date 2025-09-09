@@ -1,8 +1,8 @@
 ﻿import styles from './footer.module.scss';
-import Link from 'next/link';
 import Image from 'next/image';
 import { FOOTER_INFO, DEVELOPERS } from '@/constants/footer';
 import { getTranslations } from 'next-intl/server';
+import AppLink from '@/components/ui/app-link/app-link';
 
 export default async function Footer() {
   const t = await getTranslations('Footer');
@@ -12,7 +12,7 @@ export default async function Footer() {
       <div className={`${styles.footerWrapper} container`}>
         <div className={styles.footerLinks}>
           {DEVELOPERS.map((item) => (
-            <Link
+            <AppLink
               key={item.nameKey}
               href={item.github}
               target="_blank"
@@ -26,13 +26,13 @@ export default async function Footer() {
                 height={18}
               />
               <span className={styles.footerLinkText}>{t(item.nameKey)}</span>
-            </Link>
+            </AppLink>
           ))}
         </div>
 
         <div className={styles.footerYear}>{FOOTER_INFO.year}</div>
 
-        <Link
+        <AppLink
           href={FOOTER_INFO.rsSchool}
           target="_blank"
           aria-label="RS_Shool"
@@ -44,7 +44,7 @@ export default async function Footer() {
             width={65}
             height={24}
           />
-        </Link>
+        </AppLink>
       </div>
     </footer>
   );

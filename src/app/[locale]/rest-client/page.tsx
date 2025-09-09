@@ -1,20 +1,16 @@
 ﻿import Page from '@/components/layout/page/page';
-import { mockHeaders } from '@/constants/mockPostman';
-import { ConfigRequest } from '@/types/postman.type';
-import CodePanel from '@/components/layout/code-panel/code-panel';
+import dynamic from 'next/dynamic';
+import CircleLoader from '@/components/ui/circle-loader/circle-loader';
 
-const config: ConfigRequest = {
-  method: 'OPTIONS',
-  url: 'https://api.example.com/users',
-  language: 'rust',
-  headers: mockHeaders,
-};
+const RestClient = dynamic(
+  () => import('@/components/layout/rest-client/rest-client'),
+  { loading: () => <CircleLoader /> }
+);
 
 export default function RestClientPage() {
   return (
     <Page>
-      <div>RestClient</div>
-      <CodePanel config={config} />
+      <RestClient />
     </Page>
   );
 }
