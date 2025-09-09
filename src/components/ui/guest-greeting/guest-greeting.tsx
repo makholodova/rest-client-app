@@ -1,8 +1,8 @@
 ﻿'use client';
-import Link from 'next/link';
 import { ROUTES } from '@/constants/routes';
 import styles from './guest-greeting.module.scss';
 import { useTranslations } from 'next-intl';
+import AppLink from '@/components/ui/app-link/app-link';
 
 export default function GuestGreeting() {
   const t = useTranslations('GuestGreeting');
@@ -12,13 +12,8 @@ export default function GuestGreeting() {
       <p className={styles.text}>
         {t('text')}
         {' — '}
-        <Link className={styles.link} href={ROUTES.SIGN_IN}>
-          {t('sign-in')}
-        </Link>{' '}
-        {t('or')}{' '}
-        <Link className={styles.link} href={ROUTES.SIGN_UP}>
-          {t('sign-up')}
-        </Link>
+        <AppLink href={ROUTES.SIGN_IN}>{t('sign-in')}</AppLink> {t('or')}{' '}
+        <AppLink href={ROUTES.SIGN_UP}>{t('sign-up')}</AppLink>
       </p>
     </section>
   );

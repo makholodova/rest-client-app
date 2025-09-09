@@ -22,25 +22,25 @@ export default function Header() {
         <Logo />
         <div className={styles.nav}>
           <LanguageSwitcher />
-          {!user ? (
-            <ButtonLink
-              className={styles.navLink}
-              variant={'secondary'}
-              href={ROUTES.SIGN_IN}
-            >
-              {t('sign-in')}
-            </ButtonLink>
-          ) : null}
-          {!user ? (
-            <ButtonLink className={styles.navLink} href={ROUTES.SIGN_UP}>
-              {t('sign-up')}
-            </ButtonLink>
-          ) : null}
+
           {user ? (
             <Button className={styles.navLink} onClick={logout}>
               {t('sign-out')}
             </Button>
-          ) : null}
+          ) : (
+            <>
+              <ButtonLink
+                className={styles.navLink}
+                variant={'secondary'}
+                href={ROUTES.SIGN_IN}
+              >
+                {t('sign-in')}
+              </ButtonLink>
+              <ButtonLink className={styles.navLink} href={ROUTES.SIGN_UP}>
+                {t('sign-up')}
+              </ButtonLink>
+            </>
+          )}
         </div>
       </div>
     </header>

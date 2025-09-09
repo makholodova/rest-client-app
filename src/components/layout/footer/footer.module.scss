@@ -16,6 +16,7 @@
 .footerLinks {
   display: flex;
   gap: 1rem;
+
   @include m.tablet-sm {
     width: 100%;
     justify-content: space-between;
@@ -34,6 +35,7 @@
   color: v.$color-primary;
 }
 .footerLinkText {
+  color: v.$color-black;
   transition: color 0.2s ease;
   &:hover {
     color: v.$color-grey;
