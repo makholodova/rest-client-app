@@ -1,6 +1,8 @@
 .container {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
 }
 
 .tabList {
@@ -24,5 +26,7 @@
 }
 
 .tabContent {
+  flex-grow: 1;
+  overflow: auto;
   padding: 12px 0;
 }

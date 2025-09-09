@@ -5,7 +5,7 @@ import { LANGUAGE_OPTIONS } from '@/constants/rest-client';
 import { useState } from 'react';
 
 export default function CodeGenerator() {
-  /*const t = useTranslations('RestClient');*/
+  /* const t = useTranslations('RestClient');*/
   const [language, setLanguage] = useState<ProgrammingLanguage>('javascript');
   return (
     <div className={styles.wrapper}>
