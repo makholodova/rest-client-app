@@ -1,6 +1,6 @@
-type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS';
+export type Method = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS';
 
-type ProgrammingLanguage =
+export type ProgrammingLanguage =
   | 'csharp'
   | 'curl'
   | 'dart'

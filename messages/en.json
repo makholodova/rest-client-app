@@ -24,6 +24,12 @@
     "registrationLink": "Sign Up",
     "useEffectErrorMessage": "Please, try later or sign up - in case you are a new user."
   },
+  "RestClient": {
+    "send": "Send request",
+    "headers": "Headers",
+    "body": "Body",
+    "code": "Code"
+  },
   "Footer": {
     "ap": "Aliaksandra Palkhouskaya",
     "dy": "Denis Yakovchik",
@@ -104,6 +110,17 @@
       "required": "Confirm your password",
       "match": "Passwords must match"
     }
+  },
+  "codePanel": {
+    "generate": "generate code",
+    "genError": "Error generating code",
+    "genSucces": "The code has been successfully generated",
+    "copy": "copy",
+    "copyError": "Copy error",
+    "copySucces": "The text has been copied to the clipboard",
+    "edit": "edit",
+    "read": "read",
+    "codearea": "enter code..."
   },
   "Variables": {
     "title": "Variables",

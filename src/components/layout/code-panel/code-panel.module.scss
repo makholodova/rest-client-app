@@ -1,0 +1,93 @@
+@use '@/styles/variables' as v;
+
+.panel {
+  width: 100%;
+  height: max-content;
+
+  padding: 8px;
+
+  border-radius: 12px;
+  background-color: v.$color-d-grey;
+  color: #fff;
+
+  .editor {
+    width: 100%;
+    height: 400px;
+
+    padding: 20px 10px;
+    border-radius: 8px;
+
+    display: flex;
+    gap: 12px;
+    overflow: auto;
+
+    background-color: #2d2d2d;
+    color: #fff;
+
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+
+    &.active {
+      outline: 2px dashed v.$color-shade-1;
+    }
+  }
+
+  .codearea {
+    width: 100%;
+    height: 100%;
+
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+
+    overflow: auto;
+    white-space: pre;
+
+    tab-size: 2;
+    -moz-tab-size: 2;
+
+    background-color: #2d2d2d;
+    color: #fff;
+  }
+
+  .linearea {
+    max-width: 30px;
+    height: 100%;
+
+    padding-right: 8px;
+
+    border: none;
+    outline: none;
+    resize: none;
+    border-right: 1px solid #ddd;
+    overflow: hidden;
+
+    text-align: right;
+    user-select: none;
+
+    white-space: pre;
+    tab-size: 2;
+    -moz-tab-size: 2;
+
+    background-color: #2d2d2d;
+    color: #666;
+  }
+
+  .header {
+    display: grid;
+    grid-template-columns: 3fr 1fr 3fr;
+    margin-bottom: 8px;
+
+    .tools {
+      display: flex;
+      justify-content: right;
+      gap: 12px;
+
+      .generatButton.active {
+        background-color: v.$color-d-grey;
+      }
+    }
+  }
+}
