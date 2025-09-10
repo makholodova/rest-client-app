@@ -1,5 +1,5 @@
 ﻿import { useState } from 'react';
-import s from './tabs.module.scss';
+import styles from './tabs.module.scss';
 
 type Tab = {
   label: string;
@@ -11,18 +11,18 @@ type TabsProps = {
   defaultActive?: string;
 };
 
-export const Tabs = ({ tabs, defaultActive }: TabsProps) => {
+export function Tabs({ tabs, defaultActive }: TabsProps) {
   const [activeTab, setActiveTab] = useState<string>(
     defaultActive ?? tabs[0].label
   );
 
   return (
-    <div className={s.container}>
-      <div className={s.tabList}>
+    <div className={styles.container}>
+      <div className={styles.tabList}>
         {tabs.map((tab) => (
           <button
             key={tab.label}
-            className={`${s.tab} ${activeTab === tab.label ? s.active : ''}`}
+            className={`${styles.tab} ${activeTab === tab.label ? styles.active : ''}`}
             onClick={() => setActiveTab(tab.label)}
           >
             {tab.label}
@@ -30,9 +30,9 @@ export const Tabs = ({ tabs, defaultActive }: TabsProps) => {
         ))}
       </div>
 
-      <div className={s.tabContent}>
+      <div className={styles.tabContent}>
         {tabs.find((t) => t.label === activeTab)?.content}
       </div>
     </div>
   );
-};
+}

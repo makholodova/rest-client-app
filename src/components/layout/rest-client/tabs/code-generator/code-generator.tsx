@@ -7,10 +7,14 @@ import { useState } from 'react';
 export default function CodeGenerator() {
   /* const t = useTranslations('RestClient');*/
   const [language, setLanguage] = useState<ProgrammingLanguage>('javascript');
+
+  const hasUrl = false; //временно
+
   return (
     <div className={styles.wrapper}>
       <select
-        className={styles.language}
+        className={styles.selector}
+        disabled={!hasUrl}
         value={language}
         onChange={(e) => setLanguage(e.target.value as ProgrammingLanguage)}
       >
