@@ -50,3 +50,22 @@
     }
   }
 }
+
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 8px;
+  margin: 0;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      scale: 1.07;
+      background: v.$color-tint-5;
+    }
+    &:active {
+      scale: 1.11;
+    }
+  }
+}
