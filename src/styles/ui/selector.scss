@@ -20,4 +20,7 @@
     border-color: v.$color-shade-1;
     outline: none;
   }
+  &:disabled {
+    box-shadow: none;
+  }
 }
