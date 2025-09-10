@@ -3,7 +3,6 @@ import { useState } from 'react';
 import styles from './headers.module.scss';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import Button from '@/components/ui/button/button';
-import clsx from 'clsx';
 import { HeaderRequest } from '@/types/postman.type';
 
 export default function Headers() {
@@ -81,22 +80,24 @@ export default function Headers() {
             value={header.description ?? ''}
             onChange={(e) => updateHeader(i, 'description', e.target.value)}
           />
-          <Button variant={'secondary'} onClick={() => removeHeader(i)}>
+          <Button
+            className={styles.removeButton}
+            variant={'ghost'}
+            onClick={() => removeHeader(i)}
+          >
             ✕
           </Button>
-
-          {/*todo: использовать стили для кнопки remove*/}
         </div>
       ))}
 
       <Button
+        variant={'ghost'}
         type="button"
         onClick={addHeader}
-        className={clsx(styles.button, styles.addButton)}
+        className={styles.addButton}
       >
         + {t('addButton')}
       </Button>
-      {/*todo: использовать стили для кнопки remove     variant="ghost"*/}
     </div>
   );
 }

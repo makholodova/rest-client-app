@@ -43,6 +43,15 @@
   }
 }
 
+.ghost {
+  color: v.$color-black;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: v.$color-shade-1;
+    }
+  }
+}
+
 .scaleOnHover {
   @media (hover: hover) and (pointer: fine) {
     &:hover {

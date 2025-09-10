@@ -27,12 +27,19 @@
   accent-color: v.$color-grey;
 }
 
+.removeButton {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: v.$color-silver;
+    }
+  }
+}
+
 .addButton {
+  align-self: center;
   border: 1px dashed v.$color-l-grey;
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      background-color: transparent;
-      color: v.$color-shade-1;
       border: 1px dashed v.$color-shade-1;
     }
   }
