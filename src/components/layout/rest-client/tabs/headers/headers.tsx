@@ -28,7 +28,6 @@ export default function Headers() {
         ...updated[index],
         [field]: newValue,
       } as HeaderRequest;
-      console.log(updated);
       return updated;
     });
   };
