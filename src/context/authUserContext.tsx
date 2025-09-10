@@ -1,3 +1,4 @@
+'use client';
 import { createContext, useContext, ReactNode } from 'react';
 import useFirebaseAuth from '../hooks/useFirebaseAuth';
 import { AuthUserContextType } from '../types/interfaces';

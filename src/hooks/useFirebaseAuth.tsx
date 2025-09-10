@@ -7,6 +7,7 @@ import { AuthUser } from '../types/interfaces';
 const formatAuthUser = (user: User): AuthUser => ({
   uid: user.uid,
   email: user.email,
+  name: user.displayName,
 });
 
 export default function useFirebaseAuth() {
