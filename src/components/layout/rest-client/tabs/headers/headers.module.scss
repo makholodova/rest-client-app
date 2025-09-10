@@ -1,1 +1,46 @@
 ﻿@use '@/styles/variables' as v;
+@use '@/styles/ui/button-base' as *;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.headerRow {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 40px;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr 1fr 40px;
+  gap: 4px;
+  align-items: center;
+  justify-items: center;
+}
+
+.checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: v.$color-grey;
+}
+
+.removeButton {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: v.$color-silver;
+    }
+  }
+}
+
+.addButton {
+  align-self: center;
+  border: 1px dashed v.$color-l-grey;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      border: 1px dashed v.$color-shade-1;
+    }
+  }
+}

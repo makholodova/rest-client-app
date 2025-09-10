@@ -30,6 +30,12 @@
     "body": "Body",
     "code": "Code"
   },
+  "Headers": {
+    "key": "Key",
+    "value": "Value",
+    "description": "Description",
+    "addButton": "Add Header"
+  },
   "Footer": {
     "ap": "Aliaksandra Palkhouskaya",
     "dy": "Denis Yakovchik",

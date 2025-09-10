@@ -1,3 +1,5 @@
+@use '@/styles/variables' as v;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -7,7 +9,7 @@
 
 .tabList {
   display: flex;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid v.$color-grey-blue;
   margin-bottom: 12px;
 }
 
@@ -16,12 +18,17 @@
   cursor: pointer;
   border: none;
   background: transparent;
-  color: #374151;
+  color: v.$color-black;
 
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: v.$color-shade-3;
+    }
+  }
   &.active {
-    border-bottom: 2px solid #111827;
+    border-bottom: 2px solid v.$color-primary;
     font-weight: 600;
-    color: #111827;
+    color: v.$color-primary;
   }
 }
 
