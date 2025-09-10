@@ -121,5 +121,12 @@
     "edit": "edit",
     "read": "read",
     "codearea": "enter code..."
+  },
+  "Variables": {
+    "title": "Variables",
+    "placeholder": "Variable's name",
+    "value": "Variable's value",
+    "clearBtn": "Clear all",
+    "noVariables": "No variables yet."
   }
 }
