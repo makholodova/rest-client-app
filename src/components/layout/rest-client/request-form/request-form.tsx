@@ -5,18 +5,13 @@ import { METHOD_OPTIONS } from '@/constants/rest-client';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import Button from '@/components/ui/button/button';
 import { useState } from 'react';
-import { encodeBase64Url } from '@/untils/codeBase64';
 
 export default function RequestForm() {
   const t = useTranslations('RestClient');
   const [method, setMethod] = useState<Method>('GET');
   const [url, setUrl] = useState('');
-
   const isUrlEmpty = !url.trim();
-
   const onSendRequest = () => {
-    /*const encodedUrl = */ encodeBase64Url(url);
-
     // TODO: отправка запроса
   };
 
