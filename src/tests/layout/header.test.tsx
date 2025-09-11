@@ -1,7 +1,6 @@
 ﻿import { render, screen, fireEvent } from '@testing-library/react';
 import Header from '@/components/layout/header/header';
-import {logout} from "@/firebase";
-
+import { logout } from '@/firebase';
 
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
@@ -20,13 +19,17 @@ jest.mock('react-firebase-hooks/auth', () => ({
 }));
 
 jest.mock('@/components/ui/language-switcher/language-switcher', () => () => (
-    <div data-testid="language-switcher" />
+  <div data-testid="language-switcher" />
 ));
 jest.mock('@/components/ui/button/button', () => (props: any) => (
-    <button data-testid="button" onClick={props.onClick}>{props.children}</button>
+  <button data-testid="button" onClick={props.onClick}>
+    {props.children}
+  </button>
 ));
 jest.mock('@/components/ui/button-link/button-link', () => (props: any) => (
-    <a data-testid="button-link" href={props.href}>{props.children}</a>
+  <a data-testid="button-link" href={props.href}>
+    {props.children}
+  </a>
 ));
 
 describe('Header', () => {
@@ -57,7 +60,6 @@ describe('Header', () => {
   it('authorized: shows sign-out and calls logout on click', () => {
     const { useAuthState } = require('react-firebase-hooks/auth');
     const { useIsScrolled } = require('@/hooks/useIsScrolled');
-
 
     useAuthState.mockReturnValue([{ uid: 'u1' }]);
     useIsScrolled.mockReturnValue(false);

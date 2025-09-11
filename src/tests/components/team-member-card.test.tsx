@@ -20,7 +20,7 @@ describe('TeamMemberCard', () => {
     githubUsername: 'testuser',
   };
 
-  it('рендерит имя, роль и био через переводы', () => {
+  it('renders name, role and bio', () => {
     render(<TeamMemberCard member={member} />);
     expect(screen.getByText('team-member-name')).toBeInTheDocument();
     expect(screen.getByText('team-member-role')).toBeInTheDocument();
