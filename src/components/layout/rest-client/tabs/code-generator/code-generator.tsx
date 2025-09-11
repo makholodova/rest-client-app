@@ -3,12 +3,14 @@ import styles from './code-generator.module.scss';
 import { ProgrammingLanguage } from '@/types/postman.type';
 import { LANGUAGE_OPTIONS } from '@/constants/rest-client';
 import { useState } from 'react';
+import CodePanel from '@/components/layout/code-panel/code-panel';
 
 export default function CodeGenerator() {
   /* const t = useTranslations('RestClient');*/
   const [language, setLanguage] = useState<ProgrammingLanguage>('javascript');
 
   const hasUrl = false; //временно
+  const text = `test \n test \n test`;
 
   return (
     <div className={styles.wrapper}>
@@ -24,6 +26,8 @@ export default function CodeGenerator() {
           </option>
         ))}
       </select>
+
+      <CodePanel initText={text} title="code" />
     </div>
   );
 }
