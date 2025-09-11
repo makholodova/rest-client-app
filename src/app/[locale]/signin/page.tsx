@@ -14,9 +14,11 @@ import AppLink from '@/components/ui/app-link/app-link';
 import { ROUTES } from '@/constants/routes';
 import Button from '@/components/ui/button/button';
 import { FieldInput } from '@/components/ui/field-input/field-input';
+import { useAuth } from '@/context/authUserContext';
 
 export default function SignInPage() {
-  const [user, loading, error] = useAuthState(auth);
+  const [error] = useAuthState(auth);
+  const { authUser, loading } = useAuth();
   const router = useRouter();
   const t = useTranslations('SignIn');
   const tV = useTranslations('Validation');
@@ -34,9 +36,9 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (loading) return;
-    if (user) router.push(ROUTES.HOME);
+    if (authUser) router.push(ROUTES.HOME);
     if (error) toast.error(t('useEffectErrorMessage'));
-  }, [user, loading, router, error, t]);
+  }, [authUser, loading, router, error, t]);
 
   const handleSignIn = async (data: SignInForm) => {
     await logInWithEmailAndPassword(data.email, data.password);
