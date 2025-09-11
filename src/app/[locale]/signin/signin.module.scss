@@ -1,21 +1,18 @@
 @use '@/styles/variables' as v;
 @use '@/styles/mixins' as m;
-.wrapper {
+
+.content {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 1.5rem;
   align-items: center;
-  height: 100vh;
-  background-color: v.$color-tint-5;
 }
 .title {
   color: v.$color-primary;
-  font-style: inherit;
   font-size: 24px;
   font-weight: 400;
 }
 .formContainer {
-  margin-top: 3rem;
   display: flex;
   gap: 1rem;
   flex-direction: column;
@@ -25,7 +22,8 @@
   border-radius: 8px;
   box-shadow: v.$box-shadow;
   min-width: 390px;
-  background-color: v.$color-white;
+  max-width: 450px;
+  background-color: v.$color-tint-5;
   transition: box-shadow 0.2s ease;
 
   &:hover {
@@ -45,12 +43,7 @@
 }
 
 .linkWrapper {
-  margin-top: 1rem;
   text-align: center;
-  border-radius: 4px;
-  padding: 8px 16px;
   font-size: 18px;
-  font-weight: 400;
   line-height: 111%;
-  margin-bottom: 3rem;
 }
