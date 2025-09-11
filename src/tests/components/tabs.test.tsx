@@ -8,7 +8,7 @@ describe('Tabs', () => {
     { label: 'Tab3', content: <div data-testid="content-3">Content 3</div> },
   ];
 
-  it('переключает вкладки при клике', () => {
+  it('switches tabs on click', () => {
     render(<Tabs tabs={tabs} />);
 
     expect(screen.getByTestId('content-1')).toBeInTheDocument();

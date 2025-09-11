@@ -14,7 +14,7 @@ jest.mock('@/components/ui/team-members/team-members', () => () => (
 ));
 
 describe('HomeContent', () => {
-  it('рендерит projectText, courseTitle, courseText и TeamMembers', () => {
+  it('renders projectText, courseTitle, courseText and TeamMembers', () => {
     render(<HomeContent />);
 
     expect(screen.getByText('projectText')).toBeInTheDocument();
