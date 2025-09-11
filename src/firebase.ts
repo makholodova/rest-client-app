@@ -26,7 +26,13 @@ const db = getFirestore(app);
 
 const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    const token = await res.user.getIdToken();
+    await fetch('/api/set-token', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+      headers: { 'Content-Type': 'application/json' },
+    });
   } catch (err) {
     if (err instanceof FirebaseError) {
       toast.error(err.message);
@@ -73,8 +79,14 @@ const sendPasswordReset = async (email: string) => {
   }
 };
 
-const logout = () => {
-  signOut(auth);
+const logout = async () => {
+  try {
+    signOut(auth);
+    await fetch('/api/logout', { method: 'POST' });
+  } catch (err) {
+    if (err instanceof FirebaseError) toast.error(err.message);
+    toast.error('Logout error');
+  }
 };
 
 export {

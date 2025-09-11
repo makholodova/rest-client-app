@@ -1,5 +1,5 @@
 ﻿'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { auth, logInWithEmailAndPassword } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
@@ -18,11 +18,12 @@ import { useAuth } from '@/context/authUserContext';
 
 export default function SignInPage() {
   const [error] = useAuthState(auth);
-  const { authUser, loading } = useAuth();
+  const { loading } = useAuth();
   const router = useRouter();
   const t = useTranslations('SignIn');
   const tV = useTranslations('Validation');
   const schema = signInSchema(tV);
+  const [hasToken, setHasToken] = useState<boolean | null>(null);
 
   const {
     register,
@@ -36,49 +37,58 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (loading) return;
-    if (authUser) router.push(ROUTES.HOME);
-    if (error) toast.error(t('useEffectErrorMessage'));
-  }, [authUser, loading, router, error, t]);
+    (async () => {
+      const res = await fetch('/api/check-token');
+      const data = await res.json();
+      setHasToken(data.hasToken);
+      if (data.hasToken) {
+        router.push(ROUTES.HOME);
+      }
+      if (error) toast.error(t('useEffectErrorMessage'));
+    })();
+  }, [error, loading, router, t]);
 
   const handleSignIn = async (data: SignInForm) => {
     await logInWithEmailAndPassword(data.email, data.password);
   };
-
-  return (
-    <div className={styles.wrapper}>
-      <form
-        onSubmit={handleSubmit(handleSignIn)}
-        className={styles.formContainer}
-      >
-        <h2 className={styles.title}>{t('title')}</h2>
-        <FieldInput
-          type="email"
-          placeholder={t('email')}
-          {...register('email')}
-          disabled={isSubmitting}
-        />
-        <p className={styles.error}>{errors.email?.message || ''}</p>
-        <FieldInput
-          type="password"
-          placeholder={t('password')}
-          {...register('password')}
-          disabled={isSubmitting}
-        />
-        <p className={styles.error}>{errors.password?.message || ''}</p>
-        <Button
-          isLoading={isSubmitting}
-          disabled={!isValid || isSubmitting}
-          type={'submit'}
+  if (!hasToken) {
+    return (
+      <div className={styles.wrapper}>
+        <form
+          onSubmit={handleSubmit(handleSignIn)}
+          className={styles.formContainer}
         >
-          {t('submitBtn')}
-        </Button>
-      </form>
-      <div>
-        <p className={styles.linkWrapper}>
-          {t('linkWrapper')}{' '}
-          <AppLink href={ROUTES.SIGN_UP}>{t('registrationLink')}</AppLink>
-        </p>
+          <h2 className={styles.title}>{t('title')}</h2>
+          <FieldInput
+            type="email"
+            placeholder={t('email')}
+            {...register('email')}
+            disabled={isSubmitting}
+          />
+          <p className={styles.error}>{errors.email?.message || ''}</p>
+          <FieldInput
+            type="password"
+            placeholder={t('password')}
+            {...register('password')}
+            disabled={isSubmitting}
+          />
+          <p className={styles.error}>{errors.password?.message || ''}</p>
+          <Button
+            isLoading={isSubmitting}
+            disabled={!isValid || isSubmitting}
+            type={'submit'}
+          >
+            {t('submitBtn')}
+          </Button>
+        </form>
+        <div>
+          <p className={styles.linkWrapper}>
+            {t('linkWrapper')}{' '}
+            <AppLink href={ROUTES.SIGN_UP}>{t('registrationLink')}</AppLink>
+          </p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+  return null;
 }
