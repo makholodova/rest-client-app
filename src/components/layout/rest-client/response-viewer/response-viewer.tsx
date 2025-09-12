@@ -12,7 +12,6 @@ export default async function ResponseViewer({ data }: { data?: string[] }) {
     }
 
     const decode = decodeBase64(encodedUrl);
-    console.log(decode);
 
     const response = await fetch(decode, {
       method: method,
@@ -33,7 +32,7 @@ export default async function ResponseViewer({ data }: { data?: string[] }) {
   return (
     <div className={styles.wrapper}>
       {formattedText && (
-        <CodePanel initText={formattedText} title="body" isReadOnly />
+        <CodePanel text={formattedText} title="body" isReadOnly />
       )}
     </div>
   );

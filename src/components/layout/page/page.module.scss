@@ -2,8 +2,8 @@
 @use '@/styles/mixins' as m;
 
 .main {
+  height: max-content;
   flex: 1 1 auto;
-  display: flex;
   padding: 35px 15px 65px 15px;
 }
 .centered {

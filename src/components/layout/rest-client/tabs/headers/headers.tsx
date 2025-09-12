@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import styles from './headers.module.scss';

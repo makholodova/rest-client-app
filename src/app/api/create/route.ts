@@ -53,3 +53,19 @@ export async function POST(configRequest: NextRequest) {
     });
   }
 }
+
+export async function GET() {
+  try {
+    const supportedCodegens: LanguageOption[] = codegen.getLanguageList();
+
+    return Response.json({
+      success: true,
+      language: supportedCodegens,
+    });
+  } catch (error) {
+    return Response.json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
+}

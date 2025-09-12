@@ -1,33 +1,47 @@
+'use client';
 /*import { useTranslations } from 'next-intl';*/
 import styles from './code-generator.module.scss';
-import { ProgrammingLanguage } from '@/types/postman.type';
-import { LANGUAGE_OPTIONS } from '@/constants/rest-client';
-import { useState } from 'react';
 import CodePanel from '@/components/layout/code-panel/code-panel';
+import { useCodeGenerator } from '@/hooks/use-code-generator';
 
 export default function CodeGenerator() {
   /* const t = useTranslations('RestClient');*/
-  const [language, setLanguage] = useState<ProgrammingLanguage>('javascript');
-
+  const {
+    code,
+    setCode,
+    language,
+    value,
+    supportedLanguages,
+    handleLanguageChange,
+  } = useCodeGenerator();
   const hasUrl = false; //временно
-  const text = `test \n test \n test`;
 
   return (
     <div className={styles.wrapper}>
       <select
         className={styles.selector}
-        disabled={!hasUrl}
-        value={language}
-        onChange={(e) => setLanguage(e.target.value as ProgrammingLanguage)}
+        disabled={hasUrl}
+        value={value}
+        onChange={handleLanguageChange}
       >
-        {LANGUAGE_OPTIONS.map((language) => (
-          <option key={language.key} value={language.key}>
-            {language.label}
-          </option>
-        ))}
+        {supportedLanguages.map((language) =>
+          language.variants.map((item) => (
+            <option
+              key={language.key + item.key}
+              value={language.key + '|' + item.key}
+            >
+              {language.label + ' | ' + item.key}
+            </option>
+          ))
+        )}
       </select>
 
-      <CodePanel initText={text} title="code" />
+      <CodePanel
+        text={code}
+        setText={setCode}
+        title="code"
+        language={language}
+      />
     </div>
   );
 }
