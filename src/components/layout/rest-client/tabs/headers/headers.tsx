@@ -1,45 +1,13 @@
 import { useTranslations } from 'next-intl';
-import { useState } from 'react';
+import { useHeaders } from '@/hooks/useHeaders';
 import styles from './headers.module.scss';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import Button from '@/components/ui/button/button';
-import { HeaderRequest } from '@/types/postman.type';
 
 export default function Headers() {
   const t = useTranslations('Headers');
-  const [headers, setHeaders] = useState<HeaderRequest[]>([]);
-
-  const addHeader = () => {
-    setHeaders([
-      ...headers,
-      { key: '', value: '', description: '', disabled: false },
-    ]);
-  };
-
-  const updateHeader = (
-    index: number,
-    field: 'key' | 'value' | 'disabled' | 'description',
-    newValue: string | boolean
-  ) => {
-    setHeaders((prev) => {
-      const updated = [...prev];
-      updated[index] = {
-        ...updated[index],
-        [field]: newValue,
-      } as HeaderRequest;
-      return updated;
-    });
-  };
-
-  const removeHeader = (index: number) => {
-    setHeaders(headers.filter((_, i) => i !== index));
-  };
-
-  /*const enabledHeaders = useMemo(
-    () =>
-      headers.filter((header) => !header.disabled && header.key.trim() !== ''),
-    [headers]
-  );*/
+  const { headers, addHeader, updateHeader, removeHeader, toggleHeader } =
+    useHeaders();
 
   return (
     <div className={styles.wrapper}>
@@ -56,7 +24,7 @@ export default function Headers() {
           <input
             type="checkbox"
             checked={!header.disabled}
-            onChange={(e) => updateHeader(i, 'disabled', !e.target.checked)}
+            onChange={() => toggleHeader(i)}
             className={styles.checkbox}
           />
           <FieldInput
