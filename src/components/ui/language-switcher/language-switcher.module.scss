@@ -35,7 +35,12 @@
   opacity: 1;
 }
 
+.imageWrapper {
+  position: relative;
+  width: 48px;
+  height: 36px;
+  border-radius: 50%;
+}
 .image {
   object-fit: cover;
-  border-radius: 50%;
 }
