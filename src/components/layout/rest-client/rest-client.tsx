@@ -7,7 +7,6 @@ import Headers from '@/components/layout/rest-client/tabs/headers/headers';
 import ResponseViewer from '@/components/layout/rest-client/response-viewer/response-viewer';
 import BodyEditor from '@/components/layout/rest-client/tabs/body-editor/body-editor';
 import CodeGenerator from '@/components/layout/rest-client/tabs/code-generator/code-generator';
-import RequestForm from '@/components/layout/rest-client/request-form/request-form';
 
 export default function RestClient() {
   const t = useTranslations('RestClient');
@@ -20,7 +19,7 @@ export default function RestClient() {
 
   return (
     <div className={styles.wrapper}>
-      <RequestForm />
+      {/* <RequestForm /> */}
       <Tabs tabs={tabs} />
       <ResponseViewer />
     </div>

@@ -1,5 +1,4 @@
-﻿import Page from '@/components/layout/page/page';
-import dynamic from 'next/dynamic';
+﻿import dynamic from 'next/dynamic';
 import CircleLoader from '@/components/ui/circle-loader/circle-loader';
 
 const RestClient = dynamic(
@@ -8,9 +7,5 @@ const RestClient = dynamic(
 );
 
 export default function RestClientPage() {
-  return (
-    <Page>
-      <RestClient />
-    </Page>
-  );
+  return <RestClient />;
 }
