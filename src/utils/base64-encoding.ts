@@ -1,11 +1,7 @@
-export const serverEncodeBase64 = (str: string): string =>
-  Buffer.from(str).toString('base64');
+export const encodeBase64 = (str: string): string =>
+  Buffer.from(str, 'utf-8').toString('base64').replace(/=+$/, '');
 
-export const serverDecodeBase64 = (str: string): string =>
-  Buffer.from(str, 'base64').toString('utf-8');
-
-export const clientEncodeBase64 = (str: string): string =>
-  btoa(unescape(encodeURIComponent(str)));
-
-export const clientDecodeBase64 = (str: string): string =>
-  decodeURIComponent(escape(atob(str)));
+export const decodeBase64 = (str: string): string => {
+  const pad = str.length % 4 === 0 ? '' : '===='.slice(str.length % 4);
+  return Buffer.from(str + pad, 'base64').toString('utf-8');
+};

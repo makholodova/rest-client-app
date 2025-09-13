@@ -26,15 +26,12 @@ export const useCodeGenerator = () => {
     event: React.ChangeEvent<HTMLSelectElement>
   ) => {
     const [language, query] = event.target.value.split('|');
-    console.log(language);
-    console.log(query);
 
     setLanguage(language as ProgrammingLanguage);
     setQuery(query);
   };
 
   const createCode = async () => {
-    console.log(url);
     if (!url) {
       return '{enter url}';
     }
