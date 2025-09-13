@@ -8,11 +8,11 @@ import Button from '@/components/ui/button/button';
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useMethod } from '../../../../hooks/use-method';
+import { useApiRequest } from '@/hooks/use-api-request';
 
 export default function RequestForm() {
   const t = useTranslations('RestClient');
-  const { method, handleMethodChange, onSendRequest } = useMethod();
+  const { method, handleMethodChange, onSendRequest } = useApiRequest();
 
   const [url, setUrl] = useState('');
   const isUrlEmpty = !url.trim();

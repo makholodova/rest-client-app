@@ -1,11 +1,6 @@
-import {
-  LanguageOption,
-  Method,
-  ProgrammingLanguage,
-} from '@/types/postman.type';
-import { decodeBase64 } from '@/utils/base64-encoding';
-import { useParams } from 'next/navigation';
+import { LanguageOption, ProgrammingLanguage } from '@/types/postman.type';
 import { useEffect, useState } from 'react';
+import { useApiRequest } from './use-api-request';
 
 // eslint-disable-next-line @typescript-eslint/no-require-imports
 const codegen = require('postman-code-generators');
@@ -25,7 +20,7 @@ export const useCodeGenerator = () => {
 
   const supportedLanguages: LanguageOption[] = codegen.getLanguageList();
 
-  const { data } = useParams();
+  const { method, url } = useApiRequest();
 
   const handleLanguageChange = (
     event: React.ChangeEvent<HTMLSelectElement>
@@ -39,12 +34,13 @@ export const useCodeGenerator = () => {
   };
 
   const createCode = async () => {
-    if (!Array.isArray(data) || data.length < 2) {
+    console.log(url);
+    if (!url) {
       return '{enter url}';
     }
 
-    const request = new sdk.Request(decodeBase64(data[1] as string));
-    request.method = data[0] as Method;
+    const request = new sdk.Request(url);
+    request.method = method;
     // request.url.variables.members = config.variables ?? [];
     // request.headers.members = config.headers ?? [];
 
@@ -71,7 +67,7 @@ export const useCodeGenerator = () => {
     (async () => {
       setCode(await createCode());
     })();
-  }, [language, query, data]);
+  }, [language, query, url]);
 
   return {
     code,

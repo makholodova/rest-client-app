@@ -1,15 +1,11 @@
-export const encodeBase64 = (str: string): string => {
-  if (typeof window === 'undefined') {
-    return Buffer.from(str).toString('base64');
-  } else {
-    return btoa(unescape(encodeURIComponent(str)));
-  }
-};
+export const serverEncodeBase64 = (str: string): string =>
+  Buffer.from(str).toString('base64');
 
-export const decodeBase64 = (str: string): string => {
-  if (typeof window === 'undefined') {
-    return Buffer.from(str, 'base64').toString('utf-8');
-  } else {
-    return decodeURIComponent(escape(atob(str)));
-  }
-};
+export const serverDecodeBase64 = (str: string): string =>
+  Buffer.from(str, 'base64').toString('utf-8');
+
+export const clientEncodeBase64 = (str: string): string =>
+  btoa(unescape(encodeURIComponent(str)));
+
+export const clientDecodeBase64 = (str: string): string =>
+  decodeURIComponent(escape(atob(str)));

@@ -1,4 +1,4 @@
-﻿import { decodeBase64 } from '@/utils/base64-encoding';
+﻿import { serverDecodeBase64 } from '@/utils/base64-encoding';
 import CodePanel from '../../code-panel/code-panel';
 import styles from './response-viewer.module.scss';
 
@@ -11,7 +11,7 @@ export default async function ResponseViewer({ data }: { data?: string[] }) {
       return 'Enter url..';
     }
 
-    const decode = decodeBase64(encodedUrl);
+    const decode = serverDecodeBase64(encodedUrl);
 
     const response = await fetch(decode, {
       method: method,
