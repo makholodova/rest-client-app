@@ -1,1 +1,11 @@
 ﻿@use '@/styles/variables' as v;
+.section {
+  border-radius: 16px;
+  box-shadow: v.$box-shadow;
+  padding: 16px;
+}
+.title{
+  margin-bottom: 2rem;
+  font-weight: 600;
+  text-align: center;
+}
