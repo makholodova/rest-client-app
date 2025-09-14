@@ -28,17 +28,23 @@ const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
     const res = await signInWithEmailAndPassword(auth, email, password);
     const token = await res.user.getIdToken();
-    await fetch('/api/set-token', {
+    const apiRes = await fetch('/api/set-token', {
       method: 'POST',
       body: JSON.stringify({ token }),
       headers: { 'Content-Type': 'application/json' },
     });
+    if (!apiRes.ok) {
+      toast.error('Token set error');
+      return false;
+    }
+    return true;
   } catch (err) {
     if (err instanceof FirebaseError) {
       toast.error(err.message);
     } else {
       toast.error('Unexpected error');
     }
+    return false;
   }
 };
 
