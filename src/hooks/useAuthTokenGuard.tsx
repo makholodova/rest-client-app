@@ -24,7 +24,6 @@ export function useAuthTokenGuard(options?: UseAuthTokenGuardOptions) {
         if (!data.hasToken && active) {
           await logout();
           router.push(redirectTo);
-          toast.warning(t('sessionExpired'));
         }
       } catch {
         if (active) {
