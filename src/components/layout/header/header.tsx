@@ -10,6 +10,7 @@ import ButtonLink from '@/components/ui/button-link/button-link';
 import Button from '@/components/ui/button/button';
 import { logout, auth } from '../../../firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import clsx from 'clsx';
 
 export default function Header() {
   const isScrolled = useIsScrolled();
@@ -17,7 +18,7 @@ export default function Header() {
   const [user] = useAuthState(auth);
 
   return (
-    <header className={`${styles.header} ${isScrolled && styles.sticky}`}>
+    <header className={clsx(styles.header, { [styles.sticky]: isScrolled })}>
       <div className={`${styles.headerWrapper} container`}>
         <Logo />
         <div className={styles.nav}>

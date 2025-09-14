@@ -13,13 +13,13 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.extends('next/core-web-vitals', 'next/typescript'),
   ...compat.extends('plugin:prettier/recommended'),
-
   {
     ignores: [
       'node_modules/**',
       '.next/**',
       'out/**',
       'build/**',
+      '**/*.test.tsx',
       'next-env.d.ts',
     ],
   },
