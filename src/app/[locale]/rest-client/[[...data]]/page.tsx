@@ -1,23 +1,21 @@
 ﻿import dynamic from 'next/dynamic';
 import CircleLoader from '@/components/ui/circle-loader/circle-loader';
-import ResponseViewer from '@/components/layout/rest-client/response-viewer/response-viewer';
 
-const RestClient = dynamic(
+type RestClientProps = {
+  data: string[] | undefined;
+};
+
+const RestClient = dynamic<RestClientProps>(
   () => import('@/components/layout/rest-client/rest-client'),
   { loading: () => <CircleLoader /> }
 );
 
-export default async function RestClientPage({
-  params,
-}: {
+type RestClientPageProps = {
   params: Promise<{ data?: string[] }>;
-}) {
+};
+
+export default async function RestClientPage({ params }: RestClientPageProps) {
   const { data } = await params;
 
-  return (
-    <>
-      <RestClient />
-      <ResponseViewer data={data} />
-    </>
-  );
+  return <RestClient data={data} />;
 }

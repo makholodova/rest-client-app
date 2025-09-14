@@ -1,7 +1,7 @@
 'use client';
 /*import { useTranslations } from 'next-intl';*/
 import styles from './code-generator.module.scss';
-import CodePanel from '@/components/layout/code-panel/code-panel';
+import CodePanel from '@/components/ui/code-panel/code-panel';
 import { useCodeGenerator } from '@/hooks/use-code-generator';
 
 export default function CodeGenerator() {

@@ -1,5 +1,5 @@
 ﻿import { decodeBase64 } from '@/utils/base64-encoding';
-import CodePanel from '../../code-panel/code-panel';
+import CodePanel from '@/components/ui/code-panel/code-panel';
 import styles from './response-viewer.module.scss';
 
 export default async function ResponseViewer({ data }: { data?: string[] }) {

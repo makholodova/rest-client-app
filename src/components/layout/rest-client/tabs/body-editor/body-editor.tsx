@@ -1,14 +1,14 @@
-/*import { useTranslations } from 'next-intl';*/
+'use client';
+import { useState } from 'react';
 import styles from './body-editor.module.scss';
-import CodePanel from '@/components/layout/code-panel/code-panel';
+import CodePanel from '@/components/ui/code-panel/code-panel';
 
 export default function BodyEditor() {
-  /*const t = useTranslations('RestClient');*/
-  const text = `test \n test \n test`;
+  const [body, setBody] = useState('enter body');
 
   return (
     <div className={styles.wrapper}>
-      <CodePanel initText={text} title="body" />
+      <CodePanel text={body} setText={setBody} title="body" />
     </div>
   );
 }
