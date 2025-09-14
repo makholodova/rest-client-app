@@ -9,13 +9,16 @@ type HistoryRequestsListProps = {
 export default function HistoryRequestsList({
   requests,
 }: HistoryRequestsListProps) {
+  const sortedRequests = [...(requests || [])].sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
   return (
     <div>
       {!requests?.length ? (
         <EmptyHistory />
       ) : (
         <ul className={styles.list}>
-          {requests.map((request) => (
+          {sortedRequests.map((request) => (
             <HistoryRequestItem key={request.id} request={request} />
           ))}
         </ul>
