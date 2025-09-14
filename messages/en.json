@@ -123,7 +123,7 @@
     "genSucces": "The code has been successfully generated",
     "copy": "copy",
     "copyError": "Copy error",
-    "copySucces": "The text has been copied to the clipboard",
+    "copySucces": "Copied to clipboard",
     "edit": "edit",
     "read": "read",
     "codearea": "enter code..."

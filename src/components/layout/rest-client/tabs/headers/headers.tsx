@@ -1,3 +1,5 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 import { useHeaders } from '@/hooks/useHeaders';
 import styles from './headers.module.scss';

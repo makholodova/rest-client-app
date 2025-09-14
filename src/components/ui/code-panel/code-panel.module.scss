@@ -1,0 +1,39 @@
+@use '@/styles/variables' as v;
+
+.panel {
+  width: 100%;
+  height: max-content;
+
+  padding: 8px;
+  border-radius: 12px;
+  border: 2px dashed v.$color-l-grey;
+
+  &.active {
+    border: 2px dashed v.$color-shade-1;
+    .title {
+      color: v.$color-shade-1;
+    }
+  }
+
+  .editor {
+    padding-right: 10px;
+  }
+
+  .title {
+    color: v.$color-l-grey;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+
+    button {
+      background-color: #fff;
+      color: none;
+      border: none;
+
+      cursor: pointer;
+    }
+  }
+}

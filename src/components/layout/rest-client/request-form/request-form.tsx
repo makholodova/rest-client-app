@@ -1,26 +1,26 @@
-﻿import { useTranslations } from 'next-intl';
+﻿'use client';
+
 import styles from './request-form.module.scss';
 import { Method } from '@/types/postman.type';
 import { METHOD_OPTIONS } from '@/constants/rest-client';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import Button from '@/components/ui/button/button';
+
+import { useTranslations } from 'next-intl';
+import { useApiRequest } from '@/hooks/use-api-request';
 import { useMemo, useState } from 'react';
 import { useRestClientStore } from '@/store/restClient.store';
 import { getEnabledHeaders } from '@/utils/helpers';
 
+
 export default function RequestForm() {
   const t = useTranslations('RestClient');
-  const [method, setMethod] = useState<Method>('GET');
+  const { method, handleMethodChange, onSendRequest } = useApiRequest();
+
   const [url, setUrl] = useState('');
   const isUrlEmpty = !url.trim();
-
   const headers = useRestClientStore((s) => s.headers);
   const enabledHeaders = useMemo(() => getEnabledHeaders(headers), [headers]);
-
-  const onSendRequest = () => {
-    console.log('Sending request', method, url, enabledHeaders);
-    // TODO: отправка запроса
-  };
 
   return (
     <div className={styles.wrapper}>
@@ -28,7 +28,7 @@ export default function RequestForm() {
         name="method"
         className={styles.selector}
         value={method}
-        onChange={(e) => setMethod(e.target.value as Method)}
+        onChange={(e) => handleMethodChange(e.target.value as Method)}
       >
         {METHOD_OPTIONS.map((method) => (
           <option key={method} value={method}>
@@ -46,7 +46,7 @@ export default function RequestForm() {
       <Button
         className={styles.sendBtn}
         disabled={isUrlEmpty}
-        onClick={onSendRequest}
+        onClick={() => onSendRequest(url)}
       >
         {t('send')}
       </Button>
