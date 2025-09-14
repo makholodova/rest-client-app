@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
   const { token } = await request.json();
-  const maxAge = 20;
+  const maxAge = 60 * 60 * 12;
   const response = NextResponse.json({ success: true });
 
   response.cookies.set('AUTH-TOKEN', token, {
