@@ -8,22 +8,23 @@ import LanguageSwitcher from '@/components/ui/language-switcher/language-switche
 import { useIsScrolled } from '@/hooks/useIsScrolled';
 import ButtonLink from '@/components/ui/button-link/button-link';
 import Button from '@/components/ui/button/button';
-import { logout } from '../../../firebase';
-import { useAuth } from '@/context/authUserContext';
+import { logout, auth } from '../../../firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import clsx from 'clsx';
 
 export default function Header() {
   const isScrolled = useIsScrolled();
   const t = useTranslations('Header');
-  const { authUser } = useAuth();
+  const [user] = useAuthState(auth);
 
   return (
-    <header className={`${styles.header} ${isScrolled && styles.sticky}`}>
+    <header className={clsx(styles.header, { [styles.sticky]: isScrolled })}>
       <div className={`${styles.headerWrapper} container`}>
         <Logo />
         <div className={styles.nav}>
           <LanguageSwitcher />
 
-          {authUser ? (
+          {user ? (
             <Button
               variant={'secondary'}
               className={styles.navLink}

@@ -17,17 +17,11 @@ export default function LanguageSwitcher() {
           key={code}
           href={pathname}
           locale={code}
-          prefetch={false}
           className={`${styles.link} ${active === code ? styles.active : styles.inactive}`}
         >
-          <Image
-            className={styles.image}
-            priority={false}
-            src={flag}
-            alt={label}
-            width={48}
-            height={36}
-          />
+          <div className={styles.imageWrapper}>
+            <Image className={styles.image} src={flag} alt={label} fill />
+          </div>
         </Link>
       ))}
     </div>

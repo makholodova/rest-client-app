@@ -2,18 +2,17 @@
 
 import UserGreeting from '@/components/ui/user-greeting/user-greeting';
 import GuestGreeting from '@/components/ui/guest-greeting/guest-greeting';
-import TriggerErrorButton from '@/components/ui/error/trigger-erro-button';
 import HomeContent from '@/components/ui/home-content/home-content';
 import Page from '@/components/layout/page/page';
-import { useAuth } from '@/context/authUserContext';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '../../firebase';
 
 export default function Home() {
-  const { authUser } = useAuth();
+  const [user] = useAuthState(auth);
 
   return (
     <Page>
-      {authUser ? <UserGreeting name={authUser.name} /> : <GuestGreeting />}
-      <TriggerErrorButton />
+      {user ? <UserGreeting name={user.displayName} /> : <GuestGreeting />}
       <HomeContent />
     </Page>
   );

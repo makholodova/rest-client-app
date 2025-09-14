@@ -1,11 +1,11 @@
-﻿'use client';
-import { useEffect, useState } from 'react';
-import { auth, logInWithEmailAndPassword } from '../../../firebase';
+'use client';
+import { useEffect } from 'react';
+import { auth, logInWithEmailAndPassword } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
 
 import styles from './signin.module.scss';
-import { signInSchema, type SignInForm } from '../../../utils/validation';
+import { signInSchema, type SignInForm } from '@/utils/validation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
@@ -14,16 +14,14 @@ import AppLink from '@/components/ui/app-link/app-link';
 import { ROUTES } from '@/constants/routes';
 import Button from '@/components/ui/button/button';
 import { FieldInput } from '@/components/ui/field-input/field-input';
-import { useAuth } from '@/context/authUserContext';
+import Page from '@/components/layout/page/page';
 
 export default function SignInPage() {
-  const [error] = useAuthState(auth);
-  const { loading } = useAuth();
+  const [user, loading, error] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('SignIn');
   const tV = useTranslations('Validation');
   const schema = signInSchema(tV);
-  const [hasToken, setHasToken] = useState<boolean | null>(null);
 
   const {
     register,
@@ -37,23 +35,18 @@ export default function SignInPage() {
 
   useEffect(() => {
     if (loading) return;
-    (async () => {
-      const res = await fetch('/api/check-token');
-      const data = await res.json();
-      setHasToken(data.hasToken);
-      if (data.hasToken) {
-        router.push(ROUTES.HOME);
-      }
-      if (error) toast.error(t('useEffectErrorMessage'));
-    })();
-  }, [error, loading, router, t]);
+    if (user) router.push(ROUTES.HOME);
+    if (error) toast.error(t('useEffectErrorMessage'));
+  }, [user, loading, router, error, t]);
+
 
   const handleSignIn = async (data: SignInForm) => {
     await logInWithEmailAndPassword(data.email, data.password);
   };
-  if (!hasToken) {
-    return (
-      <div className={styles.wrapper}>
+
+  return (
+    <Page>
+      <div className={styles.content}>
         <form
           onSubmit={handleSubmit(handleSignIn)}
           className={styles.formContainer}
@@ -81,6 +74,7 @@ export default function SignInPage() {
             {t('submitBtn')}
           </Button>
         </form>
+
         <div>
           <p className={styles.linkWrapper}>
             {t('linkWrapper')}{' '}
@@ -88,7 +82,6 @@ export default function SignInPage() {
           </p>
         </div>
       </div>
-    );
-  }
-  return null;
+    </Page>
+  );
 }

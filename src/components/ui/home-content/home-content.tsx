@@ -14,7 +14,7 @@ export default function HomeContent() {
       <TeamMembers />
 
       <div className={styles.course}>
-        <Image src="/pana.png" alt=" RS School" width={307} height={302} />
+        <Image src="/pana.png" alt="RS School" width={307} height={302} />
         <div className={styles.courseContent}>
           <h2 className={styles.title}>{t('courseTitle')}</h2>
           <p className={styles.description}>{t('courseText')}</p>
