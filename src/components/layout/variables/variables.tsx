@@ -13,16 +13,29 @@ import {
   clearVariables,
   type Variables,
 } from '@/utils/variables';
+import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase';
+import { ROUTES } from '@/constants/routes';
+import { toast } from 'react-toastify';
 
 export default function Variables() {
   const [variables, setVariables] = useState<Variables>({});
   const [key, setKey] = useState('');
   const [value, setValue] = useState('');
   const t = useTranslations('Variables');
+  const [user, loading, error] = useAuthState(auth);
+  const router = useRouter();
 
   useEffect(() => {
     setVariables(loadVariables());
   }, []);
+
+  useEffect(() => {
+    if (loading) return;
+    if (!user) router.push(ROUTES.HOME);
+    if (error) toast.error(t('useEffectErrorMessage'));
+  }, [user, loading, router, error, t]);
 
   const handleAdd = () => {
     const trimmedKey = key.trim();

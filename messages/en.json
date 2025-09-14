@@ -133,6 +133,7 @@
     "placeholder": "Variable's name",
     "value": "Variable's value",
     "clearBtn": "Clear all",
-    "noVariables": "No variables yet."
+    "noVariables": "No variables yet.",
+    "useEffectErrorMessage": "Please, sign in or sign up - in case you are a new user or try later."
   }
 }

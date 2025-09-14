@@ -39,7 +39,6 @@ export default function SignInPage() {
     if (error) toast.error(t('useEffectErrorMessage'));
   }, [user, loading, router, error, t]);
 
-
   const handleSignIn = async (data: SignInForm) => {
     await logInWithEmailAndPassword(data.email, data.password);
   };
