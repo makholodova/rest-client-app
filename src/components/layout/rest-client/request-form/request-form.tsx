@@ -8,10 +8,9 @@ import Button from '@/components/ui/button/button';
 
 import { useTranslations } from 'next-intl';
 import { useApiRequest } from '@/hooks/use-api-request';
-import { useMemo, useState } from 'react';
-import { useRestClientStore } from '@/store/restClient.store';
-import { getEnabledHeaders } from '@/utils/helpers';
-
+import { useState } from 'react';
+// import { useRestClientStore } from '@/store/restClient.store';
+// import { getEnabledHeaders } from '@/utils/helpers';
 
 export default function RequestForm() {
   const t = useTranslations('RestClient');
@@ -19,8 +18,8 @@ export default function RequestForm() {
 
   const [url, setUrl] = useState('');
   const isUrlEmpty = !url.trim();
-  const headers = useRestClientStore((s) => s.headers);
-  const enabledHeaders = useMemo(() => getEnabledHeaders(headers), [headers]);
+  // const headers = useRestClientStore((s) => s.headers);
+  // const enabledHeaders = useMemo(() => getEnabledHeaders(headers), [headers]);
 
   return (
     <div className={styles.wrapper}>

@@ -1,10 +1,11 @@
 'use client';
-import { useState } from 'react';
 import styles from './body-editor.module.scss';
 import CodePanel from '@/components/ui/code-panel/code-panel';
+import { useRestClientStore } from '@/store/restClient.store';
 
 export default function BodyEditor() {
-  const [body, setBody] = useState('enter body');
+  const body = useRestClientStore((state) => state.body);
+  const setBody = useRestClientStore((state) => state.setBody);
 
   return (
     <div className={styles.wrapper}>

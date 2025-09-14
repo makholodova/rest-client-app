@@ -3,11 +3,14 @@ import { decodeBase64, encodeBase64 } from '@/utils/base64-encoding';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ROUTES } from '@/constants/routes';
+import { useRestClientStore } from '@/store/restClient.store';
 
 export const useApiRequest = () => {
   const [method, setMethod] = useState<Method>('GET');
   const [url, setUrl] = useState('');
   const [body, setBody] = useState('');
+
+  const bodyState = useRestClientStore((state) => state.body);
 
   const router = useRouter();
   const params = useParams();
@@ -45,25 +48,13 @@ export const useApiRequest = () => {
 
   const onSendRequest = (url: string) => {
     const code = encodeBase64(url);
+    const codeBudy = encodeBase64(bodyState);
 
-    const newSegments: string[] = [method, code];
-
-    if (currentBody) {
-      newSegments.push(currentBody);
-    }
+    const newSegments: string[] = [method, code, codeBudy];
 
     const newPath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
     router.push(newPath);
   };
 
-  const onSendBody = (body: string) => {
-    const encodeBody = encodeBase64(body);
-
-    const newSegments: string[] = [method, currentUrl, encodeBody];
-
-    const newPath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
-    router.push(newPath);
-  };
-
-  return { method, url, body, handleMethodChange, onSendRequest, onSendBody };
+  return { method, url, body, handleMethodChange, onSendRequest };
 };
