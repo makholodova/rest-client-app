@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './variables.module.scss';
 import Page from '@/components/layout/page/page';
 import Button from '@/components/ui/button/button';
