@@ -134,5 +134,15 @@
     "value": "Variable's value",
     "clearBtn": "Clear all",
     "noVariables": "No variables yet."
+  },
+  "History": {
+    "title": "History Requests",
+    "noRequests": "You haven't executed any requests.",
+    "empty": "It's empty here. Try:",
+    "restLink": "Open REST-client",
+    "latency": "Latency",
+    "reqSize": "Request size",
+    "resSize": "Response size",
+    "timeAlt": "Time"
   }
 }
