@@ -1,5 +1,5 @@
 ﻿import { renderHook, act } from '@testing-library/react';
-import { useIsScrolled } from '@/hooks/useIsScrolled';
+import { useIsScrolled } from '@/hooks/use-is-scrolled';
 
 describe('useIsScrolled', () => {
   beforeEach(() => {

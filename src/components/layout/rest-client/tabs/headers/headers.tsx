@@ -1,7 +1,7 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useHeaders } from '@/hooks/useHeaders';
+import { useHeaders } from '@/hooks/use-headers';
 import styles from './headers.module.scss';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import Button from '@/components/ui/button/button';
