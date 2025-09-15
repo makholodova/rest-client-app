@@ -1,35 +1,38 @@
 @use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
 .item {
   border-bottom: 1px solid v.$color-tint-4;
   transition: background-color 0.2s ease;
-  &:hover {
-    background-color: v.$color-tint-5;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: v.$color-tint-5;
+    }
   }
 }
 .item:last-child {
   border-bottom: none;
 }
 
-
-
-.row {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 12px;
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   padding: 10px 12px;
-  text-decoration: none;
-  color: #111;
 }
-.left {
+
+.main {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 1rem;
   min-width: 0;
+}
+.time {
+ color: v.$color-d-grey;
 }
 .method {
   font-weight: 800;
-  min-width: 64px;
-  text-align: right;
+  min-width: 72px;
+  text-align: left;
 }
 .method[data-method='GET'] {
   color: #2e7d32;
@@ -47,6 +50,17 @@
 .method[data-method='OPTIONS'] {
   color: #a36510;
 }
+.statusOk {
+  color: v.$color-warning;
+  font-weight: 700;
+  min-width: 35px;
+}
+.statusErr {
+  color: v.$color-error;
+  font-weight: 700;
+  min-width: 35px;
+}
+
 .url {
   white-space: nowrap;
   overflow: hidden;
@@ -54,48 +68,41 @@
 }
 
 .meta {
-  display: grid;
-  grid-auto-flow: column;
+  display: flex;
+   align-items: center;
+  gap: 0.7rem;
+  align-self: flex-end;
+  font-size: 0.8rem;
+  color: v.$color-grey;
+}
+.metaItem{
+  display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 13px;
-  color: #333;
-}
-.kv {
-  opacity: 0.9;
-}
-.time {
-  opacity: 0.8;
-}
-.statusOk {
-  color: #2e7d32;
-  font-weight: 700;
-  min-width: 44px;
-  text-align: right;
-}
-.statusErr {
-  color: #c62828;
-  font-weight: 700;
-  min-width: 44px;
-  text-align: right;
+  gap: 4px;
+  font-size: 0.85rem;
+
 }
 .errBadge {
   background: #fdecea;
-  color: #b71c1c;
+  color: v.$color-error;
   border: 1px solid #f5c6c6;
   padding: 2px 6px;
-  border-radius: 999px;
+  border-radius: 50px;
   font-size: 12px;
   line-height: 1.4;
 }
 
-@media (max-width: 720px) {
-  .row {
-    grid-template-columns: 1fr;
+@include m.phone {
+  .main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
   }
-  .meta {
-    grid-auto-flow: row;
-    grid-template-columns: repeat(3, max-content);
-    justify-content: start;
+
+  .url {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    word-break: break-all;
   }
 }
