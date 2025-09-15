@@ -5,7 +5,7 @@ import Logo from '@/components/ui/logo/logo';
 import { ROUTES } from '@/constants/routes';
 import { useTranslations } from 'next-intl';
 import LanguageSwitcher from '@/components/ui/language-switcher/language-switcher';
-import { useIsScrolled } from '@/hooks/useIsScrolled';
+import { useIsScrolled } from '@/hooks/use-is-scrolled';
 import ButtonLink from '@/components/ui/button-link/button-link';
 import Button from '@/components/ui/button/button';
 import { logout, auth } from '../../../firebase';
