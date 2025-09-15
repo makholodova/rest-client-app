@@ -13,6 +13,7 @@
 }
 
 .title {
+  align-self: center;
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -33,7 +34,9 @@
   box-shadow: v.$box-shadow;
   border-radius: 8px;
 }
-
+.noVariables {
+  align-self: center;
+}
 .listItem {
   display: flex;
   align-items: center;
@@ -43,8 +46,10 @@
   border-radius: 8px;
   align-self: baseline;
   transition: background-color 0.2s;
-  &:hover {
-    background-color: v.$color-tint-5;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: v.$color-tint-5;
+    }
   }
 }
 .varKey {

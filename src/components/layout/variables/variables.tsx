@@ -49,12 +49,12 @@ export default function Variables() {
 
   return (
     <Page>
-      <div className={styles.wrapper}>
+      <section className={styles.wrapper}>
         <h2 className={styles.title}>{t('title')}</h2>
         <div className={styles.addVar}>
           <FieldInput
             type="text"
-            placeholder={t('placeholder')}
+            placeholder={t('key')}
             value={key}
             onChange={(e) => setKey(e.target.value)}
             className={styles.input}
@@ -70,35 +70,42 @@ export default function Variables() {
             <Image src="/plus.svg" alt="+" width={24} height={24} />
           </Button>
         </div>
+
         {hasVariables ? (
-          <ul className={styles.list}>
-            {Object.entries(variables).map(([key, value]) => (
-              <li key={key} className={styles.listItem}>
-                <span className={styles.varKey}>{key}</span>
-                <span className={styles.varValue}>{value}</span>
-                <Button
-                  variant="removeButton"
-                  onClick={() => handleDelete(key)}
-                >
-                  <Image src="/close.svg" alt="Close" width={24} height={24} />
-                </Button>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-        {hasVariables ? null : <h3>{t('noVariables')}</h3>}
-        {hasVariables ? (
-          <div className={styles.clear}>
-            <Button
-              variant="secondary"
-              onClick={handleClear}
-              disabled={!Object.keys(variables).length}
-            >
-              {t('clearBtn')}
-            </Button>{' '}
-          </div>
-        ) : null}
-      </div>
+          <>
+            <ul className={styles.list}>
+              {Object.entries(variables).map(([key, value]) => (
+                <li key={key} className={styles.listItem}>
+                  <span className={styles.varKey}>{key}</span>
+                  <span className={styles.varValue}>{value}</span>
+                  <Button
+                    variant="removeButton"
+                    onClick={() => handleDelete(key)}
+                  >
+                    <Image
+                      src="/close.svg"
+                      alt="Close"
+                      width={24}
+                      height={24}
+                    />
+                  </Button>
+                </li>
+              ))}
+            </ul>
+            <div className={styles.clear}>
+              <Button
+                variant="secondary"
+                onClick={handleClear}
+                disabled={!Object.keys(variables).length}
+              >
+                {t('clearBtn')}
+              </Button>{' '}
+            </div>
+          </>
+        ) : (
+          <h3 className={styles.noVariables}>{t('noVariables')}</h3>
+        )}
+      </section>
     </Page>
   );
 }
