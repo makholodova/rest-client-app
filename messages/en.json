@@ -130,8 +130,8 @@
   },
   "Variables": {
     "title": "Variables",
-    "placeholder": "Variable's name",
-    "value": "Variable's value",
+    "key": "Key",
+    "value": "Value",
     "clearBtn": "Clear all",
     "noVariables": "No variables yet."
   },
