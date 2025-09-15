@@ -133,7 +133,12 @@
     "key": "Key",
     "value": "Value",
     "clearBtn": "Clear all",
-    "noVariables": "No variables yet."
+    "noVariables": "No variables yet.",
+    "useEffectErrorMessage": "Please, sign in or sign up - in case you are a new user or try later."
+  },
+  "ErrorsWarnings": {
+    "noAuthToken": "Something went wrong, try again.",
+    "sessionExpired": "Your session has expired, please sign in again."
   },
   "History": {
     "title": "History Requests",
