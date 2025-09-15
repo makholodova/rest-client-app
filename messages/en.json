@@ -139,5 +139,15 @@
   "ErrorsWarnings": {
     "noAuthToken": "Something went wrong, try again.",
     "sessionExpired": "Your session has expired, please sign in again."
+  },
+  "History": {
+    "title": "History Requests",
+    "noRequests": "You haven't executed any requests.",
+    "empty": "It's empty here. Try:",
+    "restLink": "Open REST-client",
+    "latency": "Latency",
+    "reqSize": "Request size",
+    "resSize": "Response size",
+    "timeAlt": "Time"
   }
 }
