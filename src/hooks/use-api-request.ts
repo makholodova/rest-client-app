@@ -1,6 +1,6 @@
 import { Method } from '@/types/postman.type';
 import { decodeBase64, encodeBase64 } from '@/utils/base64-encoding';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { ROUTES } from '@/constants/routes';
 import { useRestClientStore } from '@/store/restClient.store';
@@ -11,9 +11,11 @@ export const useApiRequest = () => {
   const [body, setBody] = useState('');
 
   const bodyState = useRestClientStore((state) => state.body);
+  const headersState = useRestClientStore((state) => state.headers);
 
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
 
   const urlSegments = params?.data || [];
   const currentMethodFromUrl =
@@ -42,7 +44,11 @@ export const useApiRequest = () => {
       newSegments.push(...urlSegments.slice(1));
     }
 
-    const newPath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
+    const currentParams = new URLSearchParams(searchParams.toString());
+    const queryString = currentParams.toString();
+    const basePath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
+    const newPath = queryString ? `${basePath}?${queryString}` : basePath;
+
     router.push(newPath);
   };
 
@@ -52,7 +58,20 @@ export const useApiRequest = () => {
 
     const newSegments: string[] = [method, code, codeBudy];
 
-    const newPath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
+    const params = new URLSearchParams();
+
+    headersState.forEach((header) => {
+      if (header.key && header.value) {
+        const encodedKey = encodeURIComponent(header.key);
+        const encodedValue = encodeURIComponent(header.value);
+        params.set(encodedKey, encodedValue);
+      }
+    });
+
+    const queryString = params.toString();
+    const basePath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
+    const newPath = queryString ? `${basePath}?${queryString}` : basePath;
+
     router.push(newPath);
   };
 

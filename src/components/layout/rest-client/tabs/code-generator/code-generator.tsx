@@ -1,11 +1,9 @@
 'use client';
-/*import { useTranslations } from 'next-intl';*/
 import styles from './code-generator.module.scss';
 import CodePanel from '@/components/ui/code-panel/code-panel';
 import { useCodeGenerator } from '@/hooks/use-code-generator';
 
 export default function CodeGenerator() {
-  /* const t = useTranslations('RestClient');*/
   const {
     code,
     setCode,
@@ -14,13 +12,11 @@ export default function CodeGenerator() {
     supportedLanguages,
     handleLanguageChange,
   } = useCodeGenerator();
-  const hasUrl = false; //временно
 
   return (
     <div className={styles.wrapper}>
       <select
         className={styles.selector}
-        disabled={hasUrl}
         value={value}
         onChange={handleLanguageChange}
       >

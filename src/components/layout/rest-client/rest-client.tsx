@@ -8,8 +8,10 @@ import ResponseViewer from './response-viewer/response-viewer';
 
 export default async function RestClient({
   data,
+  headers,
 }: {
   data: string[] | undefined;
+  headers: { [key: string]: string };
 }) {
   const t = await getTranslations('RestClient');
 
@@ -22,7 +24,7 @@ export default async function RestClient({
   return (
     <div className={styles.wrapper}>
       <Tabs tabs={tabs} />
-      <ResponseViewer data={data} />
+      <ResponseViewer {...{ data, headers }} />
     </div>
   );
 }
