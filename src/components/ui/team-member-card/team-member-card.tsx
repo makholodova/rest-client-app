@@ -1,6 +1,6 @@
 ﻿import styles from './team-member-card.module.scss';
 import { useTranslations } from 'next-intl';
-import { TeamMember } from '@/types/team';
+import { TeamMember } from '@/types/team.type';
 import Image from 'next/image';
 import AppLink from '@/components/ui/app-link/app-link';
 

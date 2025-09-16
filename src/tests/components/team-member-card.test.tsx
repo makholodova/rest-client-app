@@ -1,6 +1,6 @@
 ﻿import { render, screen } from '@testing-library/react';
 import TeamMemberCard from '@/components/ui/team-member-card/team-member-card';
-import { TeamMember } from '@/types/team';
+import { TeamMember } from '@/types/team.type';
 
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,

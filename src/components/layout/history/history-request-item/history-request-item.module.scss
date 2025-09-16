@@ -1,0 +1,107 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
+.item {
+  border-bottom: 1px solid v.$color-tint-4;
+  transition: background-color 0.2s ease;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background-color: v.$color-tint-5;
+    }
+  }
+}
+.item:last-child {
+  border-bottom: none;
+}
+
+.link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 10px 12px;
+}
+
+.main {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+.time {
+  color: v.$color-d-grey;
+}
+.method {
+  font-weight: 800;
+  min-width: 72px;
+  text-align: left;
+}
+.method[data-method='GET'] {
+  color: #2e7d32;
+}
+.method[data-method='POST'] {
+  color: #1565c0;
+}
+.method[data-method='PUT'],
+.method[data-method='PATCH'] {
+  color: #6a1b9a;
+}
+.method[data-method='DELETE'] {
+  color: #c62828;
+}
+.method[data-method='OPTIONS'] {
+  color: #a36510;
+}
+.statusOk {
+  color: v.$color-warning;
+  font-weight: 700;
+  min-width: 35px;
+}
+.statusErr {
+  color: v.$color-error;
+  font-weight: 700;
+  min-width: 35px;
+}
+
+.url {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  align-self: flex-end;
+  font-size: 0.8rem;
+  color: v.$color-grey;
+}
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.85rem;
+}
+.errBadge {
+  background: #fdecea;
+  color: v.$color-error;
+  border: 1px solid #f5c6c6;
+  padding: 2px 6px;
+  border-radius: 50px;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+@include m.phone {
+  .main {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .url {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    word-break: break-all;
+  }
+}

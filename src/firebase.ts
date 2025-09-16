@@ -12,13 +12,13 @@ import { toast } from 'react-toastify';
 import { FirebaseError } from 'firebase/app';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyBO_yryYqJQVYRsV4gD0NZ8Ulplxw96Kz8',
-  authDomain: 'rest-client-app-cfaa5.firebaseapp.com',
-  projectId: 'rest-client-app-cfaa5',
-  storageBucket: 'rest-client-app-cfaa5.firebasestorage.app',
-  messagingSenderId: '807816489019',
-  appId: '1:807816489019:web:253791a85b40cc0eefd41e',
-  measurementId: 'G-ZVR99WFE0W',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -26,13 +26,25 @@ const db = getFirestore(app);
 
 const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const res = await signInWithEmailAndPassword(auth, email, password);
+    const token = await res.user.getIdToken();
+    const apiRes = await fetch('/api/set-token', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (!apiRes.ok) {
+      toast.error('Token set error');
+      return false;
+    }
+    return true;
   } catch (err) {
     if (err instanceof FirebaseError) {
       toast.error(err.message);
     } else {
       toast.error('Unexpected error');
     }
+    return false;
   }
 };
 
@@ -73,8 +85,14 @@ const sendPasswordReset = async (email: string) => {
   }
 };
 
-const logout = () => {
-  signOut(auth);
+const logout = async () => {
+  try {
+    signOut(auth);
+    await fetch('/api/logout', { method: 'POST' });
+  } catch (err) {
+    if (err instanceof FirebaseError) toast.error(err.message);
+    toast.error('Logout error');
+  }
 };
 
 export {

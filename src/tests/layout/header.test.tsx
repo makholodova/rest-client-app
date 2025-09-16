@@ -6,7 +6,7 @@ jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-jest.mock('@/hooks/useIsScrolled', () => ({
+jest.mock('@/hooks/use-is-scrolled', () => ({
   useIsScrolled: jest.fn(),
 }));
 
