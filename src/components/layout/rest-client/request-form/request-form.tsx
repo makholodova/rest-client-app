@@ -9,17 +9,13 @@ import Button from '@/components/ui/button/button';
 import { useTranslations } from 'next-intl';
 import { useApiRequest } from '@/hooks/use-api-request';
 import { useState } from 'react';
-// import { useRestClientStore } from '@/store/restClient.store';
-// import { getEnabledHeaders } from '@/utils/helpers';
 
 export default function RequestForm() {
   const t = useTranslations('RestClient');
-  const { method, handleMethodChange, onSendRequest } = useApiRequest();
+  const { method, url, setMethod, onSendRequest } = useApiRequest();
 
-  const [url, setUrl] = useState('');
-  const isUrlEmpty = !url.trim();
-  // const headers = useRestClientStore((s) => s.headers);
-  // const enabledHeaders = useMemo(() => getEnabledHeaders(headers), [headers]);
+  const [currentUrl, setCurrentUrl] = useState(url);
+  const isUrlEmpty = !currentUrl.trim();
 
   return (
     <div className={styles.wrapper}>
@@ -27,7 +23,7 @@ export default function RequestForm() {
         name="method"
         className={styles.selector}
         value={method}
-        onChange={(e) => handleMethodChange(e.target.value as Method)}
+        onChange={(e) => setMethod(e.target.value as Method)}
       >
         {METHOD_OPTIONS.map((method) => (
           <option key={method} value={method}>
@@ -39,13 +35,13 @@ export default function RequestForm() {
       <FieldInput
         className={styles.url}
         placeholder="https://api.example.com/resource"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        value={currentUrl}
+        onChange={(e) => setCurrentUrl(e.target.value)}
       />
       <Button
         className={styles.sendBtn}
         disabled={isUrlEmpty}
-        onClick={() => onSendRequest(url)}
+        onClick={() => onSendRequest(currentUrl)}
       >
         {t('send')}
       </Button>
