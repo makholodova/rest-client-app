@@ -14,6 +14,8 @@ export default async function ResponseViewer({ data }: { data?: string[] }) {
 
       const decode = decodeBase64(encodedUrl);
 
+      const startedAt = Date.now();
+
       const response = await fetch(decode, {
         method: method,
         headers: {
@@ -21,11 +23,34 @@ export default async function ResponseViewer({ data }: { data?: string[] }) {
         },
       });
 
-      if (!response.ok) {
-        return ['{error}', 500];
-      }
+      const endedAt = Date.now();
 
-      return [await response.text(), response.status];
+      const latency = endedAt - startedAt;
+
+      const text = await response.text();
+
+      try {
+        await fetch('/api/history/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            method,
+            url: decode,
+            headers: { 'Content-Type': 'application/json' },
+            body: null,
+            status: response.status,
+            latency_ms: latency,
+            req_size_bytes: 0,
+            res_size_bytes: new TextEncoder().encode(text).length,
+            error: response.ok
+              ? null
+              : { type: 'http', message: String(response.status) },
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch {}
+
+      return [text, response.status];
     } catch {
       return ['{error}', 500];
     }
