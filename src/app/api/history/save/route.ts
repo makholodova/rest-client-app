@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { auth, db } from '@/firebase';
+import { db } from '@/firebase';
 import { HistoryRequest } from '@/types/history.type';
-
+import { getAdminAuth } from '@/firebase-admin';
 import { addDoc, collection } from 'firebase/firestore';
 
 export type NewHistoryRequest = Omit<HistoryRequest, 'id' | 'timestamp'> & {
   timestamp?: string;
+  status?: number | null;
 };
 
 export async function POST(req: NextRequest) {
@@ -15,23 +16,15 @@ export async function POST(req: NextRequest) {
     if (!token) {
       return NextResponse.json(
         {
-          error: 'Error: authorization is required, no token is available now',
+          error:
+            'Post error: authorization is required, no token is available now',
         },
         { status: 401 }
       );
     }
-
-    // I'm not sure if this is the best way to get current user, temporary solution
-    const userId = auth.currentUser?.uid;
-    if (!userId) {
-      return NextResponse.json(
-        { error: 'User (uid) is not found' },
-        { status: 401 }
-      );
-    }
-
+    const decodedToken = await getAdminAuth().verifyIdToken(token.value);
+    const userId = decodedToken.uid;
     const payload = (await req.json()) as NewHistoryRequest;
-
     const ref = collection(db, 'users', userId, 'history');
 
     await addDoc(ref, {
