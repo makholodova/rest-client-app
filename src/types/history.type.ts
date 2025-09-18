@@ -4,6 +4,8 @@ export type HistoryRequest = {
   id: string;
   method: Method;
   url: string;
+  headers?: Record<string, string>;
+  body?: string | null;
   status: number | null;
   latency_ms: number;
   timestamp: string;
