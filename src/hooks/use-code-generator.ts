@@ -1,5 +1,5 @@
 import { LanguageOption, ProgrammingLanguage } from '@/types/postman.type';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useApiRequest } from './use-api-request';
 import { useRestClientStore } from '@/store/restClient.store';
 
@@ -34,14 +34,13 @@ export const useCodeGenerator = () => {
     setQuery(query);
   };
 
-  const createCode = async () => {
+  const createCode = useCallback(async () => {
     if (!url) {
-      return '{enter url}';
+      return '...';
     }
 
     const request = new sdk.Request(url);
     request.method = method;
-    // request.url.variables.members = config.variables ?? [];
     request.headers.members = headers ?? [];
 
     request.body = new sdk.RequestBody({
@@ -71,13 +70,13 @@ export const useCodeGenerator = () => {
         }
       );
     });
-  };
+  }, [url, method, headers, body, language, query]);
 
   useEffect(() => {
     (async () => {
       setCode(await createCode());
     })();
-  }, [language, query, url, headers, body]);
+  }, [createCode]);
 
   return {
     code,

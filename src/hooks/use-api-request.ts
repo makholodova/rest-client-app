@@ -21,7 +21,13 @@ export const useApiRequest = () => {
   const url = urlSegments[1] ? decodeBase64(urlSegments[1]) : '';
   const body = urlSegments[2] ? decodeBase64(urlSegments[2]) : '';
 
-  const replacePlaceholders = (url: string): string => {
+  const hasBody =
+    method === 'GET' ||
+    method === 'HEAD' ||
+    method === 'DELETE' ||
+    method === 'OPTIONS';
+
+  const replaceVariablesInUrl = (url: string): string => {
     return url.replace(/\{\{(\w+)\}\}/g, (match, key) => {
       return variables[key] || match;
     });
@@ -48,10 +54,14 @@ export const useApiRequest = () => {
   };
 
   const onSendRequest = (newUrl: string) => {
-    const encodedUrl = encodeBase64(replacePlaceholders(newUrl));
+    const encodedUrl = encodeBase64(replaceVariablesInUrl(newUrl));
     const encodedBudy = encodeBase64(bodyState);
 
-    const newSegments: string[] = [method, encodedUrl, encodedBudy];
+    const newSegments: string[] = [method, encodedUrl];
+
+    if (!hasBody) {
+      newSegments.push(encodedBudy);
+    }
 
     const newParams = new URLSearchParams();
 
@@ -66,5 +76,5 @@ export const useApiRequest = () => {
     push(newSegments, newParams);
   };
 
-  return { method, url, body, setMethod, onSendRequest };
+  return { method, hasBody, url, body, setMethod, onSendRequest };
 };

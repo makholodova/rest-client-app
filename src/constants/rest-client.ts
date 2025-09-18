@@ -7,4 +7,5 @@ export const METHOD_OPTIONS: Method[] = [
   'PATCH',
   'DELETE',
   'OPTIONS',
+  'HEAD',
 ];
