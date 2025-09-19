@@ -1,5 +1,5 @@
 ﻿'use client';
-import { useEffect } from 'react';
+
 import { auth, registerWithEmailAndPassword } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
@@ -13,6 +13,7 @@ import AppLink from '@/components/ui/app-link/app-link';
 import Button from '@/components/ui/button/button';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import Page from '@/components/layout/page/page';
+import CircleLoader from '@/components/ui/circle-loader/circle-loader';
 
 export default function SignUpPage() {
   const [user, loading] = useAuthState(auth);
@@ -34,10 +35,8 @@ export default function SignUpPage() {
     await registerWithEmailAndPassword(data.name, data.email, data.password);
   };
 
-  useEffect(() => {
-    if (loading) return;
-    if (user) router.push(ROUTES.HOME);
-  }, [user, loading, router]);
+  if (user) router.push(ROUTES.HOME);
+  if (loading) return <CircleLoader />;
 
   return (
     <Page>

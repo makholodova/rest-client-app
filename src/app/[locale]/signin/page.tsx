@@ -1,9 +1,8 @@
 'use client';
-import { useEffect } from 'react';
+
 import { auth, logInWithEmailAndPassword } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
-
 import styles from './signin.module.scss';
 import { signInSchema, type SignInForm } from '@/utils/validation';
 import { useForm } from 'react-hook-form';
@@ -33,11 +32,9 @@ export default function SignInPage() {
     reValidateMode: 'onChange',
   });
 
-  useEffect(() => {
-    if (loading) return;
-    if (user) router.push(ROUTES.HOME);
-    if (error) toast.error(t('useEffectErrorMessage'));
-  }, [user, loading, router, error, t]);
+  if (loading) return;
+  if (user) router.push(ROUTES.HOME);
+  if (error) toast.error(t('useEffectErrorMessage'));
 
   const handleSignIn = async (data: SignInForm) => {
     await logInWithEmailAndPassword(data.email, data.password);
