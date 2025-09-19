@@ -10,11 +10,11 @@ import { toast } from 'react-toastify';
 
 export default function History() {
   const t = useTranslations('History');
-  const { history, loading, error, loadHistory } = useHistory();
+  const { history, loading, error, loadHistory, userId } = useHistory();
 
   useEffect(() => {
-    void loadHistory();
-  }, [loadHistory]);
+    if (userId) void loadHistory();
+  }, [userId, loadHistory]);
 
   return (
     <section className={styles.section}>
