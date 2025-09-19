@@ -1,5 +1,4 @@
 'use client';
-
 import { auth, logInWithEmailAndPassword } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
@@ -16,7 +15,7 @@ import { FieldInput } from '@/components/ui/field-input/field-input';
 import Page from '@/components/layout/page/page';
 
 export default function SignInPage() {
-  const [user, loading, error] = useAuthState(auth);
+  const [error] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('SignIn');
   const tV = useTranslations('Validation');
@@ -32,12 +31,10 @@ export default function SignInPage() {
     reValidateMode: 'onChange',
   });
 
-  if (loading) return;
-  if (user) router.push(ROUTES.HOME);
-  if (error) toast.error(t('useEffectErrorMessage'));
-
   const handleSignIn = async (data: SignInForm) => {
-    await logInWithEmailAndPassword(data.email, data.password);
+    const success = await logInWithEmailAndPassword(data.email, data.password);
+    if (success) router.push(ROUTES.HOME);
+    if (error) toast.error(t('useEffectErrorMessage'));
   };
 
   return (

@@ -1,7 +1,5 @@
 ﻿'use client';
-
-import { auth, registerWithEmailAndPassword } from '@/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { registerWithEmailAndPassword } from '@/firebase';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/constants/routes';
 import { signUpSchema, type SignUpForm } from '@/utils/validation';
@@ -13,10 +11,8 @@ import AppLink from '@/components/ui/app-link/app-link';
 import Button from '@/components/ui/button/button';
 import { FieldInput } from '@/components/ui/field-input/field-input';
 import Page from '@/components/layout/page/page';
-import CircleLoader from '@/components/ui/circle-loader/circle-loader';
 
 export default function SignUpPage() {
-  const [user, loading] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('SignUp');
   const tV = useTranslations('Validation');
@@ -31,12 +27,15 @@ export default function SignUpPage() {
     mode: 'onBlur',
     reValidateMode: 'onChange',
   });
-  const onSubmit = async (data: SignUpForm) => {
-    await registerWithEmailAndPassword(data.name, data.email, data.password);
-  };
 
-  if (user) router.push(ROUTES.HOME);
-  if (loading) return <CircleLoader />;
+  const onSubmit = async (data: SignUpForm) => {
+    const success = await registerWithEmailAndPassword(
+      data.name,
+      data.email,
+      data.password
+    );
+    if (success) router.push(ROUTES.HOME);
+  };
 
   return (
     <Page>
