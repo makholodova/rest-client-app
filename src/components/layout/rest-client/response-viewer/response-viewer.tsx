@@ -1,6 +1,6 @@
-﻿import CodePanel from '@/components/ui/code-panel/code-panel';
 import styles from './response-viewer.module.scss';
 import { fetchApi } from '@/utils/rest-client-api';
+import CodePanel from '@/components/ui/code-panel/code-panel';
 
 type ResponseViewerProps = {
   data?: string[];

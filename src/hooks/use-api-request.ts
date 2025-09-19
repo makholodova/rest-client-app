@@ -1,5 +1,5 @@
 import { ROUTES } from '@/constants/routes';
-import { HeaderRequest, Method } from '@/types/postman.type';
+import { Method } from '@/types/postman.type';
 import { decodeBase64, encodeBase64 } from '@/utils/base64-encoding';
 
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
@@ -33,22 +33,6 @@ export const useApiRequest = () => {
     });
   };
 
-  const encodeHeadersToSearchParams = (
-    headers: HeaderRequest[]
-  ): URLSearchParams => {
-    const searchParams = new URLSearchParams();
-
-    headers.forEach((header) => {
-      if (header.key && header.value) {
-        const encodedKey = encodeURIComponent(header.key);
-        const encodedValue = encodeURIComponent(header.value);
-        searchParams.set(encodedKey, encodedValue);
-      }
-    });
-
-    return searchParams;
-  };
-
   const push = (newSegments: string[], currentParams: URLSearchParams) => {
     const queryString = currentParams.toString();
     const basePath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
@@ -77,23 +61,43 @@ export const useApiRequest = () => {
       newSegments.push(encodeBase64(bodyState));
     }
 
-    push(newSegments, encodeHeadersToSearchParams(headersState));
+    const searchParams = new URLSearchParams();
+
+    headersState.forEach((header) => {
+      if (header.key && header.value) {
+        const encodedKey = encodeURIComponent(header.key);
+        const encodedValue = encodeURIComponent(header.value);
+        searchParams.set(encodedKey, encodedValue);
+      }
+    });
+
+    push(newSegments, searchParams);
   };
 
   const redirectToRequestPage = (
     method: string,
     url: string,
     body: string,
-    headers: HeaderRequest[]
+    headers?: Record<string, string>
   ) => {
     const encodedUrl = encodeBase64(replaceVariablesInUrl(url));
     const newSegments: string[] = [method, encodedUrl];
+
+    const searchParams = new URLSearchParams();
 
     if (body) {
       newSegments.push(encodeBase64(body));
     }
 
-    push(newSegments, encodeHeadersToSearchParams(headers));
+    if (headers) {
+      Object.entries(headers).forEach(([key, value]) => {
+        const encodedKey = encodeURIComponent(key);
+        const encodedValue = encodeURIComponent(value);
+        searchParams.set(encodedKey, encodedValue);
+      });
+    }
+
+    push(newSegments, searchParams);
   };
 
   return {

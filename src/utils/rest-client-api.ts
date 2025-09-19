@@ -1,4 +1,7 @@
+import { Method } from '@/types/postman.type';
 import { decodeBase64 } from '@/utils/base64-encoding';
+import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
 
 type FetchResult = {
   content: string;
@@ -35,10 +38,54 @@ const createRequestConfig = (
   return config;
 };
 
+const saveRequestToHistory = async (
+  method: Method,
+  url: string,
+  reqHeaders: { [key: string]: string } | null,
+  status: number,
+  ok: boolean,
+  startedAt: number,
+  result: string,
+  body?: string
+) => {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('AUTH-TOKEN')?.value;
+
+  const endedAt = Date.now();
+  const latency = endedAt - startedAt;
+
+  const headersList = await headers();
+  const host = headersList.get('host');
+  const protocol = process.env.NODE_ENV === 'development' ? 'http' : 'https';
+  const baseUrl = `${protocol}://${host}`;
+
+  await fetch(`${baseUrl}/api/history/save`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: token ? token : '',
+    },
+    body: JSON.stringify({
+      method,
+      url,
+      reqHeaders,
+      body,
+      status,
+      latency_ms: latency,
+      req_size_bytes: body ? new TextEncoder().encode(body).length : 0,
+      res_size_bytes: new TextEncoder().encode(result).length,
+      error: ok ? null : { type: 'http', message: String(status) },
+      timestamp: new Date().toISOString(),
+    }),
+  });
+};
+
 export const fetchApi = async (
   data: string[],
   headers: { [key: string]: string } | null
 ): Promise<FetchResult> => {
+  const startedAt = Date.now();
+
   try {
     const method = data?.[0] || 'GET';
     const encodedUrl = data?.[1] as string;
@@ -52,7 +99,20 @@ export const fetchApi = async (
     const body = encodeBody ? decodeBase64(encodeBody) : null;
 
     const config = createRequestConfig(method, body, headers);
+
     const response = await fetch(url, config);
+    const content = await response.text();
+
+    await saveRequestToHistory(
+      method as Method,
+      url,
+      headers,
+      response.status,
+      response.ok,
+      startedAt,
+      content,
+      body || undefined
+    );
 
     if (!response.ok) {
       return {
@@ -62,13 +122,24 @@ export const fetchApi = async (
       };
     }
 
-    const content = await response.text();
     return {
       content,
       status: response.status,
       responseHeaders: response.headers,
     };
   } catch {
+    const errorContent = 'error';
+
+    await saveRequestToHistory(
+      (data?.[0] as Method) || 'GET',
+      data?.[1] ? decodeBase64(data[1]) : 'unknown',
+      headers,
+      500,
+      false,
+      startedAt,
+      errorContent
+    );
+
     return { content: '{error}', status: 500, responseHeaders: new Headers() };
   }
 };

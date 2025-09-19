@@ -4,6 +4,7 @@ import Link from 'next/link';
 import styles from './history-request-item.module.scss';
 import { HistoryRequest } from '@/types/history.type';
 import Image from 'next/image';
+import { useApiRequest } from '@/hooks/use-api-request';
 
 function bytes(n: number) {
   if (n < 1024) return `${n} B`;
@@ -25,11 +26,21 @@ export default function HistoryRequestItem({
   request,
 }: HistoryRequestItemProps) {
   const t = useTranslations('History');
+  const { redirectToRequestPage } = useApiRequest();
+
+  const push = (history: HistoryRequest) => {
+    redirectToRequestPage(
+      history.method,
+      history.url,
+      history.body ?? '',
+      history.headers
+    );
+  };
 
   const ok =
     request.status !== null && request.status >= 200 && request.status < 400;
   return (
-    <li className={styles.item}>
+    <li className={styles.item} onClick={() => push(request)}>
       <Link
         href={{ pathname: '/client', query: { history: request.id } }}
         className={styles.link}
