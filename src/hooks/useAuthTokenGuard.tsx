@@ -1,42 +1,81 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { logout } from '@/firebase';
 import { ROUTES } from '@/constants/routes';
 import { toast } from 'react-toastify';
 import { useTranslations } from 'next-intl';
+import { useAuth } from '@/context/authUserContext';
 
 interface UseAuthTokenGuardOptions {
   redirectTo?: string;
-  intervalMs?: number;
+  skipAuthGuard?: boolean;
 }
 
 export function useAuthTokenGuard(options?: UseAuthTokenGuardOptions) {
   const router = useRouter();
-  const { redirectTo = ROUTES.HOME, intervalMs = 20000 } = options || {};
+  const authUser = useAuth().authUser;
   const t = useTranslations('ErrorsWarnings');
+  const isTokenCheckingRef = useRef(false);
+
+  const redirectTo = options?.redirectTo || ROUTES.HOME;
+  const skipAuthGuard = options?.skipAuthGuard || false;
+
+  const checkTokenValidity = useCallback(async () => {
+    if (isTokenCheckingRef.current || skipAuthGuard) return;
+    isTokenCheckingRef.current = true;
+    try {
+      const res = await fetch('/api/check-token', {
+        method: 'GET',
+      });
+      if (!res.ok) toast.error(t('tokenCheckFailed'));
+      const data = await res.json();
+      if (!data.hasValidToken) {
+        await logout();
+        router.push(redirectTo);
+        if (authUser) toast.error(t('sessionExpired'));
+      }
+    } catch (error) {
+      toast.error(t(`tokenValidationError:`) + ` ${error}`);
+      await logout();
+      router.push(redirectTo);
+      if (authUser) {
+        toast.error(t('noAuthToken'));
+      }
+    } finally {
+      isTokenCheckingRef.current = false;
+    }
+  }, [router, redirectTo, t, authUser, skipAuthGuard]);
 
   useEffect(() => {
-    let active = true;
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch('/api/check-token');
-        const data = await res.json();
-        if (!data.hasToken && active) {
-          await logout();
-          router.push(redirectTo);
-        }
-      } catch {
-        if (active) {
-          toast.error(t('noAuthToken'));
-          await logout();
-          router.push(redirectTo);
-        }
-      }
-    }, intervalMs);
+    if (authUser === null && !isTokenCheckingRef.current && !skipAuthGuard) {
+      router.push(redirectTo);
+    }
+  }, [authUser, router, redirectTo, skipAuthGuard]);
 
-    return () => {
-      active = false;
-      clearInterval(interval);
+  useEffect(() => {
+    if (skipAuthGuard) return;
+    window.addEventListener('focus', checkTokenValidity);
+    return () => window.removeEventListener('focus', checkTokenValidity);
+  }, [checkTokenValidity, skipAuthGuard]);
+
+  useEffect(() => {
+    if (skipAuthGuard) return;
+    const handleRouteChange = () => {
+      setTimeout(() => {
+        checkTokenValidity();
+      }, 100);
     };
-  }, [router, redirectTo, intervalMs, t]);
+    window.addEventListener('popstate', handleRouteChange);
+    return () => window.removeEventListener('popstate', handleRouteChange);
+  }, [checkTokenValidity, skipAuthGuard]);
+
+  useEffect(() => {
+    if (!skipAuthGuard) {
+      checkTokenValidity();
+    }
+  }, [checkTokenValidity, skipAuthGuard]);
+
+  return {
+    checkTokenValidity,
+  };
 }

@@ -38,7 +38,7 @@ export default function SignInPage() {
   };
 
   return (
-    <Page>
+    <Page skipAuthGuard={true}>
       <div className={styles.content}>
         <form
           onSubmit={handleSubmit(handleSignIn)}
