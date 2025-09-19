@@ -27,7 +27,7 @@
   min-width: 0;
 }
 .time {
- color: v.$color-d-grey;
+  color: v.$color-d-grey;
 }
 .method {
   font-weight: 800;
@@ -69,18 +69,17 @@
 
 .meta {
   display: flex;
-   align-items: center;
+  align-items: center;
   gap: 0.7rem;
   align-self: flex-end;
   font-size: 0.8rem;
   color: v.$color-grey;
 }
-.metaItem{
+.metaItem {
   display: flex;
   align-items: center;
   gap: 4px;
   font-size: 0.85rem;
-
 }
 .errBadge {
   background: #fdecea;
