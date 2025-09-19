@@ -8,7 +8,7 @@ import LanguageSwitcher from '@/components/ui/language-switcher/language-switche
 import { useIsScrolled } from '@/hooks/use-is-scrolled';
 import ButtonLink from '@/components/ui/button-link/button-link';
 import Button from '@/components/ui/button/button';
-import { logout, auth } from '../../../firebase';
+import { logout, auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import clsx from 'clsx';
 
