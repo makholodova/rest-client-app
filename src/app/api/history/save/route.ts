@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import { db } from '@/firebase';
 import { HistoryRequest } from '@/types/history.type';
 import { getAdminAuth } from '@/firebase-admin';
@@ -12,8 +11,9 @@ export type NewHistoryRequest = Omit<HistoryRequest, 'id' | 'timestamp'> & {
 
 export async function POST(req: NextRequest) {
   try {
-    const token = (await cookies()).get('AUTH-TOKEN');
-    if (!token) {
+    const authHeader = req.headers.get('Authorization');
+
+    if (!authHeader) {
       return NextResponse.json(
         {
           error:
@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
         { status: 401 }
       );
     }
-    const decodedToken = await getAdminAuth().verifyIdToken(token.value);
+    const decodedToken = await getAdminAuth().verifyIdToken(authHeader);
     const userId = decodedToken.uid;
     const payload = (await req.json()) as NewHistoryRequest;
     const ref = collection(db, 'users', userId, 'history');

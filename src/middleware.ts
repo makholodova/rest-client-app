@@ -22,7 +22,12 @@ function applyAuthLogic(request: NextRequest): NextResponse | null {
   const localesPattern = new RegExp(`^\/(${routing.locales.join('|')})`);
   const cleanPathname = pathname.replace(localesPattern, '') || '/';
 
-  if (cleanPathname.startsWith(ROUTES.HISTORY) && !token) {
+  if (
+    (cleanPathname.startsWith(ROUTES.HISTORY) ||
+      cleanPathname.startsWith(ROUTES.REST_CLIENT) ||
+      cleanPathname.startsWith(ROUTES.VARIABLES)) &&
+    !token
+  ) {
     const loginUrl = new URL(ROUTES.SIGN_IN, request.url);
     return NextResponse.redirect(loginUrl);
   }
@@ -41,6 +46,8 @@ function applyAuthLogic(request: NextRequest): NextResponse | null {
 
 export const config = {
   matcher: [
+    '/variables',
+    '/rest-client',
     '/history',
     '/signin',
     '/signup',

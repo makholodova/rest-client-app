@@ -4,18 +4,8 @@ import Link from 'next/link';
 import styles from './history-request-item.module.scss';
 import { HistoryRequest } from '@/types/history.type';
 import Image from 'next/image';
-
-function bytes(n: number) {
-  if (n < 1024) return `${n} B`;
-  const kb = n / 1024;
-  if (kb < 1024) return `${kb.toFixed(1)} KB`;
-  const mb = kb / 1024;
-  return `${mb.toFixed(2)} MB`;
-}
-function shortDate(iso: string) {
-  const d = new Date(iso);
-  return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
-}
+import { useApiRequest } from '@/hooks/use-api-request';
+import { bytes, shortDate } from '@/utils/helpers';
 
 type HistoryRequestItemProps = {
   request: HistoryRequest;
@@ -25,11 +15,21 @@ export default function HistoryRequestItem({
   request,
 }: HistoryRequestItemProps) {
   const t = useTranslations('History');
+  const { redirectToRequestPage } = useApiRequest();
+
+  const push = (history: HistoryRequest) => {
+    redirectToRequestPage(
+      history.method,
+      history.url,
+      history.body ?? '',
+      history.headers
+    );
+  };
 
   const ok =
     request.status !== null && request.status >= 200 && request.status < 400;
   return (
-    <li className={styles.item}>
+    <li className={styles.item} onClick={() => push(request)}>
       <Link
         href={{ pathname: '/client', query: { history: request.id } }}
         className={styles.link}
