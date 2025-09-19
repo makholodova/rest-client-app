@@ -15,22 +15,24 @@ export default function CodeGenerator() {
 
   return (
     <div className={styles.wrapper}>
-      <select
-        className={styles.selector}
-        value={value}
-        onChange={handleLanguageChange}
-      >
-        {supportedLanguages.map((language) =>
-          language.variants.map((item) => (
-            <option
-              key={language.key + item.key}
-              value={language.key + '|' + item.key}
-            >
-              {language.label + ' | ' + item.key}
-            </option>
-          ))
-        )}
-      </select>
+      <div>
+        <select
+          className={styles.selector}
+          value={value}
+          onChange={handleLanguageChange}
+        >
+          {supportedLanguages.map((language) =>
+            language.variants.map((item) => (
+              <option
+                key={language.key + item.key}
+                value={language.key + '|' + item.key}
+              >
+                {language.label + ' | ' + item.key}
+              </option>
+            ))
+          )}
+        </select>
+      </div>
 
       <CodePanel
         text={code}

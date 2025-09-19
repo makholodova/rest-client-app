@@ -36,7 +36,7 @@ export const useCodeGenerator = () => {
 
   const createCode = useCallback(async () => {
     if (!url) {
-      return '...';
+      return ' ';
     }
 
     const request = new sdk.Request(url);

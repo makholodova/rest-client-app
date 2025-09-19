@@ -1,15 +1,25 @@
 import Page from '@/components/layout/page/page';
-import RequestForm from '@/components/layout/rest-client/request-form/request-form';
+import CircleLoader from '@/components/ui/circle-loader/circle-loader';
+import dynamic from 'next/dynamic';
 
-export default function RestClientLayout({
+const RestClientHeader = dynamic(
+  () => import('@/components/layout/rest-client/rest-client'),
+  {
+    loading: () => <CircleLoader />,
+  }
+);
+
+export default async function RestClientLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
     <Page>
-      <RequestForm />
-      {children}
+      <div>
+        <RestClientHeader />
+        {children}
+      </div>
     </Page>
   );
 }
