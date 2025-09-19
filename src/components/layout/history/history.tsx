@@ -10,7 +10,8 @@ import { toast } from 'react-toastify';
 
 export default function History() {
   const t = useTranslations('History');
-  const { history, loading, error, loadHistory, userId } = useHistory();
+  const { history, loading, authLoading, error, loadHistory, userId } =
+    useHistory();
 
   useEffect(() => {
     if (userId) void loadHistory();
@@ -19,12 +20,16 @@ export default function History() {
   return (
     <section className={styles.section}>
       <h2 className={styles.title}>{t('title')}</h2>
-      {loading ? (
+      {authLoading ? (
         <CircleLoader />
       ) : error ? (
         toast.error(error)
       ) : (
-        <HistoryRequestsList requests={history} />
+        <HistoryRequestsList
+          requests={history}
+          loading={loading}
+          authLoading={false}
+        />
       )}
     </section>
   );

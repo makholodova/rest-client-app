@@ -13,12 +13,14 @@ import { HistoryRequest } from '@/types/history.type';
 export function useHistory() {
   const [history, setHistory] = useState<HistoryRequest[]>([]);
   const [loading, setLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUserId(user?.uid ?? null);
+      setAuthLoading(false);
     });
     return () => unsubscribe();
   }, []);
@@ -49,7 +51,6 @@ export function useHistory() {
 
   const saveHistory = useCallback(
     async (request: Omit<HistoryRequest, 'id'>) => {
-      const userId = auth.currentUser?.uid;
       if (!userId) {
         setError('Error: Sign in to have access to history, saveHistory error');
         return;
@@ -66,8 +67,16 @@ export function useHistory() {
         else setError('Failed to save history, unknown error');
       }
     },
-    [loadHistory]
+    [loadHistory, userId]
   );
 
-  return { history, loading, error, loadHistory, saveHistory, userId };
+  return {
+    history,
+    loading,
+    error,
+    loadHistory,
+    authLoading,
+    saveHistory,
+    userId,
+  };
 }
