@@ -9,14 +9,26 @@ jest.mock(
   '@/components/layout/history/history-request-item/history-request-item',
   () => (props: any) => <li data-testid="history-item">{props.request.id}</li>
 );
-
+jest.mock(
+    '@/components/ui/circle-loader/circle-loader',
+    () => () => <div data-testid="loader">Loading...</div>
+);
 describe('HistoryRequestsList', () => {
-  it('renders EmptyHistory when undefined', () => {
-    render(<HistoryRequestsList requests={undefined as any} />);
-    expect(screen.getByTestId('empty-history')).toBeInTheDocument();
+  it('shows the loader when  loading=true', () => {
+    render(
+        <HistoryRequestsList requests={[]} loading={true} authLoading={false} />
+    );
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
+  });
+
+  it('shows the loader when authLoading=true', () => {
+    render(
+        <HistoryRequestsList requests={[]} loading={false} authLoading={true} />
+    );
+    expect(screen.getByTestId('loader')).toBeInTheDocument();
   });
   it('renders EmptyHistory if requests are empty', () => {
-    render(<HistoryRequestsList requests={[]} />);
+    render(<HistoryRequestsList loading={false} authLoading={false} requests={[]} />);
     expect(screen.getByTestId('empty-history')).toBeInTheDocument();
   });
 
@@ -27,7 +39,7 @@ describe('HistoryRequestsList', () => {
       { id: 'middle', timestamp: '2025-09-16T08:00:00Z' },
     ] as any;
 
-    render(<HistoryRequestsList requests={requests} />);
+    render(<HistoryRequestsList requests={requests} loading={false} authLoading={false}/>);
 
     const items = screen
       .getAllByTestId('history-item')
