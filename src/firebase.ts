@@ -63,6 +63,16 @@ const registerWithEmailAndPassword = async (
       authProvider: 'local',
       email,
     });
+    const token = await user.getIdToken();
+    const apiRes = await fetch('/api/set-token', {
+      method: 'POST',
+      body: JSON.stringify({ token }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+    if (!apiRes.ok) {
+      toast.error('Token set error');
+      return false;
+    }
   } catch (err) {
     if (err instanceof FirebaseError) {
       toast.error(err.message);

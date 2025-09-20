@@ -6,10 +6,15 @@ import { useAuthTokenGuard } from '@/hooks/useAuthTokenGuard';
 type PageProps = {
   children: React.ReactNode;
   centered?: boolean;
+  skipAuthGuard?: boolean;
 };
 
-export default function Page({ children, centered }: PageProps) {
-  useAuthTokenGuard();
+export default function Page({
+  children,
+  centered,
+  skipAuthGuard = false,
+}: PageProps) {
+  useAuthTokenGuard({ skipAuthGuard });
   return (
     <main className={clsx(styles.main, centered && styles.centered)}>
       <div className={'container'}>{children}</div>

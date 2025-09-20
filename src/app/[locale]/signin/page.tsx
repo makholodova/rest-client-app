@@ -1,9 +1,7 @@
 'use client';
-import { useEffect } from 'react';
 import { auth, logInWithEmailAndPassword } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRouter } from 'next/navigation';
-
 import styles from './signin.module.scss';
 import { signInSchema, type SignInForm } from '@/utils/validation';
 import { useForm } from 'react-hook-form';
@@ -17,7 +15,7 @@ import { FieldInput } from '@/components/ui/field-input/field-input';
 import Page from '@/components/layout/page/page';
 
 export default function SignInPage() {
-  const [user, loading, error] = useAuthState(auth);
+  const [error] = useAuthState(auth);
   const router = useRouter();
   const t = useTranslations('SignIn');
   const tV = useTranslations('Validation');
@@ -33,18 +31,14 @@ export default function SignInPage() {
     reValidateMode: 'onChange',
   });
 
-  useEffect(() => {
-    if (loading) return;
-    if (user) router.push(ROUTES.HOME);
-    if (error) toast.error(t('useEffectErrorMessage'));
-  }, [user, loading, router, error, t]);
-
   const handleSignIn = async (data: SignInForm) => {
-    await logInWithEmailAndPassword(data.email, data.password);
+    const success = await logInWithEmailAndPassword(data.email, data.password);
+    if (success) router.push(ROUTES.HOME);
+    if (error) toast.error(t('useEffectErrorMessage'));
   };
 
   return (
-    <Page>
+    <Page skipAuthGuard={true}>
       <div className={styles.content}>
         <form
           onSubmit={handleSubmit(handleSignIn)}

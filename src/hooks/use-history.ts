@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { db, auth } from '@/firebase';
 import {
   collection,
@@ -7,17 +7,27 @@ import {
   query,
   orderBy,
 } from 'firebase/firestore';
+import { onAuthStateChanged } from 'firebase/auth';
 import { HistoryRequest } from '@/types/history.type';
 
 export function useHistory() {
   const [history, setHistory] = useState<HistoryRequest[]>([]);
   const [loading, setLoading] = useState(false);
+  const [authLoading, setAuthLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setUserId(user?.uid ?? null);
+      setAuthLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const loadHistory = useCallback(async () => {
-    const userId = auth.currentUser?.uid;
     if (!userId) {
-      setError('Error: Sign in to have access to history');
+      setError('Error: Sign in to have access to history, loadhistory error');
       return;
     }
     setLoading(true);
@@ -37,13 +47,12 @@ export function useHistory() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [userId]);
 
   const saveHistory = useCallback(
     async (request: Omit<HistoryRequest, 'id'>) => {
-      const userId = auth.currentUser?.uid;
       if (!userId) {
-        setError('Error: Sign in to have access to history');
+        setError('Error: Sign in to have access to history, saveHistory error');
         return;
       }
       try {
@@ -58,8 +67,16 @@ export function useHistory() {
         else setError('Failed to save history, unknown error');
       }
     },
-    [loadHistory]
+    [loadHistory, userId]
   );
 
-  return { history, loading, error, loadHistory, saveHistory };
+  return {
+    history,
+    loading,
+    error,
+    loadHistory,
+    authLoading,
+    saveHistory,
+    userId,
+  };
 }

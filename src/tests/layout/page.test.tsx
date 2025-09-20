@@ -9,18 +9,36 @@ jest.mock('./page.module.scss', () => ({
 
 const useAuthTokenGuardMock = jest.fn();
 jest.mock('@/hooks/useAuthTokenGuard', () => ({
-  useAuthTokenGuard: () => useAuthTokenGuardMock(),
+  useAuthTokenGuard: (options?: { skipAuthGuard?: boolean }) =>
+    useAuthTokenGuardMock(options),
 }));
 
 describe('Page', () => {
-  it('calls useAuthTokenGuard and renders children', () => {
+  beforeEach(() => {
+    useAuthTokenGuardMock.mockClear();
+  });
+
+  it('calls useAuthTokenGuard and renders children by default', () => {
     render(
       <Page>
         <span>child</span>
       </Page>
     );
 
-    expect(useAuthTokenGuardMock).toHaveBeenCalled();
+    expect(useAuthTokenGuardMock).toHaveBeenCalledWith({
+      skipAuthGuard: false,
+    });
+    expect(screen.getByText('child')).toBeInTheDocument();
+  });
+
+  it('calls useAuthTokenGuard with skipAuthGuard=true when skipAuthGuard prop is true', () => {
+    render(
+      <Page skipAuthGuard={true}>
+        <span>child</span>
+      </Page>
+    );
+
+    expect(useAuthTokenGuardMock).toHaveBeenCalledWith({ skipAuthGuard: true });
     expect(screen.getByText('child')).toBeInTheDocument();
   });
 
