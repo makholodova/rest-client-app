@@ -26,6 +26,7 @@ export function useAuthTokenGuard(options?: UseAuthTokenGuardOptions) {
     try {
       const res = await fetch('/api/check-token', {
         method: 'GET',
+        credentials: 'include',
       });
       if (!res.ok) toast.error(t('tokenCheckFailed'));
       const data = await res.json();
