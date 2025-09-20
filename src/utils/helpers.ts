@@ -1,5 +1,3 @@
-import { HeaderRequest } from '@/types/postman.type';
-
 export function parseJSON<T>(raw: string | null, fallback: T): T {
   if (!raw) return fallback;
   try {
@@ -9,5 +7,14 @@ export function parseJSON<T>(raw: string | null, fallback: T): T {
   }
 }
 
-export const getEnabledHeaders = (headers: HeaderRequest[]) =>
-  (headers ?? []).filter((h) => !h.disabled && h.key.trim() !== '');
+export function bytes(n: number) {
+  if (n < 1024) return `${n} B`;
+  const kb = n / 1024;
+  if (kb < 1024) return `${kb.toFixed(1)} KB`;
+  const mb = kb / 1024;
+  return `${mb.toFixed(2)} MB`;
+}
+export function shortDate(iso: string) {
+  const d = new Date(iso);
+  return `${d.toLocaleDateString()} ${d.toLocaleTimeString()}`;
+}

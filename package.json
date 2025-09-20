@@ -17,6 +17,7 @@
     "@hookform/resolvers": "^5.2.1",
     "@monaco-editor/react": "^4.7.0",
     "firebase": "^12.2.1",
+    "firebase-admin": "^13.5.0",
     "next": "15.5.2",
     "next-intl": "^4.3.5",
     "postman-code-generators": "^2.0.0",

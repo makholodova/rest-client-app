@@ -32,6 +32,11 @@ jest.mock('@/components/ui/button-link/button-link', () => (props: any) => (
   </a>
 ));
 
+const pushMock = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: pushMock }),
+}));
+
 describe('Header', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -39,7 +44,7 @@ describe('Header', () => {
 
   it('guest: displays Logo, sign-in and sign-up, no sticky', () => {
     const { useAuthState } = require('react-firebase-hooks/auth');
-    const { useIsScrolled } = require('@/hooks/useIsScrolled');
+    const { useIsScrolled } = require('@/hooks/use-is-scrolled');
 
     useAuthState.mockReturnValue([null]);
     useIsScrolled.mockReturnValue(false);
@@ -59,7 +64,7 @@ describe('Header', () => {
 
   it('authorized: shows sign-out and calls logout on click', () => {
     const { useAuthState } = require('react-firebase-hooks/auth');
-    const { useIsScrolled } = require('@/hooks/useIsScrolled');
+    const { useIsScrolled } = require('@/hooks/use-is-scrolled');
 
     useAuthState.mockReturnValue([{ uid: 'u1' }]);
     useIsScrolled.mockReturnValue(false);
@@ -73,7 +78,7 @@ describe('Header', () => {
 
   it('adds sticky class when useIsScrolled === true', () => {
     const { useAuthState } = require('react-firebase-hooks/auth');
-    const { useIsScrolled } = require('@/hooks/useIsScrolled');
+    const { useIsScrolled } = require('@/hooks/use-is-scrolled');
 
     useAuthState.mockReturnValue([null]);
     useIsScrolled.mockReturnValue(true);

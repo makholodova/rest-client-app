@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './variables.module.scss';
 import Page from '@/components/layout/page/page';
 import Button from '@/components/ui/button/button';
@@ -11,7 +11,6 @@ import { FieldInput } from '@/components/ui/field-input/field-input';
 import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
-import { ROUTES } from '@/constants/routes';
 import { toast } from 'react-toastify';
 
 import { useVariables } from '@/hooks/use-variables';
@@ -26,7 +25,6 @@ export default function Variables() {
 
   useEffect(() => {
     if (loading) return;
-    if (!user) router.push(ROUTES.HOME);
     if (error) toast.error(t('useEffectErrorMessage'));
   }, [user, loading, router, error, t]);
 

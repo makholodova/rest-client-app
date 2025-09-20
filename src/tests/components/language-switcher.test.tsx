@@ -16,7 +16,8 @@ jest.mock('next-intl', () => ({
 }));
 
 jest.mock('next/image', () => (props: any) => {
-  return <img {...props} alt={props.alt} />;
+  const { fill, ...rest } = props;
+  return <img {...rest} alt={props.alt || ''} />;
 });
 
 describe('LanguageSwitcher', () => {

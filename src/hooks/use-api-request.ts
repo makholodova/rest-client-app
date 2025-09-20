@@ -1,69 +1,112 @@
+import { ROUTES } from '@/constants/routes';
 import { Method } from '@/types/postman.type';
 import { decodeBase64, encodeBase64 } from '@/utils/base64-encoding';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { ROUTES } from '@/constants/routes';
+
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import { useRestClientStore } from '@/store/restClient.store';
+import { useVariables } from './use-variables';
 
 export const useApiRequest = () => {
-  const [method, setMethod] = useState<Method>('GET');
-  const [url, setUrl] = useState('');
-  const [body, setBody] = useState('');
+  const { variables } = useVariables();
+
+  const bodyState = useRestClientStore((state) => state.body);
+  const headersState = useRestClientStore((state) => state.headers);
 
   const router = useRouter();
   const params = useParams();
+  const searchParams = useSearchParams();
 
   const urlSegments = params?.data || [];
-  const currentMethodFromUrl =
-    (urlSegments[0]?.toUpperCase() as Method) || 'GET';
-  const currentUrl = urlSegments[1];
-  const currentBody = urlSegments[2];
+  const method = (urlSegments[0]?.toUpperCase() as Method) || 'GET';
+  const url = urlSegments[1] ? decodeBase64(urlSegments[1]) : '';
+  const body = urlSegments[2] ? decodeBase64(urlSegments[2]) : '';
 
-  useEffect(() => {
-    setMethod(currentMethodFromUrl);
-  }, [currentMethodFromUrl]);
+  const hasBody =
+    method === 'GET' ||
+    method === 'HEAD' ||
+    method === 'DELETE' ||
+    method === 'OPTIONS';
 
-  useEffect(() => {
-    setUrl(currentUrl ? decodeBase64(currentUrl) : '');
-  }, [currentUrl]);
+  const replaceVariablesInUrl = (url: string): string => {
+    return url.replace(/\{\{(\w+)\}\}/g, (match, key) => {
+      return variables[key] || match;
+    });
+  };
 
-  useEffect(() => {
-    setBody(currentBody ? decodeBase64(currentBody) : '');
-  }, [currentBody]);
+  const push = (newSegments: string[], currentParams: URLSearchParams) => {
+    const queryString = currentParams.toString();
+    const basePath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
+    const newPath = queryString ? `${basePath}?${queryString}` : basePath;
 
-  const handleMethodChange = (newMethod: Method) => {
-    setMethod(newMethod);
+    router.push(newPath);
+  };
 
+  const setMethod = (newMethod: Method) => {
     const newSegments: string[] = [newMethod];
 
     if (urlSegments.length > 1) {
       newSegments.push(...urlSegments.slice(1));
     }
 
-    const newPath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
-    router.push(newPath);
+    const currentParams = new URLSearchParams(searchParams.toString());
+
+    push(newSegments, currentParams);
   };
 
-  const onSendRequest = (url: string) => {
-    const code = encodeBase64(url);
+  const onSendRequest = (newUrl: string) => {
+    const encodedUrl = encodeBase64(replaceVariablesInUrl(newUrl));
+    const newSegments: string[] = [method, encodedUrl];
 
-    const newSegments: string[] = [method, code];
-
-    if (currentBody) {
-      newSegments.push(currentBody);
+    if (!hasBody) {
+      newSegments.push(encodeBase64(bodyState));
     }
 
-    const newPath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
-    router.push(newPath);
+    const searchParams = new URLSearchParams();
+
+    headersState.forEach((header) => {
+      if (header.key && header.value) {
+        const encodedKey = encodeURIComponent(header.key);
+        const encodedValue = encodeURIComponent(header.value);
+        searchParams.set(encodedKey, encodedValue);
+      }
+    });
+
+    push(newSegments, searchParams);
   };
 
-  const onSendBody = (body: string) => {
-    const encodeBody = encodeBase64(body);
+  const redirectToRequestPage = (
+    method: string,
+    url: string,
+    body: string,
+    headers?: Record<string, string>
+  ) => {
+    const encodedUrl = encodeBase64(replaceVariablesInUrl(url));
+    const newSegments: string[] = [method, encodedUrl];
 
-    const newSegments: string[] = [method, currentUrl, encodeBody];
+    const searchParams = new URLSearchParams();
 
-    const newPath = `${ROUTES.REST_CLIENT}/${newSegments.join('/')}`;
-    router.push(newPath);
+    if (body) {
+      newSegments.push(encodeBase64(body));
+    }
+
+    if (headers) {
+      Object.entries(headers).forEach(([key, value]) => {
+        const encodedKey = encodeURIComponent(key);
+        const encodedValue = encodeURIComponent(value);
+        searchParams.set(encodedKey, encodedValue);
+      });
+    }
+
+    push(newSegments, searchParams);
   };
 
-  return { method, url, body, handleMethodChange, onSendRequest, onSendBody };
+  return {
+    method,
+    hasBody,
+    url,
+    body,
+    setMethod,
+    onSendRequest,
+    redirectToRequestPage,
+  };
 };

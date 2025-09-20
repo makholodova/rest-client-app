@@ -8,14 +8,21 @@ import LanguageSwitcher from '@/components/ui/language-switcher/language-switche
 import { useIsScrolled } from '@/hooks/use-is-scrolled';
 import ButtonLink from '@/components/ui/button-link/button-link';
 import Button from '@/components/ui/button/button';
-import { logout, auth } from '../../../firebase';
+import { logout, auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const isScrolled = useIsScrolled();
   const t = useTranslations('Header');
   const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  const handleLogOut = async () => {
+    logout();
+    router.push(ROUTES.HOME);
+  };
 
   return (
     <header className={clsx(styles.header, { [styles.sticky]: isScrolled })}>
@@ -28,7 +35,7 @@ export default function Header() {
             <Button
               variant={'secondary'}
               className={styles.navLink}
-              onClick={logout}
+              onClick={handleLogOut}
             >
               {t('sign-out')}
             </Button>
