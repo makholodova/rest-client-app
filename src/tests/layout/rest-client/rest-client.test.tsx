@@ -1,0 +1,57 @@
+﻿import { render, screen } from '@testing-library/react';
+import RestClient from '@/components/layout/rest-client/rest-client';
+
+jest.mock(
+  '@/components/layout/rest-client/request-form/request-form',
+  () => () => <div data-testid="request-form">RequestForm</div>
+);
+jest.mock('@/components/layout/rest-client/tabs/headers/headers', () => () => (
+  <div data-testid="headers">Headers</div>
+));
+jest.mock(
+  '@/components/layout/rest-client/tabs/body-editor/body-editor',
+  () => () => <div data-testid="body-editor">BodyEditor</div>
+);
+jest.mock(
+  '@/components/layout/rest-client/tabs/code-generator/code-generator',
+  () => () => <div data-testid="code-generator">CodeGenerator</div>
+);
+jest.mock('@/components/ui/tabs/tabs', () => ({
+  Tabs: ({ tabs }: any) => (
+    <div data-testid="tabs">
+      {tabs.map((tab: any) => (
+        <div key={tab.label} data-testid="tab">
+          {tab.label}
+        </div>
+      ))}
+    </div>
+  ),
+}));
+
+const getTranslationsMock = jest.fn();
+jest.mock('next-intl/server', () => ({
+  getTranslations: (ns: string) => getTranslationsMock(ns),
+}));
+
+describe('RestClient', () => {
+  it('renders RequestForm and Tabs with translated labels', async () => {
+    getTranslationsMock.mockResolvedValue((key: string) => {
+      const dict: Record<string, string> = {
+        headers: 'Headers label',
+        body: 'Body label',
+        code: 'Code label',
+      };
+      return dict[key] ?? key;
+    });
+
+    const ui = await RestClient();
+    render(ui);
+
+    expect(screen.getByTestId('request-form')).toBeInTheDocument();
+
+    const labels = screen.getAllByTestId('tab').map((el) => el.textContent);
+    expect(labels).toEqual(['Headers label', 'Body label', 'Code label']);
+
+    expect(getTranslationsMock).toHaveBeenCalledWith('RestClient');
+  });
+});
