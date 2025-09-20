@@ -1,4 +1,4 @@
-﻿import {fireEvent, render, screen} from '@testing-library/react';
+﻿import { fireEvent, render, screen } from '@testing-library/react';
 import HistoryRequestItem from '@/components/layout/history/history-request-item/history-request-item';
 
 jest.mock('next-intl', () => ({
@@ -64,7 +64,9 @@ describe('HistoryRequestItem', () => {
   it('on click calls redirectToRequestPage with the correct arguments', () => {
     render(<HistoryRequestItem request={baseRequest as any} />);
 
-    const li = screen.getByRole('listitem', { hidden: true }) || screen.getByText(baseRequest.url).closest('li');
+    const li =
+      screen.getByRole('listitem', { hidden: true }) ||
+      screen.getByText(baseRequest.url).closest('li');
     fireEvent.click(li!);
 
     expect(redirectToRequestPageMock).toHaveBeenCalledTimes(1);

@@ -85,7 +85,6 @@ describe('Variables page', () => {
     clearMock.mockReset();
   });
 
-
   it('shows a toast when auth fails', async () => {
     useAuthStateMock.mockReturnValue([{ uid: 'u1' }, false, new Error('x')]);
     render(<Variables />);
