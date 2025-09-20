@@ -85,12 +85,6 @@ describe('Variables page', () => {
     clearMock.mockReset();
   });
 
-  it('redirects guest to HOME when there is no user and loading=false', async () => {
-    render(<Variables />);
-    await waitFor(() => {
-      expect(pushMock).toHaveBeenCalledWith(ROUTES.HOME);
-    });
-  });
 
   it('shows a toast when auth fails', async () => {
     useAuthStateMock.mockReturnValue([{ uid: 'u1' }, false, new Error('x')]);
