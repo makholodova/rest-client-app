@@ -10,15 +10,21 @@ jest.mock('next-intl', () => ({
 const loadHistoryMock = jest.fn<Promise<void>, []>();
 
 type HistoryItem = { id: number };
-const useHistoryMock: {
+type UseHistoryShape = {
   history: HistoryItem[];
   loading: boolean;
+  authLoading: boolean;
   error: string;
+  userId?: string | null;
   loadHistory: jest.Mock<Promise<void>, []>;
-} = {
+};
+
+const useHistoryMock: UseHistoryShape = {
   history: [],
   loading: false,
+  authLoading: false,
   error: '',
+  userId: undefined,
   loadHistory: loadHistoryMock,
 };
 
@@ -40,8 +46,18 @@ jest.mock(
   '@/components/layout/history/history-request-list/history-request-list',
   () => ({
     __esModule: true,
-    default: ({ requests }: { requests: any[] }) => (
-      <div data-testid="history-list">{`items:${requests?.length ?? 0}`}</div>
+    default: ({
+      requests,
+      loading,
+      authLoading,
+    }: {
+      requests: any[];
+      loading: boolean;
+      authLoading: boolean;
+    }) => (
+      <div data-testid="history-list">
+        {`items:${requests?.length ?? 0};loading:${loading};auth:${authLoading}`}
+      </div>
     ),
   })
 );
@@ -55,25 +71,36 @@ describe('History component', () => {
     jest.clearAllMocks();
     useHistoryMock.history = [];
     useHistoryMock.loading = false;
+    useHistoryMock.authLoading = false;
     useHistoryMock.error = '';
+    useHistoryMock.userId = undefined;
     loadHistoryMock.mockResolvedValue(undefined);
   });
 
-  it('renders the header and calls loadHistory on mount', async () => {
+  it('renders the header ', () => {
     render(<History />);
     expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
       'title'
     );
+  });
 
+  it('does not call loadHistory without a userId', async () => {
+    render(<History />);
+    await waitFor(() => {
+      expect(loadHistoryMock).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  it('calls loadHistory when userId appears', async () => {
+    useHistoryMock.userId = 'u1';
+    render(<History />);
     await waitFor(() => {
       expect(loadHistoryMock).toHaveBeenCalledTimes(1);
     });
   });
-
-  it('shows the loader when loading=true', () => {
-    useHistoryMock.loading = true;
+  it('shows the loader when authLoading=true', () => {
+    useHistoryMock.authLoading = true;
     render(<History />);
-
     expect(screen.getByTestId('circle-loader')).toBeInTheDocument();
     expect(screen.queryByTestId('history-list')).not.toBeInTheDocument();
   });

@@ -32,6 +32,11 @@ jest.mock('@/components/ui/button-link/button-link', () => (props: any) => (
   </a>
 ));
 
+const pushMock = jest.fn();
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: pushMock }),
+}));
+
 describe('Header', () => {
   beforeEach(() => {
     jest.clearAllMocks();
