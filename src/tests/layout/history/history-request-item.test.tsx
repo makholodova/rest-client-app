@@ -1,4 +1,4 @@
-﻿import { render, screen } from '@testing-library/react';
+﻿import { fireEvent, render, screen } from '@testing-library/react';
 import HistoryRequestItem from '@/components/layout/history/history-request-item/history-request-item';
 
 jest.mock('next-intl', () => ({
@@ -17,6 +17,13 @@ jest.mock('next/link', () => {
     </a>
   );
 });
+
+const redirectToRequestPageMock = jest.fn();
+jest.mock('@/hooks/use-api-request', () => ({
+  useApiRequest: () => ({
+    redirectToRequestPage: redirectToRequestPageMock,
+  }),
+}));
 
 const baseRequest = {
   id: 'req-1',
@@ -52,5 +59,16 @@ describe('HistoryRequestItem', () => {
     render(<HistoryRequestItem request={request as any} />);
     expect(screen.getByText('—')).toBeInTheDocument();
     expect(screen.getByText('NETWORK')).toBeInTheDocument();
+  });
+
+  it('on click calls redirectToRequestPage with the correct arguments', () => {
+    render(<HistoryRequestItem request={baseRequest as any} />);
+
+    const li =
+      screen.getByRole('listitem', { hidden: true }) ||
+      screen.getByText(baseRequest.url).closest('li');
+    fireEvent.click(li!);
+
+    expect(redirectToRequestPageMock).toHaveBeenCalledTimes(1);
   });
 });
