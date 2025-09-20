@@ -43,23 +43,23 @@ jest.mock('@/components/ui/circle-loader/circle-loader', () => ({
 }));
 
 jest.mock(
-    '@/components/layout/history/history-request-list/history-request-list',
-    () => ({
-      __esModule: true,
-      default: ({
-                  requests,
-                  loading,
-                  authLoading,
-                }: {
-        requests: any[];
-        loading: boolean;
-        authLoading: boolean;
-      }) => (
-          <div data-testid="history-list">
-            {`items:${requests?.length ?? 0};loading:${loading};auth:${authLoading}`}
-          </div>
-      ),
-    })
+  '@/components/layout/history/history-request-list/history-request-list',
+  () => ({
+    __esModule: true,
+    default: ({
+      requests,
+      loading,
+      authLoading,
+    }: {
+      requests: any[];
+      loading: boolean;
+      authLoading: boolean;
+    }) => (
+      <div data-testid="history-list">
+        {`items:${requests?.length ?? 0};loading:${loading};auth:${authLoading}`}
+      </div>
+    ),
+  })
 );
 
 jest.mock('react-toastify', () => ({
@@ -79,7 +79,9 @@ describe('History component', () => {
 
   it('renders the header ', () => {
     render(<History />);
-    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent('title');
+    expect(screen.getByRole('heading', { level: 2 })).toHaveTextContent(
+      'title'
+    );
   });
 
   it('does not call loadHistory without a userId', async () => {
