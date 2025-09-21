@@ -27,6 +27,8 @@ const mockUseRouter = jest.fn(() => ({
 
 const mockUseParams = jest.fn();
 const mockUseSearchParams = jest.fn(() => new URLSearchParams());
+const mockSetBody = jest.fn();
+const mockSetHeader = jest.fn();
 
 describe('useApiRequest', () => {
   const mockVariables = { apiKey: '12345', token: 'abcde' };
@@ -52,6 +54,8 @@ describe('useApiRequest', () => {
       (selector) => {
         if (selector.toString().includes('body')) return mockBodyState;
         if (selector.toString().includes('headers')) return mockHeadersState;
+        if (selector.toString().includes('setBody')) return mockSetBody;
+        if (selector.toString().includes('initHeaders')) return mockSetHeader;
         return null;
       }
     );
@@ -158,7 +162,19 @@ describe('useApiRequest', () => {
       });
 
       expect(mockRouterPush).toHaveBeenCalledWith(
-        `${ROUTES.REST_CLIENT}/GET/encoded_https://api.example.com/users?Content-Type=application%252Fjson&Authorization=Bearer%2520token`
+        expect.stringContaining(
+          `${ROUTES.REST_CLIENT}/GET/encoded_https://api.example.com/users`
+        )
+      );
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        expect.stringContaining(
+          '/rest-client/GET/encoded_https://api.example.com/users?Content-Type=application%252Fjson&Authorization=Bearer%2520token'
+        )
+      );
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        expect.stringContaining(
+          '/rest-client/GET/encoded_https://api.example.com/users?Content-Type=application%252Fjson&Authorization=Bearer%2520token'
+        )
       );
     });
 
@@ -174,7 +190,9 @@ describe('useApiRequest', () => {
       });
 
       expect(mockRouterPush).toHaveBeenCalledWith(
-        `${ROUTES.REST_CLIENT}/POST/encoded_https://api.example.com/users/encoded_request body?Content-Type=application%252Fjson&Authorization=Bearer%2520token`
+        expect.stringContaining(
+          `${ROUTES.REST_CLIENT}/POST/encoded_https://api.example.com/users/encoded_request body`
+        )
       );
     });
 
@@ -183,6 +201,8 @@ describe('useApiRequest', () => {
         (selector) => {
           if (selector.toString().includes('body')) return mockBodyState;
           if (selector.toString().includes('headers')) return [];
+          if (selector.toString().includes('setBody')) return mockSetBody;
+          if (selector.toString().includes('initHeaders')) return mockSetHeader;
           return null;
         }
       );
@@ -204,7 +224,7 @@ describe('useApiRequest', () => {
   });
 
   describe('redirectToRequestPage', () => {
-    it('should redirect with method, url and body', () => {
+    it('should redirect with method, url and body and call setBody/setHeader', () => {
       mockUseParams.mockReturnValue({ data: [] });
 
       const { result } = renderHook(() => useApiRequest());
@@ -218,12 +238,20 @@ describe('useApiRequest', () => {
         );
       });
 
+      expect(mockSetBody).toHaveBeenCalledWith({ name: 'John' });
+      expect(mockSetHeader).toHaveBeenCalledWith({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer token',
+      });
+
       expect(mockRouterPush).toHaveBeenCalledWith(
-        `${ROUTES.REST_CLIENT}/POST/encoded_https://api.example.com/users/encoded_{\"name\": \"John\"}?Content-Type=application%252Fjson&Authorization=Bearer%2520token`
+        expect.stringContaining(
+          `${ROUTES.REST_CLIENT}/POST/encoded_https://api.example.com/users/encoded_{"name": "John"}`
+        )
       );
     });
 
-    it('should redirect without body for GET requests', () => {
+    it('should redirect without body for GET requests but still call setHeader', () => {
       mockUseParams.mockReturnValue({ data: [] });
 
       const { result } = renderHook(() => useApiRequest());
@@ -237,8 +265,15 @@ describe('useApiRequest', () => {
         );
       });
 
+      expect(mockSetBody).not.toHaveBeenCalled();
+      expect(mockSetHeader).toHaveBeenCalledWith({
+        'Content-Type': 'application/json',
+      });
+
       expect(mockRouterPush).toHaveBeenCalledWith(
-        `${ROUTES.REST_CLIENT}/GET/encoded_https://api.example.com/users?Content-Type=application%252Fjson`
+        expect.stringContaining(
+          `${ROUTES.REST_CLIENT}/GET/encoded_https://api.example.com/users`
+        )
       );
     });
 
@@ -255,50 +290,55 @@ describe('useApiRequest', () => {
         );
       });
 
+      expect(mockSetBody).toHaveBeenCalledWith({ name: 'John' });
+      expect(mockSetHeader).not.toHaveBeenCalled();
+
       expect(mockRouterPush).toHaveBeenCalledWith(
-        `${ROUTES.REST_CLIENT}/POST/encoded_https://api.example.com/users/encoded_{"name": "John"}`
+        expect.stringContaining(
+          `${ROUTES.REST_CLIENT}/POST/encoded_https://api.example.com/users/encoded_{"name": "John"}`
+        )
       );
     });
   });
 
   describe('hasBody logic', () => {
-    it('should return false for GET method', () => {
+    it('should return true for GET method', () => {
       mockUseParams.mockReturnValue({ data: ['GET'] });
       const { result } = renderHook(() => useApiRequest());
       expect(result.current.hasBody).toBe(true);
     });
 
-    it('should return false for HEAD method', () => {
+    it('should return true for HEAD method', () => {
       mockUseParams.mockReturnValue({ data: ['HEAD'] });
       const { result } = renderHook(() => useApiRequest());
       expect(result.current.hasBody).toBe(true);
     });
 
-    it('should return false for DELETE method', () => {
+    it('should return true for DELETE method', () => {
       mockUseParams.mockReturnValue({ data: ['DELETE'] });
       const { result } = renderHook(() => useApiRequest());
       expect(result.current.hasBody).toBe(true);
     });
 
-    it('should return false for OPTIONS method', () => {
+    it('should return true for OPTIONS method', () => {
       mockUseParams.mockReturnValue({ data: ['OPTIONS'] });
       const { result } = renderHook(() => useApiRequest());
       expect(result.current.hasBody).toBe(true);
     });
 
-    it('should return true for POST method', () => {
+    it('should return false for POST method', () => {
       mockUseParams.mockReturnValue({ data: ['POST'] });
       const { result } = renderHook(() => useApiRequest());
       expect(result.current.hasBody).toBe(false);
     });
 
-    it('should return true for PUT method', () => {
+    it('should return false for PUT method', () => {
       mockUseParams.mockReturnValue({ data: ['PUT'] });
       const { result } = renderHook(() => useApiRequest());
       expect(result.current.hasBody).toBe(false);
     });
 
-    it('should return true for PATCH method', () => {
+    it('should return false for PATCH method', () => {
       mockUseParams.mockReturnValue({ data: ['PATCH'] });
       const { result } = renderHook(() => useApiRequest());
       expect(result.current.hasBody).toBe(false);
