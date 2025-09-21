@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import BodyEditor from '../../../components/layout/rest-client/tabs/body-editor/body-editor';
-
+import { useApiRequest } from '@/hooks/use-api-request';
 jest.mock('@/hooks/use-api-request', () => ({
   useApiRequest: jest.fn(() => ({ hasBody: false })),
 }));
@@ -11,12 +11,12 @@ const setBodyMock = jest.fn();
 let storeState = { body: '{}', setBody: setBodyMock };
 
 jest.mock('@/store/restClient.store', () => ({
-  useRestClientStore: (selector: any) => selector(storeState),
+  useRestClientStore: (selector) => selector(storeState),
 }));
 
 jest.mock('@/components/ui/code-panel/code-panel', () => ({
   __esModule: true,
-  default: (props: any) => (
+  default: (props) => (
     <div
       data-testid="codepanel"
       data-language={props.language}
@@ -73,8 +73,10 @@ describe('BodyEditor', () => {
   });
 
   test('isReadOnly=true when hasBody=true', async () => {
-    const { useApiRequest } = require('@/hooks/use-api-request');
-    (useApiRequest as jest.Mock).mockReturnValueOnce({ hasBody: true });
+    const mockedUseApiRequest = useApiRequest as jest.MockedFunction<
+      typeof useApiRequest
+    >;
+    mockedUseApiRequest.mockReturnValueOnce({ hasBody: true });
 
     render(<BodyEditor />);
 

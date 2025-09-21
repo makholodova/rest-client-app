@@ -21,12 +21,12 @@ jest.mock('react-firebase-hooks/auth', () => ({
 jest.mock('@/components/ui/language-switcher/language-switcher', () => () => (
   <div data-testid="language-switcher" />
 ));
-jest.mock('@/components/ui/button/button', () => (props: any) => (
+jest.mock('@/components/ui/button/button', () => (props) => (
   <button data-testid="button" onClick={props.onClick}>
     {props.children}
   </button>
 ));
-jest.mock('@/components/ui/button-link/button-link', () => (props: any) => (
+jest.mock('@/components/ui/button-link/button-link', () => (props) => (
   <a data-testid="button-link" href={props.href}>
     {props.children}
   </a>

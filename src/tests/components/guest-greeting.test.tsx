@@ -14,11 +14,21 @@ jest.mock('next-intl', () => ({
 }));
 
 jest.mock('@/components/ui/app-link/app-link', () => {
-  return ({ href, children }: any) => (
+  const AppLinkMock = ({
+    href,
+    children,
+  }: {
+    href: string;
+    children?: React.ReactNode;
+  }) => (
     <a href={href} data-testid="app-link">
       {children}
     </a>
   );
+
+  (AppLinkMock as { displayName?: string }).displayName = 'AppLinkMock';
+
+  return AppLinkMock;
 });
 
 describe('GuestGreeting', () => {

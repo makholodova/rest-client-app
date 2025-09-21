@@ -1,6 +1,5 @@
 ﻿import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { ROUTES } from '@/constants/routes';
 import Variables from '@/components/layout/variables/variables';
 
 jest.mock('./variables.module.scss', () => ({
@@ -22,22 +21,24 @@ jest.mock('next-intl', () => ({
 
 jest.mock('@/components/layout/page/page', () => ({
   __esModule: true,
-  default: ({ children }: any) => <div data-testid="page">{children}</div>,
+  default: ({ children }) => <div data-testid="page">{children}</div>,
 }));
 jest.mock('@/components/ui/button/button', () => ({
   __esModule: true,
-  default: ({ children, ...props }: any) => (
-    <button {...props}>{children}</button>
-  ),
+  default: ({ children, ...props }) => <button {...props}>{children}</button>,
 }));
 jest.mock('@/components/ui/field-input/field-input', () => ({
   __esModule: true,
-  FieldInput: ({ onChange, ...props }: any) => (
+  FieldInput: ({ onChange, ...props }) => (
     <input data-testid={props.placeholder} onChange={onChange} {...props} />
   ),
 }));
 
-jest.mock('next/image', () => (props: any) => <img alt={props.alt} />);
+jest.mock('next/image', () => {
+  const NextImageMock = (props: { alt: string }) => <img alt={props.alt} />;
+  (NextImageMock as { displayName?: string }).displayName = 'NextImageMock';
+  return NextImageMock;
+});
 
 const pushMock = jest.fn();
 jest.mock('next/navigation', () => ({
@@ -46,7 +47,7 @@ jest.mock('next/navigation', () => ({
 
 const useAuthStateMock = jest.fn();
 jest.mock('react-firebase-hooks/auth', () => ({
-  useAuthState: (...args: any[]) => useAuthStateMock(...args),
+  useAuthState: (...args) => useAuthStateMock(...args),
 }));
 jest.mock('@/firebase', () => ({ auth: {} }));
 

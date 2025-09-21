@@ -15,11 +15,21 @@ jest.mock('next-intl', () => ({
 }));
 
 jest.mock('@/components/ui/button-link/button-link', () => {
-  return ({ href, children }: any) => (
+  const ButtonLinkMock = ({
+    href,
+    children,
+  }: {
+    href: string;
+    children?: React.ReactNode;
+  }) => (
     <a href={href} data-testid="btn-link">
       {children}
     </a>
   );
+
+  (ButtonLinkMock as { displayName?: string }).displayName = 'ButtonLinkMock';
+
+  return ButtonLinkMock;
 });
 
 describe('UserGreeting', () => {

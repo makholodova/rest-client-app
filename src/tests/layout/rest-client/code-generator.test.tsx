@@ -25,16 +25,28 @@ jest.mock('@/hooks/use-code-generator', () => ({
   }),
 }));
 
-jest.mock('@/components/ui/code-panel/code-panel', () => (props: any) => (
-  <div data-testid="code-panel">
-    <div data-testid="cp-language">{props.language}</div>
-    <textarea
-      data-testid="cp-input"
-      value={props.text}
-      onChange={(e) => props.setText?.(e.target.value)}
-    />
-  </div>
-));
+jest.mock('@/components/ui/code-panel/code-panel', () => {
+  const CodePanelMock = (props: {
+    language: string;
+    text: string;
+    setText?: (v: string) => void;
+  }) => (
+    <div data-testid="code-panel">
+      <div data-testid="cp-language">{props.language}</div>
+      <textarea
+        data-testid="cp-input"
+        value={props.text}
+        onChange={(e) =>
+          props.setText?.((e.target as HTMLTextAreaElement).value)
+        }
+      />
+    </div>
+  );
+
+  (CodePanelMock as { displayName?: string }).displayName = 'CodePanelMock';
+
+  return CodePanelMock;
+});
 
 jest.mock('./code-generator.module.scss', () => ({
   wrapper: 'wrapper',
