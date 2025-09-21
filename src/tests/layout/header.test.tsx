@@ -10,7 +10,6 @@ jest.mock('@/firebase', () => ({
   logout: jest.fn(),
 }));
 
-// Затем импортируем мок и типизируем его
 const mockedAuth = auth as jest.Mocked<typeof auth>;
 const mockedLogout = logout as jest.MockedFunction<typeof logout>;
 
@@ -56,7 +55,6 @@ describe('Header', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    // Правильная типизация для onAuthStateChanged
     mockedAuth.onAuthStateChanged.mockImplementation(
       (
         nextOrObserver:
