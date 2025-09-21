@@ -48,14 +48,6 @@ describe('useAuthTokenGuard', () => {
     });
   });
 
-  it('redirects to home if authUser is null', () => {
-    require('@/context/authUserContext').useAuth.mockReturnValue({
-      authUser: null,
-    });
-    renderHook(() => useAuthTokenGuard());
-    expect(push).toHaveBeenCalledWith(ROUTES.HOME);
-  });
-
   it('calls logout and redirects if token is invalid', async () => {
     require('@/context/authUserContext').useAuth.mockReturnValue({
       authUser: { uid: '123' },

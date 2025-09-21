@@ -31,7 +31,6 @@ function Thrower({ shouldThrow }: { shouldThrow: boolean }) {
   return <div data-testid="content">OK</div>;
 }
 
-
 describe('ErrorBoundary', () => {
   it('renders children when there is no error', () => {
     render(

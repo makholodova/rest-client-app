@@ -8,9 +8,7 @@ jest.mock('next-intl/server', () => ({
 jest.mock('next/image', () => {
   const NextImageMock = (
     props: { alt: string } & React.ImgHTMLAttributes<HTMLImageElement>
-  ) => (
-    <img {...props} alt={props.alt} />
-  );
+  ) => <img {...props} alt={props.alt} />;
 
   (NextImageMock as { displayName?: string }).displayName = 'NextImageMock';
 
