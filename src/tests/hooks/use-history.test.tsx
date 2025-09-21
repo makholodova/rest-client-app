@@ -126,8 +126,8 @@ describe('useHistory', () => {
     it('should subscribe to auth state changes on mount', () => {
       renderHook(() => useHistory());
       expect(mockOnAuthStateChanged).toHaveBeenCalledWith(
-        expect.any(Object),
-        expect.any(Function)
+        require('@/firebase').auth,
+        authCallback
       );
     });
 
