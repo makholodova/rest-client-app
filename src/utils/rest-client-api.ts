@@ -68,7 +68,7 @@ const saveRequestToHistory = async (
     body: JSON.stringify({
       method,
       url,
-      reqHeaders,
+      headers: reqHeaders,
       body,
       status,
       latency_ms: latency,
