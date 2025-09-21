@@ -23,23 +23,23 @@ jest.mock('next/navigation', () => ({
 }));
 
 jest.mock('@hookform/resolvers/zod', () => ({
-  zodResolver: () => (_values: any) => ({ values: _values, errors: {} }),
+  zodResolver: () => (_values) => ({ values: _values, errors: {} }),
 }));
 
-jest.mock('@/components/ui/app-link/app-link', () => (props: any) => (
+jest.mock('@/components/ui/app-link/app-link', () => (props) => (
   <a data-testid="app-link" href={props.href}>
     {props.children}
   </a>
 ));
-jest.mock('@/components/ui/button/button', () => (props: any) => (
+jest.mock('@/components/ui/button/button', () => (props) => (
   <button type={props.type || 'button'} onClick={props.onClick}>
     {props.children}
   </button>
 ));
 jest.mock('@/components/ui/field-input/field-input', () => ({
-  FieldInput: (props: any) => <input data-testid={props.type} {...props} />,
+  FieldInput: (props) => <input data-testid={props.type} {...props} />,
 }));
-jest.mock('@/components/layout/page/page', () => (props: any) => (
+jest.mock('@/components/layout/page/page', () => (props) => (
   <div data-testid="page">{props.children}</div>
 ));
 

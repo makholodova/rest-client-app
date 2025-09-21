@@ -37,14 +37,7 @@ jest.mock('@/hooks/use-headers', () => ({
 }));
 
 jest.mock('@/components/ui/field-input/field-input', () => ({
-  FieldInput: ({
-    value,
-    onChange,
-    placeholder,
-    variant,
-    type,
-    className,
-  }: any) => (
+  FieldInput: ({ value, onChange, placeholder, variant, type, className }) => (
     <input
       data-testid={`fi-${placeholder}`}
       value={value}
@@ -57,9 +50,13 @@ jest.mock('@/components/ui/field-input/field-input', () => ({
   ),
 }));
 
-jest.mock('@/components/ui/button/button', () => (props: any) => (
-  <button {...props} />
-));
+jest.mock('@/components/ui/button/button', () => {
+  const ButtonMock = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <button {...props} />
+  );
+  (ButtonMock as { displayName?: string }).displayName = 'ButtonMock';
+  return ButtonMock;
+});
 
 jest.mock('./headers.module.scss', () => ({
   wrapper: 'wrapper',

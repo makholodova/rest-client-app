@@ -19,7 +19,7 @@ jest.mock('@/hooks/use-api-request', () => ({
 }));
 
 jest.mock('@/components/ui/field-input/field-input', () => ({
-  FieldInput: ({ value, onChange, placeholder, className }: any) => (
+  FieldInput: ({ value, onChange, placeholder, className }) => (
     <input
       data-testid="url-input"
       className={className}
@@ -30,9 +30,13 @@ jest.mock('@/components/ui/field-input/field-input', () => ({
   ),
 }));
 
-jest.mock('@/components/ui/button/button', () => (props: any) => (
-  <button {...props} />
-));
+jest.mock('@/components/ui/button/button', () => {
+  const ButtonMock = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <button {...props} />
+  );
+  (ButtonMock as { displayName?: string }).displayName = 'ButtonMock';
+  return ButtonMock;
+});
 
 jest.mock('./request-form.module.scss', () => ({
   wrapper: 'wrapper',

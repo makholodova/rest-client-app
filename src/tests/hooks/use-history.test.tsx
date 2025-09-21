@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react';
 import { useHistory } from '../../hooks/use-history';
-import { db, auth } from '@/firebase';
+import { db } from '@/firebase';
 import {
   collection,
   addDoc,

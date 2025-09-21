@@ -5,11 +5,21 @@ import { ROUTES } from '@/constants/routes';
 jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }));
-jest.mock('@/components/ui/button-link/button-link', () => (props: any) => (
-  <a data-testid="button-link" href={props.href}>
-    {props.children}
-  </a>
-));
+jest.mock('@/components/ui/button-link/button-link', () => {
+  const ButtonLinkMock = ({
+    href,
+    children,
+  }: {
+    href: string;
+    children?: React.ReactNode;
+  }) => (
+    <a data-testid="button-link" href={href}>
+      {children}
+    </a>
+  );
+  (ButtonLinkMock as { displayName?: string }).displayName = 'ButtonLinkMock';
+  return ButtonLinkMock;
+});
 
 describe('EmptyHistory', () => {
   it('renders noRequests, empty and link', () => {
