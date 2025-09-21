@@ -213,7 +213,7 @@ describe('saveRequestToHistory', () => {
     expect(requestBody).toEqual({
       method: 'POST',
       url: 'https://api.example.com',
-      reqHeaders: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: 'request body',
       status: 200,
       latency_ms: expect.any(Number),
