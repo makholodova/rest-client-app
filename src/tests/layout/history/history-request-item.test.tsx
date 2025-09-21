@@ -5,17 +5,32 @@ jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-jest.mock('next/image', () => (props: any) => (
-  <img {...props} alt={props.alt} />
-));
+jest.mock('next/image', () => {
+  const NextImageMock = (
+    props: React.ImgHTMLAttributes<HTMLImageElement> & { alt?: string }
+  ) => <img {...props} alt={props.alt} />;
+
+  (NextImageMock as { displayName?: string }).displayName = 'NextImageMock';
+  return NextImageMock;
+});
 
 jest.mock('next/link', () => {
-  const React = require('react');
-  return ({ href, children }: any) => (
-    <a href={typeof href === 'string' ? href : '/client?history=test'}>
+  const LinkMock = ({
+    href,
+    children,
+  }: {
+    href: string | { pathname: string; query?: Record<string, string> };
+    children?: React.ReactNode;
+  }) => (
+    <a
+      href={typeof href === 'string' ? href : '/client?history=test'}
+      data-testid="mock-link"
+    >
       {children}
     </a>
   );
+  (LinkMock as { displayName?: string }).displayName = 'LinkMock';
+  return LinkMock;
 });
 
 const redirectToRequestPageMock = jest.fn();
@@ -39,7 +54,7 @@ const baseRequest = {
 
 describe('HistoryRequestItem', () => {
   it('renders data for a successful request', () => {
-    render(<HistoryRequestItem request={baseRequest as any} />);
+    render(<HistoryRequestItem request={baseRequest} />);
 
     expect(screen.getByText('GET')).toBeInTheDocument();
     expect(screen.getByText(String(baseRequest.status))).toBeInTheDocument();
@@ -56,18 +71,23 @@ describe('HistoryRequestItem', () => {
       error: { type: 'NETWORK' },
     };
 
-    render(<HistoryRequestItem request={request as any} />);
+    render(<HistoryRequestItem request={request} />);
     expect(screen.getByText('—')).toBeInTheDocument();
     expect(screen.getByText('NETWORK')).toBeInTheDocument();
   });
 
   it('on click calls redirectToRequestPage with the correct arguments', () => {
-    render(<HistoryRequestItem request={baseRequest as any} />);
+    render(<HistoryRequestItem request={baseRequest} />);
 
     const li =
-      screen.getByRole('listitem', { hidden: true }) ||
+      screen.queryByRole('listitem', { hidden: true }) ??
       screen.getByText(baseRequest.url).closest('li');
-    fireEvent.click(li!);
+
+    expect(li).not.toBeNull();
+
+    if (li) {
+      fireEvent.click(li);
+    }
 
     expect(redirectToRequestPageMock).toHaveBeenCalledTimes(1);
   });

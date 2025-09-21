@@ -51,7 +51,7 @@ jest.mock(
       loading,
       authLoading,
     }: {
-      requests: any[];
+      requests: HistoryItem[];
       loading: boolean;
       authLoading: boolean;
     }) => (

@@ -5,13 +5,20 @@ jest.mock('next-intl', () => ({
   useTranslations: () => (key: string) => key,
 }));
 
-jest.mock('next/image', () => (props: any) => {
-  return <img {...props} alt={props.alt} />;
+jest.mock('next/image', () => {
+  const NextImageMock = (
+    props: React.ImgHTMLAttributes<HTMLImageElement> & { alt: string }
+  ) => <img {...props} alt={props.alt} />;
+
+  (NextImageMock as { displayName?: string }).displayName = 'NextImageMock';
+  return NextImageMock;
 });
 
-jest.mock('@/components/ui/team-members/team-members', () => () => (
-  <div data-testid="team-members" />
-));
+jest.mock('@/components/ui/team-members/team-members', () => {
+  const TeamMembersMock: React.FC = () => <div data-testid="team-members" />;
+  (TeamMembersMock as { displayName?: string }).displayName = 'TeamMembersMock';
+  return TeamMembersMock;
+});
 
 describe('HomeContent', () => {
   it('renders projectText, courseTitle, courseText and TeamMembers', () => {

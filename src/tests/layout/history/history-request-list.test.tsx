@@ -1,17 +1,33 @@
 ﻿import { render, screen } from '@testing-library/react';
 import HistoryRequestsList from '@/components/layout/history/history-request-list/history-request-list';
 
-jest.mock(
-  '@/components/layout/history/empty-history/empty-history',
-  () => () => <div data-testid="empty-history">Empty</div>
-);
+jest.mock('@/components/layout/history/empty-history/empty-history', () => {
+  const EmptyHistoryMock: React.FC = () => (
+    <div data-testid="empty-history">Empty</div>
+  );
+  (EmptyHistoryMock as { displayName?: string }).displayName =
+    'EmptyHistoryMock';
+  return EmptyHistoryMock;
+});
+
 jest.mock(
   '@/components/layout/history/history-request-item/history-request-item',
-  () => (props: any) => <li data-testid="history-item">{props.request.id}</li>
+  () => {
+    type Props = { request: { id: string } };
+    const HistoryRequestItemMock: React.FC<Props> = ({ request }) => (
+      <li data-testid="history-item">{request.id}</li>
+    );
+    (HistoryRequestItemMock as { displayName?: string }).displayName =
+      'HistoryRequestItemMock';
+    return HistoryRequestItemMock;
+  }
 );
-jest.mock('@/components/ui/circle-loader/circle-loader', () => () => (
-  <div data-testid="loader">Loading...</div>
-));
+
+jest.mock('@/components/ui/circle-loader/circle-loader', () => {
+  const LoaderMock: React.FC = () => <div data-testid="loader">Loading...</div>;
+  (LoaderMock as { displayName?: string }).displayName = 'LoaderMock';
+  return LoaderMock;
+});
 describe('HistoryRequestsList', () => {
   it('shows the loader when  loading=true', () => {
     render(
@@ -38,7 +54,7 @@ describe('HistoryRequestsList', () => {
       { id: 'old', timestamp: '2025-09-15T10:00:00Z' },
       { id: 'new', timestamp: '2025-09-16T12:00:00Z' },
       { id: 'middle', timestamp: '2025-09-16T08:00:00Z' },
-    ] as any;
+    ];
 
     render(
       <HistoryRequestsList

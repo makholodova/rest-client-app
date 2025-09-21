@@ -5,8 +5,16 @@ jest.mock('next-intl/server', () => ({
   getTranslations: jest.fn().mockResolvedValue((key: string) => key),
 }));
 
-jest.mock('next/image', () => (props: any) => {
-  return <img {...props} alt={props.alt} />;
+jest.mock('next/image', () => {
+  const NextImageMock = (
+    props: { alt: string } & React.ImgHTMLAttributes<HTMLImageElement>
+  ) => (
+    <img {...props} alt={props.alt} />
+  );
+
+  (NextImageMock as { displayName?: string }).displayName = 'NextImageMock';
+
+  return NextImageMock;
 });
 
 describe('Footer', () => {

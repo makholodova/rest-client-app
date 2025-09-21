@@ -10,17 +10,31 @@ jest.mock('use-intl', () => ({
 jest.mock('react-toastify', () => ({
   toast: { success: jest.fn(), error: jest.fn() },
 }));
-jest.mock('next/image', () => (props: any) => (
-  <img {...props} alt={props.alt} />
-));
-jest.mock('@monaco-editor/react', () => () => <textarea />);
-jest.mock('@monaco-editor/react', () => (props: any) => (
-  <textarea
-    data-testid="editor"
-    value={props.value}
-    onChange={(e) => props.onChange?.((e.target as HTMLTextAreaElement).value)}
-  />
-));
+jest.mock('next/image', () => {
+  const NextImageMock = (
+    props: React.ImgHTMLAttributes<HTMLImageElement> & { alt: string }
+  ) => <img {...props} alt={props.alt} />;
+
+  (NextImageMock as { displayName?: string }).displayName = 'NextImageMock';
+  return NextImageMock;
+});
+jest.mock('@monaco-editor/react', () => {
+  const MonacoMock = (props: {
+    value?: string;
+    onChange?: (val: string) => void;
+  }) => (
+    <textarea
+      data-testid="editor"
+      value={props.value}
+      onChange={(e) =>
+        props.onChange?.((e.target as HTMLTextAreaElement).value)
+      }
+    />
+  );
+
+  (MonacoMock as { displayName?: string }).displayName = 'MonacoMock';
+  return MonacoMock;
+});
 
 describe('CodePanel', () => {
   beforeEach(() => {

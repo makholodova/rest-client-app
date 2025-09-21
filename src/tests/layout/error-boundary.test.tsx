@@ -1,5 +1,5 @@
 ﻿import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { ErrorBoundary } from '@/components/layout/error-boundary/error-boundary';
 
 jest.mock('./error-boundary.module.scss', () => ({
@@ -8,25 +8,29 @@ jest.mock('./error-boundary.module.scss', () => ({
   text: 'text',
 }));
 
-jest.mock('@/components/ui/button/button', () => (props: any) => (
-  <button {...props} />
-));
-jest.mock('@/components/layout/page/page', () => (props: any) => (
-  <div data-testid="page" {...props} />
-));
+jest.mock('@/components/ui/button/button', () => {
+  const ButtonMock = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+    <button {...props} />
+  );
+
+  (ButtonMock as { displayName?: string }).displayName = 'ButtonMock';
+  return ButtonMock;
+});
+
+jest.mock('@/components/layout/page/page', () => {
+  const PageMock = (props: { children?: React.ReactNode }) => (
+    <div data-testid="page">{props.children}</div>
+  );
+
+  (PageMock as { displayName?: string }).displayName = 'PageMock';
+  return PageMock;
+});
 
 function Thrower({ shouldThrow }: { shouldThrow: boolean }) {
   if (shouldThrow) throw new Error('Kaboom');
   return <div data-testid="content">OK</div>;
 }
 
-let consoleErrorSpy: jest.SpyInstance;
-beforeAll(() => {
-  consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-});
-afterAll(() => {
-  consoleErrorSpy.mockRestore();
-});
 
 describe('ErrorBoundary', () => {
   it('renders children when there is no error', () => {

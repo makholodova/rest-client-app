@@ -7,16 +7,27 @@ jest.mock('./response-viewer.module.scss', () => ({
 
 const fetchApiMock = jest.fn();
 jest.mock('@/utils/rest-client-api', () => ({
-  fetchApi: (...args: any[]) => fetchApiMock(...args),
+  fetchApi: (...args) => fetchApiMock(...args),
 }));
 
-jest.mock('@/components/ui/code-panel/code-panel', () => (props: any) => (
-  <div data-testid="code-panel">
-    <div data-testid="title">{props.title}</div>
-    <pre data-testid="text">{props.text}</pre>
-    <span data-testid="readonly">{String(props.isReadOnly)}</span>
-  </div>
-));
+jest.mock('@/components/ui/code-panel/code-panel', () => {
+  type Props = {
+    title?: string;
+    text?: string;
+    isReadOnly?: boolean;
+  };
+
+  const CodePanelMock: React.FC<Props> = (props) => (
+    <div data-testid="code-panel">
+      <div data-testid="title">{props.title}</div>
+      <pre data-testid="text">{props.text}</pre>
+      <span data-testid="readonly">{String(!!props.isReadOnly)}</span>
+    </div>
+  );
+
+  (CodePanelMock as { displayName?: string }).displayName = 'CodePanelMock';
+  return CodePanelMock;
+});
 
 describe('ResponseViewer', () => {
   beforeEach(() => {

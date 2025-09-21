@@ -10,11 +10,21 @@ jest.mock('./button-link.module.scss', () => ({
 }));
 
 jest.mock('next/link', () => {
-  return ({ href, className, children }: any) => (
+  const NextLinkMock = ({
+    href,
+    className,
+    children,
+  }: {
+    href: string;
+    className?: string;
+    children?: React.ReactNode;
+  }) => (
     <a href={href} className={className} data-testid="link">
       {children}
     </a>
   );
+  (NextLinkMock as { displayName?: string }).displayName = 'NextLinkMock';
+  return NextLinkMock;
 });
 
 describe('ButtonLink', () => {
