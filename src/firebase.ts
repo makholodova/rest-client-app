@@ -73,6 +73,7 @@ const registerWithEmailAndPassword = async (
       toast.error('Token set error');
       return false;
     }
+    return true;
   } catch (err) {
     if (err instanceof FirebaseError) {
       toast.error(err.message);
