@@ -20,14 +20,6 @@ function Thrower({ shouldThrow }: { shouldThrow: boolean }) {
   return <div data-testid="content">OK</div>;
 }
 
-let consoleErrorSpy: jest.SpyInstance;
-beforeAll(() => {
-  consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-});
-afterAll(() => {
-  consoleErrorSpy.mockRestore();
-});
-
 describe('ErrorBoundary', () => {
   it('renders children when there is no error', () => {
     render(
