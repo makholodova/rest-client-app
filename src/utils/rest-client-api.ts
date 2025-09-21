@@ -9,7 +9,7 @@ type FetchResult = {
   responseHeaders: Headers;
 };
 
-const createRequestConfig = (
+export const createRequestConfig = (
   method: string,
   bodyData: string | null,
   headers: { [key: string]: string } | null
@@ -38,7 +38,7 @@ const createRequestConfig = (
   return config;
 };
 
-const saveRequestToHistory = async (
+export const saveRequestToHistory = async (
   method: Method,
   url: string,
   reqHeaders: { [key: string]: string } | null,
