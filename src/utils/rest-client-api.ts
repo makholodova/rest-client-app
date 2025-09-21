@@ -32,7 +32,7 @@ const createRequestConfig = (
   };
 
   if (bodyData && method !== 'GET' && method !== 'HEAD') {
-    config.body = JSON.stringify(bodyData);
+    config.body = JSON.parse(bodyData);
   }
 
   return config;
@@ -111,16 +111,17 @@ export const fetchApi = async (
       response.ok,
       startedAt,
       content,
-      body || undefined
+      JSON.stringify(body) ?? undefined
     );
 
     if (!response.ok) {
       return {
-        content: '{error}',
+        content: response.statusText,
         status: response.status,
         responseHeaders: response.headers,
       };
     }
+    console.log('test 7');
 
     return {
       content,
@@ -128,7 +129,9 @@ export const fetchApi = async (
       responseHeaders: response.headers,
     };
   } catch {
-    const errorContent = 'error';
+    console.log('test 5');
+
+    const errorContent = data?.[2] ? JSON.stringify(decodeBase64(data[2])) : '';
 
     await saveRequestToHistory(
       (data?.[0] as Method) || 'GET',
@@ -137,6 +140,7 @@ export const fetchApi = async (
       500,
       false,
       startedAt,
+      '',
       errorContent
     );
 
