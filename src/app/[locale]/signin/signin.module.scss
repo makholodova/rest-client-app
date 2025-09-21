@@ -1,0 +1,49 @@
+@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+.title {
+  color: v.$color-primary;
+  font-size: 24px;
+  font-weight: 400;
+}
+.formContainer {
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: v.$box-shadow;
+  min-width: 390px;
+  max-width: 450px;
+  background-color: v.$color-tint-5;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: v.$box-shadow-hover;
+  }
+  &:disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
+.error {
+  color: v.$color-error;
+  align-self: flex-start;
+  font-size: 14px;
+  min-height: 16px;
+}
+
+.linkWrapper {
+  text-align: center;
+  font-size: 18px;
+  line-height: 111%;
+}

@@ -1,0 +1,16 @@
+﻿@use '@/styles/variables' as v;
+@use '@/styles/mixins' as m;
+
+.main {
+  height: max-content;
+  flex: 1 1 auto;
+  padding: 35px 15px 65px 15px;
+  margin-top: 80px;
+  @include m.phone {
+    margin-top: 130px;
+  }
+}
+.centered {
+  justify-content: center;
+  align-items: center;
+}

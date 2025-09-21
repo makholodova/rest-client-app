@@ -1,0 +1,59 @@
+﻿@use '@/styles/variables' as v;
+
+.card {
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid v.$color-silver;
+  box-shadow: 0 6px 12px 0 rgba(171, 190, 209, 0.3);
+  background: v.$color-silver;
+  scale: 1;
+
+  transition:
+    background-color 0.2s ease,
+    scale 0.2s ease;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      scale: 1.03;
+      box-shadow: 0 8px 16px 0 rgba(171, 190, 209, 0.4);
+    }
+  }
+}
+.name {
+}
+.role {
+  color: v.$color-d-grey;
+}
+.github {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+}
+.contributions {
+  padding-left: 1.5rem;
+  list-style-type: none;
+}
+
+.contributions li {
+  position: relative;
+  margin-bottom: 0.5rem;
+  padding-left: 1.3rem;
+}
+
+.contributions li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+
+  width: 1.2rem;
+  height: 1.2rem;
+
+  background: url('/done.svg') no-repeat center;
+  background-size: contain;
+}

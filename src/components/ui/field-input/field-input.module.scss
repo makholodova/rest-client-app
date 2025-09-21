@@ -1,0 +1,31 @@
+@use '@/styles/variables' as v;
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid v.$color-l-grey;
+  border-radius: 8px;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      box-shadow: v.$box-shadow-hover;
+    }
+  }
+  &:focus {
+    box-shadow: v.$box-shadow-hover;
+    border-color: v.$color-shade-1;
+    outline: none;
+  }
+
+  &:disabled {
+    background: v.$color-silver;
+    cursor: not-allowed;
+  }
+}
+.small {
+  padding: 4px 8px;
+}

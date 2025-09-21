@@ -1,0 +1,80 @@
+﻿@use '../../styles/variables' as v;
+
+.button {
+  border: none;
+  color: inherit;
+  text-align: center;
+  border-radius: 4px;
+  padding: 8px 16px;
+  background: transparent;
+  scale: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    scale 0.2s ease;
+
+  &:disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+}
+
+.primary {
+  background: v.$color-primary;
+  color: v.$color-white;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: v.$color-shade-2;
+    }
+  }
+}
+
+.secondary {
+  background: v.$color-silver;
+  color: v.$color-primary;
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      background: v.$color-tint-5;
+    }
+  }
+}
+
+.ghost {
+  color: v.$color-black;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      color: v.$color-shade-1;
+    }
+  }
+}
+
+.scaleOnHover {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      scale: 1.1;
+    }
+  }
+}
+
+.removeButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 8px;
+  margin: 0;
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      scale: 1.07;
+      background: v.$color-tint-5;
+    }
+    &:active {
+      scale: 1.11;
+    }
+  }
+}

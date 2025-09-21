@@ -1,0 +1,20 @@
+﻿@use '@/styles/ui/button-base' as *;
+@use '@/styles/variables' as v;
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid v.$color-white;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

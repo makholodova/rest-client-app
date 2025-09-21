@@ -1,0 +1,25 @@
+﻿@use '@/styles/variables' as v;
+
+@mixin laptop {
+  @media screen and (max-width: v.$laptop) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: v.$tablet) {
+    @content;
+  }
+}
+
+@mixin tablet-sm {
+  @media screen and (max-width: v.$tablet-sm) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media screen and (max-width: v.$phone) {
+    @content;
+  }
+}

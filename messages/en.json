@@ -1,0 +1,156 @@
+{
+  "Header": {
+    "logo": "REST Client",
+    "main": "Main",
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In",
+    "sign-out": "Sign Out"
+  },
+  "SignUp": {
+    "title": "Sign Up",
+    "name": "Name",
+    "email": " E-mail address",
+    "password": "Password",
+    "passwordConfirm": "Confirm password",
+    "submitBtn": "Sign Up",
+    "linkWrapper": "Do you have an account? ",
+    "signInLink": "Sign In"
+  },
+  "SignIn": {
+    "title": "Sign In",
+    "email": " E-mail address",
+    "password": "Password",
+    "submitBtn": "Sign In",
+    "linkWrapper": "Do not have an account? ",
+    "registrationLink": "Sign Up",
+    "useEffectErrorMessage": "Please, try later or sign up - in case you are a new user."
+  },
+  "RestClient": {
+    "send": "Send request",
+    "headers": "Headers",
+    "body": "Body",
+    "code": "Code"
+  },
+  "Headers": {
+    "key": "Key",
+    "value": "Value",
+    "description": "Description",
+    "addButton": "Add Header"
+  },
+  "Footer": {
+    "ap": "Aliaksandra Palkhouskaya",
+    "dy": "Denis Yakovchik",
+    "mk": "Marina Kholodova"
+  },
+  "Toasts": {},
+  "HomePage": {
+    "projectTitle": "About the Project",
+    "projectText": "RESTful Client App is a lightweight and user-friendly tool for interacting with RESTful APIs. It supports common HTTP methods (GET, POST, PUT, DELETE, etc.), allows you to send requests, customize headers, and manage variables. The app also keeps history of your API calls, making it easy to reuse and test APIs. Inspired by tools like Postman, this project provides a simple but powerful environment for developers, testers, and API architects.",
+    "courseTitle": "About the Course",
+    "courseText": "This project was created as part of the RS School React Course. RS School is a free educational program for aspiring web developers. The course covers JavaScript, React, state management (Redux, Context API), API integration, and modern development practices. Everyone can study at RS School regardless of age, background, or location. It is a great opportunity to gain practical skills and work on real projects in a team."
+  },
+  "GuestGreeting": {
+    "title": "Welcome to Rest Client",
+    "text": "To access all features",
+    "or": "or",
+    "sign-up": "Sign Up",
+    "sign-in": "Sign In"
+  },
+  "UserGreeting": {
+    "title": "Hello",
+    "text": "Glad to see you again. You can continue working with the API right now",
+    "restClient": "REST Client",
+    "history": "History",
+    "variables": "Variables"
+  },
+  "404": {
+    "title": "404 | Not Found",
+    "description": "Could not find requested resource",
+    "button": "Return Home"
+  },
+  "Teams": {
+    "marina": {
+      "name": "Marina Kholodova",
+      "role": "Team Lead & Frontend Developer",
+      "bio": "I'm Marina, a frontend developer. I'm inspired by mountains and snowboarding — that's how I recharge. I got into development because I was interested in web technologies, which turned into a passion for creating user-friendly and modern interfaces. I like making interfaces that are easy to understand and fun to use.",
+      "contributions": {
+        "1": "Implemented Header and Footer",
+        "2": "Added support for 2 languages."
+      }
+    },
+    "aliaksandra": {
+      "name": "Aliaksandra Palkhouskaya",
+      "role": "Frontend Developer",
+      "bio": "I started my journey in IT with HTML and CSS, and then I realized that I wanted more, so JavaScript, then React completely took over my mind. My goal - is to create convenient, modern and productive web applications that solve real user problems. I like: coding learning new technologies and applying them in practice, have the results of my work in real projects.",
+      "contributions": {
+        "1": "Set up Firebase",
+        "2": "Implemented authentication"
+      }
+    },
+    "denis": {
+      "name": "Denis Yakovchik",
+      "role": "Frontend Developer",
+      "bio": "I'm Denis, a front-end developer. My journey into development began during my university studies, where I initially learned to develop desktop applications. Over time, I realized that web technologies were much more interesting to me, after which I took my first steps in front-end development. In my free time, I enjoy walking and playing board games. I strive to further improve my skills and create products that are useful to people.",
+      "contributions": {
+        "1": "Set up project's environment",
+        "2": "Configured i18n"
+      }
+    }
+  },
+  "Validation": {
+    "name": {
+      "required": "Name is required",
+      "regex": "Name should contain only letters, you can add your full name or short"
+    },
+    "email": {
+      "required": "Email is required",
+      "invalid": "Invalid email address"
+    },
+    "password": {
+      "min": "Password is required, at least 12 characters",
+      "lowercase": "Password should contain at least one lowercase",
+      "uppercase": "Password should contain at least one uppercase",
+      "digit": "Password should contain at least one digit",
+      "special": "Password should contain at least one special char"
+    },
+    "confirmPassword": {
+      "required": "Confirm your password",
+      "match": "Passwords must match"
+    }
+  },
+  "codePanel": {
+    "generate": "generate code",
+    "genError": "Error generating code",
+    "genSucces": "The code has been successfully generated",
+    "copy": "copy",
+    "copyError": "Copy error",
+    "copySucces": "Copied to clipboard",
+    "edit": "edit",
+    "read": "read",
+    "codearea": "enter code..."
+  },
+  "Variables": {
+    "title": "Variables",
+    "key": "Key",
+    "value": "Value",
+    "clearBtn": "Clear all",
+    "noVariables": "No variables yet.",
+    "useEffectErrorMessage": "Please, sign in or sign up - in case you are a new user or try later."
+  },
+  "ErrorsWarnings": {
+    "noAuthToken": "Something went wrong, try again.",
+    "sessionExpired": "Your session has expired, please sign in again.",
+    "tokenCheckFailed": "Token check failed, please try again.",
+    "tokenValidationError": "Token validation error:"
+  },
+  "History": {
+    "title": "History Requests",
+    "noRequests": "You haven't executed any requests.",
+    "empty": "It's empty here. Try:",
+    "restLink": "Open REST-client",
+    "latency": "Latency",
+    "reqSize": "Request size",
+    "resSize": "Response size",
+    "timeAlt": "Time"
+  }
+}

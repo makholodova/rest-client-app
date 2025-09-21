@@ -1,0 +1,46 @@
+@use '@/styles/variables' as v;
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: v.$color-white;
+  padding: 6px;
+  border-radius: 30px;
+  box-shadow: v.$box-shadow;
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: v.$box-shadow-hover;
+  }
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+
+  width: 20px;
+  height: 20px;
+  text-decoration: none;
+}
+
+.inactive {
+  opacity: 0.4;
+}
+
+.active {
+  opacity: 1;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 48px;
+  height: 36px;
+  border-radius: 50%;
+}
+.image {
+  object-fit: cover;
+}
