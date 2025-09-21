@@ -12,6 +12,7 @@ type RestClientActions = {
     next: HeaderRequest[] | ((prev: HeaderRequest[]) => HeaderRequest[])
   ) => void;
 
+  initHeaders: (v: Record<string, string>) => void;
   addHeader: () => void;
   updateHeader: <K extends keyof HeaderRequest>(
     index: number,
@@ -34,6 +35,16 @@ export const useRestClientStore = create<RestClientState & RestClientActions>()(
     setHeaders: (next) =>
       set((s) => ({
         headers: typeof next === 'function' ? next(s.headers) : next,
+      })),
+
+    initHeaders: (headersRecord) =>
+      set(() => ({
+        headers: Object.entries(headersRecord).map(([key, value]) => ({
+          key,
+          value,
+          description: '',
+          disabled: false,
+        })),
       })),
 
     addHeader: () =>

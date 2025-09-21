@@ -45,7 +45,7 @@ export const useCodeGenerator = () => {
 
     request.body = new sdk.RequestBody({
       mode: 'raw',
-      raw: JSON.stringify(JSON.parse(body)),
+      raw: body ? JSON.stringify(JSON.parse(body)) : '',
       options: {
         raw: {
           language: 'json',

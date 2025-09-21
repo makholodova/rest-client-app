@@ -9,7 +9,7 @@ type FetchResult = {
   responseHeaders: Headers;
 };
 
-const createRequestConfig = (
+export const createRequestConfig = (
   method: string,
   bodyData: string | null,
   headers: { [key: string]: string } | null
@@ -31,14 +31,22 @@ const createRequestConfig = (
     headers: requestHeaders,
   };
 
-  if (bodyData && method !== 'GET' && method !== 'HEAD') {
+  if (
+    bodyData &&
+    !(
+      method === 'GET' ||
+      method === 'HEAD' ||
+      method === 'DELETE' ||
+      method === 'OPTIONS'
+    )
+  ) {
     config.body = JSON.parse(bodyData);
   }
 
   return config;
 };
 
-const saveRequestToHistory = async (
+export const saveRequestToHistory = async (
   method: Method,
   url: string,
   reqHeaders: { [key: string]: string } | null,
