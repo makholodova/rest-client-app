@@ -31,7 +31,11 @@ export const createRequestConfig = (
     headers: requestHeaders,
   };
 
-  if (bodyData && method !== 'GET' && method !== 'HEAD') {
+  if (bodyData 
+    && !(method === 'GET' 
+    || method === 'HEAD' 
+    || method === 'DELETE' 
+    || method === 'OPTIONS')) {
     config.body = JSON.parse(bodyData);
   }
 
@@ -121,7 +125,6 @@ export const fetchApi = async (
         responseHeaders: response.headers,
       };
     }
-    console.log('test 7');
 
     return {
       content,
@@ -129,7 +132,6 @@ export const fetchApi = async (
       responseHeaders: response.headers,
     };
   } catch {
-    console.log('test 5');
 
     const errorContent = data?.[2] ? JSON.stringify(decodeBase64(data[2])) : '';
 

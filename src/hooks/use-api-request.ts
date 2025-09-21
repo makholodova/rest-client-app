@@ -11,6 +11,8 @@ export const useApiRequest = () => {
 
   const bodyState = useRestClientStore((state) => state.body);
   const headersState = useRestClientStore((state) => state.headers);
+  const setBody = useRestClientStore((state) => state.setBody);
+  const setHeader = useRestClientStore((state) => state.initHeaders);
 
   const router = useRouter();
   const params = useParams();
@@ -86,10 +88,12 @@ export const useApiRequest = () => {
     const searchParams = new URLSearchParams();
 
     if (body) {
+      setBody(JSON.parse(body));
       newSegments.push(encodeBase64(body));
     }
 
     if (headers) {
+      setHeader(headers);
       Object.entries(headers).forEach(([key, value]) => {
         const encodedKey = encodeURIComponent(key);
         const encodedValue = encodeURIComponent(value);
