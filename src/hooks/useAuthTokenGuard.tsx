@@ -48,9 +48,13 @@ export function useAuthTokenGuard(options?: UseAuthTokenGuardOptions) {
   }, [router, redirectTo, t, authUser, skipAuthGuard]);
 
   useEffect(() => {
-    if (authUser === null && !isTokenCheckingRef.current && !skipAuthGuard) {
-      router.push(redirectTo);
-    }
+    const timer = setTimeout(() => {
+      if (authUser === null && !isTokenCheckingRef.current && !skipAuthGuard) {
+        router.push(redirectTo);
+      }
+    }, 1000);
+
+    return () => clearTimeout(timer);
   }, [authUser, router, redirectTo, skipAuthGuard]);
 
   useEffect(() => {

@@ -9,20 +9,42 @@ import { useIsScrolled } from '@/hooks/use-is-scrolled';
 import ButtonLink from '@/components/ui/button-link/button-link';
 import Button from '@/components/ui/button/button';
 import { logout, auth } from '@/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import type { User } from 'firebase/auth';
 
 export default function Header() {
   const isScrolled = useIsScrolled();
   const t = useTranslations('Header');
-  const [user] = useAuthState(auth);
   const router = useRouter();
+
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setIsLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleLogOut = async () => {
     logout();
     router.push(ROUTES.HOME);
   };
+
+  if (isLoading) {
+    <header className={clsx(styles.header, { [styles.sticky]: isScrolled })}>
+      <div className={`${styles.headerWrapper} container`}>
+        <Logo />
+        <div className={styles.nav}>
+          <LanguageSwitcher />
+        </div>
+      </div>
+    </header>;
+  }
 
   return (
     <header className={clsx(styles.header, { [styles.sticky]: isScrolled })}>
