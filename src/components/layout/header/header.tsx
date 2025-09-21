@@ -32,13 +32,18 @@ export default function Header() {
           <LanguageSwitcher />
 
           {user ? (
-            <Button
-              variant={'secondary'}
-              className={styles.navLink}
-              onClick={handleLogOut}
-            >
-              {t('sign-out')}
-            </Button>
+            <>
+              <ButtonLink className={styles.navLink} href={ROUTES.HOME}>
+                {t('main')}
+              </ButtonLink>
+              <Button
+                variant={'secondary'}
+                className={styles.navLink}
+                onClick={handleLogOut}
+              >
+                {t('sign-out')}
+              </Button>
+            </>
           ) : (
             <>
               <ButtonLink

@@ -1,6 +1,7 @@
 {
   "Header": {
     "logo": "REST Клиент",
+    "main": "Главная",
     "sign-up": "Регистрация",
     "sign-in": "Войти",
     "sign-out": "Выйти"

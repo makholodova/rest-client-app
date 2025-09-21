@@ -1,6 +1,7 @@
 {
   "Header": {
     "logo": "REST Client",
+    "main": "Main",
     "sign-up": "Sign Up",
     "sign-in": "Sign In",
     "sign-out": "Sign Out"
