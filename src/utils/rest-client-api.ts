@@ -31,11 +31,15 @@ export const createRequestConfig = (
     headers: requestHeaders,
   };
 
-  if (bodyData 
-    && !(method === 'GET' 
-    || method === 'HEAD' 
-    || method === 'DELETE' 
-    || method === 'OPTIONS')) {
+  if (
+    bodyData &&
+    !(
+      method === 'GET' ||
+      method === 'HEAD' ||
+      method === 'DELETE' ||
+      method === 'OPTIONS'
+    )
+  ) {
     config.body = JSON.parse(bodyData);
   }
 
@@ -72,7 +76,7 @@ export const saveRequestToHistory = async (
     body: JSON.stringify({
       method,
       url,
-      reqHeaders,
+      headers: reqHeaders,
       body,
       status,
       latency_ms: latency,
@@ -132,7 +136,6 @@ export const fetchApi = async (
       responseHeaders: response.headers,
     };
   } catch {
-
     const errorContent = data?.[2] ? JSON.stringify(decodeBase64(data[2])) : '';
 
     await saveRequestToHistory(
